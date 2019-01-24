@@ -6,7 +6,7 @@ output:
 # BLUE TEAM
 
 - Add team photo here
-- Add team's main goal for this course
+- Learn a lot of Data Science and the ins and outs of R
 
 ##Individual Sections
 
