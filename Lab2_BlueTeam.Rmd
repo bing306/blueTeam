@@ -20,6 +20,7 @@
 ******
 #### Brandon Bowen
 
+
 - I'm interested in the growing popularity of profesional gaming. Even now some profesional gamers are making the same amount as profesional sports player. How will this trend contiune? Will it eventualy become a world wide "sport?"
 
 - Six months after graduation, I would at least want a stable job that I can work at for a couple of years before pursuing higher education. After 5 years if I already finished my higher education I would like to work in a foreign country such as Japan. Reason being i'm interested in the country of Japan itself and i'm also learning Japanese.
@@ -31,4 +32,8 @@
 - Something about me is I love to read on my off time with no specific genre in mind. Also i'm a competive gamer, while not profesional I do participate in a couple online tournaments and even in person tournaments.
 
 ******
-#### Bing Mitchell
+This is the first change to the file
+![this is a meme](meme.png)
+```{r}
+Nicolas Zimmerman 
+````
