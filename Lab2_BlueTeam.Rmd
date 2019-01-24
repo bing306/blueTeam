@@ -51,7 +51,3 @@ output:
 - I am from Piedmont, California which is right next to Oakland. I am a Golden State Warriors fan and follow the NBA very closely.
 =======
 
-```{r}
-Nicolas Zimmerman 
-````
->>>>>>> 3762436f693f4f775504e1d935426fab31ee723f
