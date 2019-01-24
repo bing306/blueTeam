@@ -6,7 +6,7 @@ output:
 # BLUE TEAM
 
 - Add team photo here
-- Learn a lot of Data Science and the ins and outs of R
+- Add team's main goal for this course
 
 ##Individual Sections
 
@@ -38,6 +38,7 @@ output:
 - Something about me is I love to read on my off time with no specific genre in mind. Also i'm a competive gamer, while not profesional I do participate in a couple online tournaments and even in person tournaments.
 
 ******
+<<<<<<< HEAD
 #### Bing Mitchell
 ![Bing in Hawaii](PicOfBing.jpg)
 
@@ -48,7 +49,20 @@ output:
 - I am hoping to be able to learn how to analyze data better, figure out what is relevant and what isn't, and be able to put together nice statistical reports
 
 - I am from Piedmont, California which is right next to Oakland. I am a Golden State Warriors fan and follow the NBA very closely.
+=======
 
+
+#### Nicolas Zimmerman 
+
+- I would like to see the rate that diseases have been growing in populations that are heavy with anti-vaxers.
+
+- 5 months after graduation I would like to be in some kind of software developement job, 5 years after I would like to be working for a very good company or my own startup.
+
+- Greatest career accomplishments might have to be becoming a systems administrator.
+
+- This course will help because big data and data science are only going to become a bigger deal, and having knowledge of it will be benificial in any field of computer science.
+
+- I was born and raised here in colorado, and I dont think I'll ever want to live in a place without mountains.
 
 
 ## Ryan Tate
@@ -63,4 +77,4 @@ _ 6 months after graduating I want to find a job as a data scientist.
 
 - I am hoping to learn what it means to be a data scientist. 
 
-
+>>>>>>> 3762436f693f4f775504e1d935426fab31ee723f
