@@ -49,5 +49,18 @@ output:
 - I am hoping to be able to learn how to analyze data better, figure out what is relevant and what isn't, and be able to put together nice statistical reports
 
 - I am from Piedmont, California which is right next to Oakland. I am a Golden State Warriors fan and follow the NBA very closely.
-=======
 
+## Ryan Tate
+
+![pic](pic.jpg)
+
+_ 6 months after graduating I want to find a job as a data scientist.
+
+- 5 years after graduating I want to be working remotely and traveling.
+
+- I hope my greatest career accomplishment will be being able to live in a van.
+
+- I am hoping to learn what it means to be a data scientist. 
+
+>>>>>>> 3762436f693f4f775504e1d935426fab31ee723f
+>>>>>>> a80269926400f795bbaec27baacd5e0ffef14c09
