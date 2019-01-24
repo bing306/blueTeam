@@ -1,3 +1,8 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
 # BLUE TEAM
 
 - Add team photo here
@@ -32,3 +37,12 @@
 
 ******
 #### Bing Mitchell
+![Bing in Hawaii](PicOfBing.jpg)
+
+- I want to be able to find insights about the game of Basketball by analyzing data.
+
+- 6 Months after graduation, I would love to be travelling the world because I love to be in new places. 5 years after graduation, I would like to be a data analyst for a proffesional sports franchise
+
+- I am hoping to be able to learn how to analyze data better, figure out what is relevant and what isn't, and be able to put together nice statistical reports
+
+- I am from Piedmont, California which is right next to Oakland. I am a Golden State Warriors fan and follow the NBA very closely.
