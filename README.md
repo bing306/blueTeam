@@ -1,1 +1,5 @@
-#This is our readme file
+#Team Members
+
+###Matthew Lawson
+
+###Bing Mitchell
