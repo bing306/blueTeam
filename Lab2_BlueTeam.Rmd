@@ -38,7 +38,6 @@ output:
 - Something about me is I love to read on my off time with no specific genre in mind. Also i'm a competive gamer, while not profesional I do participate in a couple online tournaments and even in person tournaments.
 
 ******
-<<<<<<< HEAD
 #### Bing Mitchell
 ![Bing in Hawaii](PicOfBing.jpg)
 
