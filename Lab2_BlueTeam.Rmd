@@ -22,6 +22,8 @@ output:
 
 - Also, I like to snowboard, hike, swim, and, as of recently, play poker.
 
+<!-- (comments from Brandon).  Your answers are structured nicely with the bullet list. All your answers have explainations which is appreciated and allows a further insight to why you are currentlly doing what you're doing. 
+
 ******
 #### Brandon Bowen
 ![Only recent picture of Brandon Bowen](picOfBrandon2.JPG)
@@ -49,6 +51,8 @@ output:
 - I am hoping to be able to learn how to analyze data better, figure out what is relevant and what isn't, and be able to put together nice statistical reports
 
 - I am from Piedmont, California which is right next to Oakland. I am a Golden State Warriors fan and follow the NBA very closely.
+
+<!-- (comments from Brandon). Your answers are nicely structured with the bullten points. Your code " <<<<<<<< HEAD" messes with your picture which you should fix. -->
 =======
 
 
@@ -64,6 +68,8 @@ output:
 
 - I was born and raised here in colorado, and I dont think I'll ever want to live in a place without mountains.
 
+<!-- (comments from Brandon).  Your answers are nicely structured and are easy to understand. For your first answer you could include a reason why you're intersted in that topic. do you want to help anti-vaxers or some other reason would be helpful for your answer. --> 
+
 
 ## Ryan Tate
 
@@ -75,6 +81,8 @@ _ 6 months after graduating I want to find a job as a data scientist.
 
 - I hope my greatest career accomplishment will be being able to live in a van.
 
-- I am hoping to learn what it means to be a data scientist. 
+- I am hoping to learn what it means to be a data scientist.
+
+<!-- (comments from Brandon). Your answers  are nicely structured and straight to the point which makes it easy to understand. Although it could be better to include a little more detail in your answers. Also you forgot to include the answer to the first question which was " a question you would like to answer ( not statistical related) with data science." -->
 
 >>>>>>> 3762436f693f4f775504e1d935426fab31ee723f
