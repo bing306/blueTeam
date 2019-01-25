@@ -5,8 +5,9 @@ output:
 ---
 # BLUE TEAM
 
-- Add team photo here
-- Add team's main goal for this course
+![This is our team: Nick, Ryan, Bing, Matt, and Brandon](TeamPhoto.jpg)
+
+- Our main goal for this course is to learn a lot of Data Science tools and become fluent in R Markdown.
 
 ##Individual Sections
 
@@ -39,8 +40,9 @@ output:
 
 - Something about me is I love to read on my off time with no specific genre in mind. Also i'm a competive gamer, while not profesional I do participate in a couple online tournaments and even in person tournaments.
 
+> I never knew that professional gamers could make so much money. You should be a little more speciffic about what kind of higher education you are expecting to pursue. -Matt
+
 ******
-<<<<<<< HEAD
 #### Bing Mitchell
 ![Bing in Hawaii](PicOfBing.jpg)
 
@@ -54,6 +56,10 @@ output:
 
 <!-- (comments from Brandon). Your answers are nicely structured with the bullten points. Your code " <<<<<<<< HEAD" messes with your picture which you should fix. -->
 =======
+
+> It's cool that you want to travel after graduation. I do too. I'm interested in what types of insights about Basketball you are hoping to find. -Matt
+
+*****
 
 
 #### Nicolas Zimmerman 
@@ -69,13 +75,15 @@ output:
 - I was born and raised here in colorado, and I dont think I'll ever want to live in a place without mountains.
 
 <!-- (comments from Brandon).  Your answers are nicely structured and are easy to understand. For your first answer you could include a reason why you're intersted in that topic. do you want to help anti-vaxers or some other reason would be helpful for your answer. --> 
+> Your question about anti-vaxers is really interesting to me too. You should add a photo to your section. -Matt
+<!-- (comments from Brandon).  Your answers are nicely structured and are easy to understand. For your first answer you could include a reason why you're intersted in that topic. do you want to help anti-vaxers or some other reason would be helpful for your answer. --> 
 
 
 ## Ryan Tate
 
 ![pic](pic.jpg)
 
-_ 6 months after graduating I want to find a job as a data scientist.
+- 6 months after graduating I want to find a job as a data scientist.
 
 - 5 years after graduating I want to be working remotely and traveling.
 
@@ -86,3 +94,5 @@ _ 6 months after graduating I want to find a job as a data scientist.
 <!-- (comments from Brandon). Your answers  are nicely structured and straight to the point which makes it easy to understand. Although it could be better to include a little more detail in your answers. Also you forgot to include the answer to the first question which was " a question you would like to answer ( not statistical related) with data science." -->
 
 >>>>>>> 3762436f693f4f775504e1d935426fab31ee723f
+
+> I's cool that you want to travel and work remotely. I want to do that too! You should include where you want to travel. -Matt
