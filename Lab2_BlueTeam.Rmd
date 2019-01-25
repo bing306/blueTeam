@@ -24,6 +24,8 @@ output:
 - Also, I like to snowboard, hike, swim, and, as of recently, play poker.
 
     + (comments from Brandon).  Your answers are structured nicely with the bullet list. All your answers have explainations which is appreciated and allows a further insight to why you are currentlly doing what you're doing. 
+    
+    + (Ryan) Very answers are very detailed. I've also thought about moving to a different country including Germany.
 
 ******
 #### Brandon Bowen
@@ -41,6 +43,8 @@ output:
 - Something about me is I love to read on my off time with no specific genre in mind. Also i'm a competive gamer, while not profesional I do participate in a couple online tournaments and even in person tournaments.
 
     + (Matt) I never knew that professional gamers could make so much money. You should be a little more speciffic about what kind of higher education you are expecting to pursue.
+    
+    + (Ryan) Your answers are complete and intersting. If I had more free time I would love to read more.
 
 ******
 #### Bing Mitchell
@@ -57,6 +61,9 @@ output:
     + (comments from Brandon). Your answers are nicely structured with the bullten points. Your code " <<<<<<<< HEAD" messes with your picture which you should fix.
 
     + (Matt) It's cool that you want to travel after graduation. I do too. I'm interested in what types of insights about Basketball you are hoping to find.
+    
+    + (Ryan) I also love to travel and visit new places. I like how all of ours are formatted similarly. 
+    
 
 *****
 
@@ -77,19 +84,23 @@ output:
     + (Matt) Your question about anti-vaxers is really interesting to me too. You should add a photo to your section.
     
     + (comments from Brandon).  Your answers are nicely structured and are easy to understand. For your first answer you could include a reason why you're intersted in that topic. do you want to help anti-vaxers or some other reason would be helpful for your answer.
+    
+    + (Ryan) I would also like to see that data about diseases. I think adding a photo would help us visualize what you look like.
 
 
 ## Ryan Tate
 
 ![pic](pic.jpg)
 
-- 6 months after graduating I want to find a job as a data scientist.
+- I would like to see data on public opioniono of climate change and how it changes with geography and other factors. 
 
-- 5 years after graduating I want to be working remotely and traveling.
+- 6 months after graduating I want to find a job as a data scientist, although I'm nor exactly sure what field I'd like to specialize in.
 
-- I hope my greatest career accomplishment will be being able to live in a van.
+- 5 years after graduating I want to be working remotely and traveling, not necesarily working free-lance but at least remotely.
 
-- I am hoping to learn what it means to be a data scientist.
+- I hope my greatest career accomplishment will be being able to live and work in a van, so you could say I'm very ambitious. 
+
+- I am hoping to learn what it means to be a data scientist and the ability to analzye data in any subject I want. 
 
     + (comments from Brandon). Your answers  are nicely structured and straight to the point which makes it easy to understand. Although it could be better to include a little more detail in your answers. Also you forgot to include the answer to the first question which was " a question you would like to answer ( not statistical related) with data science."
 
