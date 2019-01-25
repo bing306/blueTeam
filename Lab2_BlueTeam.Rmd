@@ -29,6 +29,8 @@ output:
     
     + (Nick) Your plans are laid out very clear and concse. I think your question is excellent as well, traffic is always something we should be improving. 
 
+    + (Bing) Your interests are vast which is realy interesting. I also like to ski/snowboard and play poker.
+
 ******
 #### Brandon Bowen
 ![Only recent picture of Brandon Bowen](picOfBrandon2.JPG)
@@ -48,8 +50,9 @@ output:
     
     + (Ryan) Your answers are complete and intersting. If I had more free time I would love to read more.
     
-    + (Nick) Your writing is well thought out. Your question is interesting and I would imagine there are some great ways to view this data. Maybe mention which online games you like to be apart of. Starcraft?
+    + (Nick) Your writing is well thought out. Your question is interesting and I would imagine there are some great ways to view this data. Maybe mention which online games you like to be apart of. Starcraft? 
 
+    + (Bing) I like that you are interested in going abroad and are learning another language. Gaming competitions are such awesome events.
 ******
 #### Bing Mitchell
 ![Bing in Hawaii](PicOfBing.jpg)
@@ -93,6 +96,8 @@ output:
     
     + (Ryan) I would also like to see that data about diseases. I think adding a photo would help us visualize what you look like.
 
+    + (Bing) Have you ever thought about going into medical fields? I also agree that data science is only growing right now.
+
 
 ## Ryan Tate
 
@@ -112,4 +117,6 @@ output:
 
     + (Matt) I's cool that you want to travel and work remotely. I want to do that too! You should include where you want to travel.
     
-    + (Nick) I like how all your statements here are somewhat connected to eachoter. And that sounds like quite the van.  
+    + (Nick) I like how all your statements here are somewhat connected to eachoter. And that sounds like quite the van.
+
+    + (Bing) I like how you statements have similar structure. I also am not exactly sure what I want to do with data science.
