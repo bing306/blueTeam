@@ -16,19 +16,67 @@ library(tidyverse)
 source("http://www.openintro.org/stat/data/cdc.R")
 cdc <- as_tibble(cdc)
 ```
+
+```{r}
+cdc$exerany <- factor(cdc$exerany, labels=c("Not an active excerciser", "Active excerciser"))
+cdc$smoke100 <- factor(cdc$smoke100, labels=c("Not a smoker", "Smoker"))
+cdc$hlthplan <- factor(cdc$hlthplan, labels=c("No health plan", "Health plan"))
+```
+
+
 ```{r}
 head(cdc)
 ```
+
+
 ```{r}
-cdc$exerany <- factor(cdc$exerany)
-cdc$smoke100 <- factor(cdc$smoke100)
-cdc$hlthplan <- factor(cdc$hlthplan)
+ggplot(data=cdc) +
+  geom_bar(aes(x=smoke100, fill=weight-wtdesire<20))
 ```
 
 
 ```{r}
 ggplot(data=cdc) + 
-stat_count(mapping=aes(x=age, group=smoke100)) + 
+  geom_point(mapping=aes(x=height, y=weight)) +
+  facet_wrap(~smoke100)
+```
+
+```{r}
+ggplot(data=cdc) +
+  stat_count(mapping=aes(x=exerany, fill=exerany)) +
+  facet_wrap(~genhlth)
+```
+
+```{r}
+ggplot(data=cdc) +
+  stat_count(mapping=aes(x=smoke100, fill=smoke100)) +
+  facet_wrap(~genhlth)
+```
+
+
+
+```{r}
+ggplot(data=cdc)+
+  stat_count(mapping=aes(x=hlthplan)) +
+  facet_wrap(~weight>300)
+```
+
+
+```{r}
+ggplot(data=cdc) + 
+stat_count(mapping=aes(x=age)) + 
   facet_wrap(~gender)
+```
+
+
+
+```{r}
+data(diamonds)
+head(diamonds)
+```
+
+```{r}
+ggplot(data=diamonds, aes(x=price, color=cut, size=1.5)) +
+geom_density()
 ```
 
