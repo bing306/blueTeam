@@ -1,0 +1,76 @@
+---
+title: "Lab3Matt"
+author: "Matt Lawson"
+date: "1/30/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+library(tidyverse)
+source("http://www.openintro.org/stat/data/cdc.R")
+cdc <- as_tibble(cdc)
+```
+
+```{r}
+cdc$exerany <- factor(cdc$exerany, labels=c("Not an active excerciser", "Active excerciser"))
+cdc$smoke100 <- factor(cdc$smoke100, labels=c("Not a smoker", "Smoker"))
+cdc$hlthplan <- factor(cdc$hlthplan, labels=c("No health plan", "Health plan"))
+```
+
+
+```{r}
+head(cdc)
+```
+
+
+```{r}
+ggplot(data = cdc, mapping = aes( x = age, y = weight, color = genhlth)) +
+geom_smooth(se = FALSE) +
+facet_grid(smoke100~gender) +
+  ggtitle('Weight vs. Age broken down by smoking habits and gender')
+```
+
+
+```{r}
+ggplot(data = cdc, mapping = aes( x = age, y = weight, color = smoke100)) +
+geom_smooth(se = FALSE) +
+facet_grid(genhlth~gender)
+```
+
+We can see here that age vs. weight is different for male and female. It is also different for different levels of general health. However, it is nearly exactly the same for smokers vs. non smokers.
+
+
+
+
+```{r}
+ggplot(data = cdc, mapping = aes( x = age, y = weight, color = genhlth)) +
+geom_smooth(se=FALSE) +
+  facet_wrap(~gender) + 
+   scale_color_discrete(name = 'Health Level')
+```
+
+We can see here that different health levels age differently with respect to weight. We can also see how men begin to decrease in weight sooner than women do.
+```{r}
+ggplot(data=cdc) + 
+geom_bar(mapping=aes(x=genhlth, fill=gender)) +
+facet_wrap(~exerany)
+```
+
+```{r}
+ggplot(data=cdc) +
+  stat_count(mapping=aes(x=exerany, fill=exerany)) +
+  facet_wrap(~genhlth) +
+  coord_flip()
+```
+
+```{r}
+ggplot(data=cdc) +
+  stat_count(mapping=aes(x=smoke100, fill=smoke100)) +
+  facet_wrap(~genhlth)
+```
