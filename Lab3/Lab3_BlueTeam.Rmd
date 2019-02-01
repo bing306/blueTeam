@@ -257,7 +257,7 @@ Age and weight tend to increase if someone has a healtplan. Since smoking has no
 ggplot(data=cdc) + 
 geom_bar(mapping=aes(x = exerany, fill = genhlth), position = "fill") + labs(title = "Bar Chart of General Health of people who do and don't excersize")
 ```
-
+This bar chart shows the proportion of people's general health based on if they exersize or not. As we can see the percentage of people that have excellent health that do exersize is much greater than the percentage of people with excellent health if they do not exersize.
 
 ```{r}
 # Plot 8
