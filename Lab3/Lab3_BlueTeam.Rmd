@@ -1,7 +1,3 @@
-
-
->>>>>>>> HEAD
-=======
 ---
 title: "Lab3_BlueTeam"
 author: "Blue Team"
@@ -88,7 +84,8 @@ geom_bar(mapping = aes(x = hlthplan, fill =genhlth ), position = "fill")+
 ggtitle("Is the proportion of healthy people without a healthplan
 less than the proportion of healthy people with a health plan")
 ```
-I Brandon Bowen, vreated a bar graph with the "fill" option in order to clearly lable the general health of people. Than use the position = fill function to better compare the two sides since the count is vastly different for the two bar charts. Based of the graph the two upper classes of general health has a higher porportion of people with health insurance, While the lower three classes of general health has a higher proportion with people without health insurance.
+
+   I Brandon Bowen, created a bar graph with the "fill" option in order to clearly lable the general health of people. Then I used the position = fill function to better compare the two sides since the count is vastly different for the two bar charts. Based of the graph the two upper classes of general health has a higher porportion of people with health insurance, While the lower three classes of general health has a higher proportion with people without health insurance.
 
 
 ```{r}
@@ -107,18 +104,6 @@ Clearly, excercising had a positive effect on general health. The vast majority 
 
 ```{r}
 # Plot 5
-ggplot(data=cdc) +
-  geom_point(aes(x=height, y=weight))
-```
-
-```{r}
-# Plot 6
-ggplot(data=cdc) +
-  geom_jitter(aes(x=weight, y=wtdesire))
-```
-
-```{r}
-# Plot 7
 ggplot(data = cdc) + 
   geom_jitter(data = cdc, mapping = aes(x = weight, y = age, color = hlthplan)) +
   facet_wrap(~ hlthplan) +
@@ -127,14 +112,14 @@ ggplot(data = cdc) +
 Age and weight tend to increase if someone has a healtplan. Since smoking has no affect on someone's age or weight loss it should stand to reason that giving them access to a healthplan would help them live longer. 
 
 ```{r}
-# Plot 8
+# Plot 6
 ggplot(data=cdc) + 
 geom_bar(mapping=aes(x = exerany, fill = genhlth), position = "fill") + labs(title = "Bar Chart of General Health of people who do and don't excersize")
 ```
 This bar chart shows the proportion of people's general health based on if they exersize or not. As we can see the percentage of people that have excellent health that do exersize is much greater than the percentage of people with excellent health if they do not exersize.
 
 ```{r}
-# Plot 9
+# Plot 7
 ggplot(data=mutate(cdc,
        bmi = weight/height^2 * 703,
        weightClass = ifelse(bmi < 18.5, "underweight", 
@@ -149,6 +134,9 @@ This is a histogram that displays the respondent's weightClass, ranging from und
 
 ## Who Did What
 
-- Matt worked on plot 1, 2, and 3
--Br
->>>>>>> master
+- Matt worked on Team plot and plot 1, 2, and 3
+- Brandon worked on Team plot and plot 3
+- Nick worked on plot Team plot and plot 7 
+- Ryan worked on plot Team plot and plot 5
+- Bing worked on plot on Team plot and plot 6 
+
