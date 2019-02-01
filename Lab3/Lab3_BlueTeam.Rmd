@@ -31,6 +31,22 @@ head(cdc)
 
 Does smoking affect the weight loss as one gets older? What’s the difference of weight loss between male and female?
 
+
+
+
+
+
+```{r, warning=FALSE, message=F}
+# Team Plot
+ggplot(data = cdc, mapping = aes( x = age, y = weight, color = genhlth)) +
+geom_smooth(se = FALSE) +
+facet_grid(smoke100~gender) +
+  ggtitle('Weight vs. Age broken down by smoking habits and gender')
+```
+
+
+
+
 ### Results
 
 Smokers and non-smokers experience the same amount of weight loss as they get older in every health class. Also, they have about the same life expectancy. We conclude that smoking has no effect on weight loss or weight gain and thus no effect on overall health.
@@ -39,18 +55,8 @@ Smokers and non-smokers experience the same amount of weight loss as they get ol
 
 Health insurrance companies shouldn’t be afraid to give health insurance to those smokers as they age.
 
-
-
-
-```{r, warning=FALSE, message=F}
-ggplot(data = cdc, mapping = aes( x = age, y = weight, color = genhlth)) +
-geom_smooth(se = FALSE) +
-facet_grid(smoke100~gender) +
-  ggtitle('Weight vs. Age broken down by smoking habits and gender')
-```
-
-
 ```{r, warning=F, message=F}
+# Plot 1
 ggplot(data = cdc, mapping = aes( x = age, y = weight, color = smoke100)) +
 geom_smooth(se = FALSE) +
 facet_grid(genhlth~gender)
@@ -62,6 +68,7 @@ We can see here that age vs. weight is different for male and female. It is also
 
 
 ```{r, warning=F, message=F}
+# Plot 2
 ggplot(data = cdc, mapping = aes( x = age, y = weight, color = genhlth)) +
 geom_smooth(se=FALSE) +
   facet_wrap(~gender) + 
@@ -72,6 +79,7 @@ We can see here that different health levels age differently with respect to wei
 
 
 ```{r}
+# Plot 3
 ggplot(data=cdc) +
   stat_count(mapping=aes(x=exerany, fill=exerany)) +
   facet_wrap(~genhlth) +
@@ -85,16 +93,19 @@ Clearly, excercising had a positive effect on general health. The vast majority 
 
 
 ```{r}
+# Plot 4
 ggplot(data=cdc) +
   geom_point(aes(x=height, y=weight))
 ```
 
 ```{r}
+# Plot 5
 ggplot(data=cdc) +
   geom_jitter(aes(x=weight, y=wtdesire))
 ```
 
 ```{r}
+# Plot 6
 ggplot(data = cdc) + 
   geom_jitter(data = cdc, mapping = aes(x = weight, y = age, color = hlthplan)) +
   facet_wrap(~ hlthplan) +
@@ -103,12 +114,14 @@ ggplot(data = cdc) +
 Age and weight tend to increase if someone has a healtplan. Since smoking has no affect on someone's age or weight loss it should stand to reason that giving them access to a healthplan would help them live longer. 
 
 ```{r}
+# Plot 7
 ggplot(data=cdc) + 
 geom_bar(mapping=aes(x = exerany, fill = genhlth), position = "fill") + labs(title = "Bar Chart of General Health of people who do and don't excersize")
 ```
 
 
 ```{r}
+# Plot 8
 ggplot(data=mutate(cdc,
        bmi = weight/height^2 * 703,
        weightClass = ifelse(bmi < 18.5, "underweight", 
@@ -117,3 +130,10 @@ ggplot(data=mutate(cdc,
   geom_bar(mapping=aes(x=weightClass,fill=gender))
 ```
 This is a histogram that displays the respondent's weightClass, ranging from underweight to obese based on their BMI (Body Mass Index)
+
+
+
+
+## Who Did What
+
+- Matt worked on plot 1, 2, and 3
