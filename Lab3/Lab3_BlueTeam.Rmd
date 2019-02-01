@@ -1,6 +1,6 @@
 ---
-title: "Lab3Matt"
-author: "Matt Lawson"
+title: "Lab3_BlueTeam"
+author: "Blue Team"
 date: "1/30/2019"
 output: html_document
 ---
@@ -11,25 +11,38 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-```{r}
+```{r, include=F}
 library(tidyverse)
 source("http://www.openintro.org/stat/data/cdc.R")
 cdc <- as_tibble(cdc)
 ```
 
-```{r}
+```{r, include=F}
 cdc$exerany <- factor(cdc$exerany, labels=c("Not an active excerciser", "Active excerciser"))
 cdc$smoke100 <- factor(cdc$smoke100, labels=c("Not a smoker", "Smoker"))
 cdc$hlthplan <- factor(cdc$hlthplan, labels=c("No health plan", "Health plan"))
 ```
 
 
-```{r}
+```{r, include=F}
 head(cdc)
 ```
+### Question
+
+Does smoking affect the weight loss as one gets older? What’s the difference of weight loss between male and female?
+
+### Results
+
+Smokers and non-smokers experience the same amount of weight loss as they get older in every health class. Also, they have about the same life expectancy. We conclude that smoking has no effect on weight loss or weight gain and thus no effect on overall health.
+
+### Recomendation
+
+Health insurrance companies shouldn’t be afraid to give health insurance to those smokers as they age.
 
 
-```{r}
+
+
+```{r, warning=FALSE, message=F}
 ggplot(data = cdc, mapping = aes( x = age, y = weight, color = genhlth)) +
 geom_smooth(se = FALSE) +
 facet_grid(smoke100~gender) +
@@ -37,7 +50,7 @@ facet_grid(smoke100~gender) +
 ```
 
 
-```{r}
+```{r, warning=F, message=F}
 ggplot(data = cdc, mapping = aes( x = age, y = weight, color = smoke100)) +
 geom_smooth(se = FALSE) +
 facet_grid(genhlth~gender)
@@ -48,7 +61,7 @@ We can see here that age vs. weight is different for male and female. It is also
 
 
 
-```{r}
+```{r, warning=F, message=F}
 ggplot(data = cdc, mapping = aes( x = age, y = weight, color = genhlth)) +
 geom_smooth(se=FALSE) +
   facet_wrap(~gender) + 
@@ -56,21 +69,36 @@ geom_smooth(se=FALSE) +
 ```
 
 We can see here that different health levels age differently with respect to weight. We can also see how men begin to decrease in weight sooner than women do.
-```{r}
-ggplot(data=cdc) + 
-geom_bar(mapping=aes(x=genhlth, fill=gender)) +
-facet_wrap(~exerany)
-```
+
 
 ```{r}
 ggplot(data=cdc) +
   stat_count(mapping=aes(x=exerany, fill=exerany)) +
   facet_wrap(~genhlth) +
-  coord_flip()
+  coord_flip() +
+  guides(fill=FALSE) +
+  ggtitle("Does excercising have an effect on general health?")
+```
+
+Clearly, excercising had a positive effect on general health. The vast majority of the people in "excelent", "very good", and "good" general health are active excercisers.
+
+
+
+```{r}
+ggplot(data=cdc) +
+  geom_point(aes(x=height, y=weight))
 ```
 
 ```{r}
 ggplot(data=cdc) +
-  stat_count(mapping=aes(x=smoke100, fill=smoke100)) +
-  facet_wrap(~genhlth)
+  geom_jitter(aes(x=weight, y=wtdesire))
+```
+
+
+
+
+
+```{r}
+ggplot(data=cdc) + 
+geom_bar(mapping=aes(x = exerany, fill = genhlth), position = "fill") + labs(title = "Bar Chart of General Health of people who do and don't excersize")
 ```
