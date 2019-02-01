@@ -31,13 +31,16 @@ head(cdc)
 
 Does smoking affect the weight loss as one gets older? What’s the difference of weight loss between male and female?
 
+### signifigance
+This question is signifigant because if smoking has an adverse effect on weight loss then smokers would genraly become even more unhealthy as they age and have a smaller life span than non-smokers. If smokers have a smaller life span then insurance companies may not want to give smokers the same health plans and benifits as non- smokers. Furthermore, does gender have any effects on weight loss also.
+
 ### Results
 
-Smokers and non-smokers experience the same amount of weight loss as they get older in every health class. Also, they have about the same life expectancy. We conclude that smoking has no effect on weight loss or weight gain and thus no effect on overall health.
+ As seen from the graph below Smokers and non-smokers experience the same amount or minimal difference of weight loss as they get older in every health class. Also, they have about the same life expectancy. We conclude that smoking has no signifigant effect on weight loss or weight gain and thus no adverse effect on overall health. While females do have an overal less weight than males, this could be due to the difference of male and femal physique.
 
 ### Recomendation
 
-Health insurrance companies shouldn’t be afraid to give health insurance to those smokers as they age.
+Health insurance companies should give the same benifits and health plans to smokers as they do to non-smokers as they don't have any risk factor.
 
 
 
