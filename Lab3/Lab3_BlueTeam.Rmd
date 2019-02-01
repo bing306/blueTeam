@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 title: "Lab3_BlueTeam"
 author: "Blue Team"
@@ -135,3 +136,144 @@ geom_bar(mapping=aes(x = exerany, fill = genhlth), position = "fill") + labs(tit
 Brandon created the Bar graph(" Is the proportion of healthy people without a health plan smaller than the proportion of healthy people who do have a health plan." )
 
 
+=======
+---
+title: "Lab3_BlueTeam"
+author: "Blue Team"
+date: "1/30/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r, include=F}
+library(tidyverse)
+source("http://www.openintro.org/stat/data/cdc.R")
+cdc <- as_tibble(cdc)
+```
+
+```{r, include=F}
+cdc$exerany <- factor(cdc$exerany, labels=c("Not an active excerciser", "Active excerciser"))
+cdc$smoke100 <- factor(cdc$smoke100, labels=c("Not a smoker", "Smoker"))
+cdc$hlthplan <- factor(cdc$hlthplan, labels=c("No health plan", "Health plan"))
+```
+
+
+```{r, include=F}
+head(cdc)
+```
+### Question
+
+Does smoking affect the weight loss as one gets older? What’s the difference of weight loss between male and female?
+
+
+
+
+
+
+```{r, warning=FALSE, message=F}
+# Team Plot
+ggplot(data = cdc, mapping = aes( x = age, y = weight, color = genhlth)) +
+geom_smooth(se = FALSE) +
+facet_grid(smoke100~gender) +
+  ggtitle('Weight vs. Age broken down by smoking habits and gender')
+```
+
+
+
+
+### Results
+
+Smokers and non-smokers experience the same amount of weight loss as they get older in every health class. Also, they have about the same life expectancy. We conclude that smoking has no effect on weight loss or weight gain and thus no effect on overall health.
+
+### Recomendation
+
+Health insurrance companies shouldn’t be afraid to give health insurance to those smokers as they age.
+
+```{r, warning=F, message=F}
+# Plot 1
+ggplot(data = cdc, mapping = aes( x = age, y = weight, color = smoke100)) +
+geom_smooth(se = FALSE) +
+facet_grid(genhlth~gender)
+```
+
+We can see here that age vs. weight is different for male and female. It is also different for different levels of general health. However, it is nearly exactly the same for smokers vs. non smokers.
+
+
+
+
+```{r, warning=F, message=F}
+# Plot 2
+ggplot(data = cdc, mapping = aes( x = age, y = weight, color = genhlth)) +
+geom_smooth(se=FALSE) +
+  facet_wrap(~gender) + 
+   scale_color_discrete(name = 'Health Level')
+```
+
+We can see here that different health levels age differently with respect to weight. We can also see how men begin to decrease in weight sooner than women do.
+
+
+```{r}
+# Plot 3
+ggplot(data=cdc) +
+  stat_count(mapping=aes(x=exerany, fill=exerany)) +
+  facet_wrap(~genhlth) +
+  coord_flip() +
+  guides(fill=FALSE) +
+  ggtitle("Does excercising have an effect on general health?")
+```
+
+Clearly, excercising had a positive effect on general health. The vast majority of the people in "excelent", "very good", and "good" general health are active excercisers.
+
+
+
+```{r}
+# Plot 4
+ggplot(data=cdc) +
+  geom_point(aes(x=height, y=weight))
+```
+
+```{r}
+# Plot 5
+ggplot(data=cdc) +
+  geom_jitter(aes(x=weight, y=wtdesire))
+```
+
+```{r}
+# Plot 6
+ggplot(data = cdc) + 
+  geom_jitter(data = cdc, mapping = aes(x = weight, y = age, color = hlthplan)) +
+  facet_wrap(~ hlthplan) +
+  ggtitle("Age and Weight distribution based on whether or not someone has a healthplan")
+```
+Age and weight tend to increase if someone has a healtplan. Since smoking has no affect on someone's age or weight loss it should stand to reason that giving them access to a healthplan would help them live longer. 
+
+```{r}
+# Plot 7
+ggplot(data=cdc) + 
+geom_bar(mapping=aes(x = exerany, fill = genhlth), position = "fill") + labs(title = "Bar Chart of General Health of people who do and don't excersize")
+```
+
+
+```{r}
+# Plot 8
+ggplot(data=mutate(cdc,
+       bmi = weight/height^2 * 703,
+       weightClass = ifelse(bmi < 18.5, "underweight", 
+                     ifelse(bmi < 25, "Normal Weight", 
+                     ifelse(bmi <= 30, "Overweight", "Obese")))))+
+  geom_bar(mapping=aes(x=weightClass,fill=gender))
+```
+This is a histogram that displays the respondent's weightClass, ranging from underweight to obese based on their BMI (Body Mass Index)
+
+
+
+
+## Who Did What
+
+- Matt worked on plot 1, 2, and 3
+>>>>>>> master
