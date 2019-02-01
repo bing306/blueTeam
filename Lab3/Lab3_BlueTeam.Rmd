@@ -94,9 +94,13 @@ ggplot(data=cdc) +
   geom_jitter(aes(x=weight, y=wtdesire))
 ```
 
-
-
-
+```{r}
+ggplot(data = cdc) + 
+  geom_jitter(data = cdc, mapping = aes(x = weight, y = age, color = hlthplan)) +
+  facet_wrap(~ hlthplan) +
+  ggtitle("Age and Weight distribution based on whether or not someone has a healthplan")
+```
+Age and weight tend to increase if someone has a healtplan. Since smoking has no affect on someone's age or weight loss it should stand to reason that giving them access to a healthplan would help them live longer. 
 
 ```{r}
 ggplot(data=cdc) + 
