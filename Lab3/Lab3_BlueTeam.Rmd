@@ -31,7 +31,7 @@ head(cdc)
 
 Does smoking affect the weight loss as one gets older? What’s the difference of weight loss between male and female?
 
-### signifigance
+### Signifigance
 This question is signifigant because if smoking has an adverse effect on weight loss then smokers would genraly become even more unhealthy as they age and have a smaller life span than non-smokers. If smokers have a smaller life span then insurance companies may not want to give smokers the same health plans and benifits as non- smokers. Furthermore, does gender have any effects on weight loss also.
 
 ### Results
@@ -54,6 +54,8 @@ facet_grid(smoke100~gender) +
 
 ***
 
+### Individual Section
+
 ```{r, warning=F, message=F}
 ggplot(data = cdc, mapping = aes( x = age, y = weight, color = smoke100)) +
 geom_smooth(se = FALSE) +
@@ -74,6 +76,13 @@ geom_smooth(se=FALSE) +
 
 We can see here that different health levels age differently with respect to weight. We can also see how men begin to decrease in weight sooner than women do.
 
+***
+
+```{r}
+ggplot(data = cdc) +
+geom_bar(mapping = aes(x = hlthplan, fill = genhlth), position = "fill") +
+ggtitle(" Is the proportion of healthy people without a health plan less than the proportion of healthy people with a health plan")
+```
 ***
 
 ```{r}
@@ -113,3 +122,12 @@ Age and weight tend to increase if someone has a healtplan. Since smoking has no
 ggplot(data=cdc) + 
 geom_bar(mapping=aes(x = exerany, fill = genhlth), position = "fill") + labs(title = "Bar Chart of General Health of people who do and don't excersize")
 ```
+
+
+
+***
+### Contributions
+
+
+
+
