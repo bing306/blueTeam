@@ -27,8 +27,11 @@ cdc$hlthplan <- factor(cdc$hlthplan, labels=c("No health plan", "Health plan"))
 ```{r}
 head(cdc)
 ```
-
-
+```{r}
+ggplot(data = cdc, mapping = aes( x = age, y = weight, color = genhlth)) +
+geom_smooth(se = FALSE) +
+facet_grid(smoke100~gender)
+```
 ```{r}
 ggplot(data=cdc) +
   geom_bar(aes(x=smoke100, fill=weight-wtdesire<20))
