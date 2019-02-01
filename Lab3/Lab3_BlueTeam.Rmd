@@ -109,13 +109,11 @@ geom_bar(mapping=aes(x = exerany, fill = genhlth), position = "fill") + labs(tit
 
 
 ```{r}
-cdcb <- mutate(cdc,
+ggplot(data=mutate(cdc,
        bmi = weight/height^2 * 703,
        weightClass = ifelse(bmi < 18.5, "underweight", 
                      ifelse(bmi < 25, "Normal Weight", 
-                     ifelse(bmi <= 30, "Overweight", "Obese"))))
-
-ggplot(data=cdcb)+
+                     ifelse(bmi <= 30, "Overweight", "Obese")))))+
   geom_bar(mapping=aes(x=weightClass,fill=gender))
 ```
 This is a histogram that displays the respondent's weightClass, ranging from underweight to obese based on their BMI (Body Mass Index)
