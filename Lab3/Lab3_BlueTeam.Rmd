@@ -81,8 +81,10 @@ We can see here that different health levels age differently with respect to wei
 ```{r}
 ggplot(data = cdc) +
 geom_bar(mapping = aes(x = hlthplan, fill = genhlth), position = "fill") +
-ggtitle(" Is the proportion of healthy people without a health plan less than the proportion of healthy people with a health plan")
+ggtitle(" Is the proportion of healthy people without a health plan less than 
+the proportion of healthy people with a health plan")
 ```
+I Brandon Bowen created a bar graph to show people with and without a health plan and the proportion of each health class in each section. To easily see the proportion I made the function "position = "fill". " I choose this over count becuase it made it an easier comparison for my question. Then i used the "fill" function to classify my general health to make it easier to see. Based off the chart in the upper two catagories of health( Exccelent and very good) the proportion with a health plan is larger than the one without. In the lower three catagories the proportion is larger with those who don't have a health plan. Therefore i conclude the most healthy people will genrally have a helath plan instead of those who don't. This can be attributed to the fact that people who are healthier most likely have some form of a health plan.
 ***
 
 ```{r}
@@ -126,8 +128,6 @@ geom_bar(mapping=aes(x = exerany, fill = genhlth), position = "fill") + labs(tit
 
 
 ***
-### Contributions
-
-
+Brandon created the Bar graph(" Is the proportion of healthy people without a health plan smaller than the proportion of healthy people who do have a health plan." )
 
 
