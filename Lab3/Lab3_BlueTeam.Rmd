@@ -49,6 +49,7 @@ facet_grid(smoke100~gender) +
   ggtitle('Weight vs. Age broken down by smoking habits and gender')
 ```
 
+***
 
 ```{r, warning=F, message=F}
 ggplot(data = cdc, mapping = aes( x = age, y = weight, color = smoke100)) +
@@ -58,7 +59,7 @@ facet_grid(genhlth~gender)
 
 We can see here that age vs. weight is different for male and female. It is also different for different levels of general health. However, it is nearly exactly the same for smokers vs. non smokers.
 
-
+***
 
 
 ```{r, warning=F, message=F}
@@ -70,6 +71,7 @@ geom_smooth(se=FALSE) +
 
 We can see here that different health levels age differently with respect to weight. We can also see how men begin to decrease in weight sooner than women do.
 
+***
 
 ```{r}
 ggplot(data=cdc) +
@@ -82,7 +84,7 @@ ggplot(data=cdc) +
 
 Clearly, excercising had a positive effect on general health. The vast majority of the people in "excelent", "very good", and "good" general health are active excercisers.
 
-
+***
 
 ```{r}
 ggplot(data=cdc) +
@@ -101,6 +103,8 @@ ggplot(data = cdc) +
   ggtitle("Age and Weight distribution based on whether or not someone has a healthplan")
 ```
 Age and weight tend to increase if someone has a healtplan. Since smoking has no affect on someone's age or weight loss it should stand to reason that giving them access to a healthplan would help them live longer. 
+
+***
 
 ```{r}
 ggplot(data=cdc) + 
