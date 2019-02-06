@@ -36,8 +36,16 @@ head(babies)
 
 
 ### Matt
+```{r}
+ggplot(data=babies) +
+  geom_bar(mapping=aes(x=as.factor(smoke), fill=as.factor(marital)), position="dodge")
+```
+```{r}
+ggplot(data=babies) + 
+  geom_bar(mapping=aes(x=as.factor(smoke), fill=as.factor(med)), position="dodge")
+```
 
-
+Mothers that have never smoked are more likely to have some college experience or a college degree.
 ### Brandan
 
 
