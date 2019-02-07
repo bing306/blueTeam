@@ -1,0 +1,16 @@
+---
+title: "lab4Bing"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+babies <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-repo/master/babies2a.dat")
+babies <- rename(babies, bwtoz = `bwt/oz`)
+
+head(babies)
+total = nrow(babies)
+ggplot(data=babies)+stat_boxplot(mapping = aes(x = med,y = bwtoz))+facet_grid(~med)
+ggplot(data=babies)+geom_boxplot(mapping = aes(x = med,y = bwtoz))+facet_grid(~med)
+```
