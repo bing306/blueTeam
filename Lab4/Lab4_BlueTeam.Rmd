@@ -45,13 +45,29 @@ Do the newborns of mothers who smoke have smaller birth weights at every gestati
 ggplot(data=babies) + 
   geom_bar(mapping=aes(x=as.factor(smoke), fill=as.factor(med)), position="dodge")
 ```
+```{r}
+ggplot(data=babies) + 
+  geom_bar(mapping=aes(x=as.factor(smoke), fill=as.factor(ded)), position="dodge")
+```
 
-Mothers that have never smoked are more likely to have some college experience or a college degree.
+
+Mothers that have never smoked are much more likely to have some college experience or a college degree.
+I used geom_bar to plot the mothers education for smokers and for non-smokers. I used color to see the different education leves. I also used position="dodge" to better compare the counts of each diffferent education level.
 
 ```{r}
 with(babies, table(smoke, Premature))
 # 41% of non-smokers are born prematurely, but 52% of smokers are born prematurely 
 ```
+
+```{r}
+sat <- read.csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-repo/master/SAT_2010.csv")
+head(sat)
+dim(sat)
+
+ggplot(data=sat) + 
+  geom_jitter(mapping=aes(x=sat_pct, y=total), color="purple")
+```
+
 
 
 ### Brandan
