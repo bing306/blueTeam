@@ -60,11 +60,11 @@ ggplot(data=babies, mapping=aes(x=as.factor(smoke), fill=as.factor(Premature)))+
        caption="Never: n=288        Smokes now: n=217")
 ```
 
-This plot shows that the percentage of births at a normal gestational age is less for mothers that smoke now.
+This plot shows that the percentage of births at a normal gestational age is less for mothers that smoke now. Therefore Smoking should have some effect on premature birth. Although the difference is only about a seven percent proportion between smoking and non-smoking. There could also be a confounding variable based off the mothers weight before pregnancy. A lower weight could cause the mother not having enough nutrients to provide the baby or the mother's small stature not being able to fully develop the baby. Brandon created an indiviual graph based off this confounding variable if you would like more information.
 
 
 ### Recomendation
-
+We recomend that mothers shouldn't smoke during the pregnacy. Also doctors should recomned to their patients not to smoke during child birth. 
 
 ### Individual Findings
 
