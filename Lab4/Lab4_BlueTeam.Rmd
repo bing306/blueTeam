@@ -96,7 +96,12 @@ with(babies, table(smoke, Premature))
 
 
 #### Bing
+```{r}
+ggplot(data=babies)+geom_bar(mapping = aes(x = smoke, y = ..prop.., fill = med)) + 
+  facet_grid(~med)
+```
 
+As we can see how the percentage of mothers wo smoke based, faceted by their education. Our plot shows that the percentage of mothers who smoke generally is less based on the greater education they have. The colors are denote each level of the mother's education.
 
 #### Nick
 ```{r}
