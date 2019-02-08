@@ -99,8 +99,14 @@ with(babies, table(smoke, Premature))
 
 
 #### Nick
-
-
+```{r}
+ggplot(data = babies)+
+  geom_point(mapping = aes(x=gestation,y=bwtoz))+
+  facet_wrap(~number)+
+  geom_vline(xintercept=270, col="blue")
+```
+I plotted the birthweight vs the gestation time with a blue line idicating premature birth.
+I also included a facet wrap showing the different catagories for the number of cigarettes smoked per day for past and current smokers. My findings showed that there are many mothers who smoked 20-29 cigarettes per day and that it did show to have more probability that the babies would be born premature and/or lower birth weights, especially compared to mothers that don't smoke at all.  
 
 
 ### Who did what
