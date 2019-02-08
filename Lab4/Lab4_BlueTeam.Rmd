@@ -1,6 +1,6 @@
 ---
 title: "Lab 4"
-author: "Blue Team: Matt Lawson, Nick Zimmrman, BLAH, BLAH"
+author: "Blue Team: Matt Lawson, Nick Zimmrman, Brandon Bowen, Bing Mitchell"
 date: "2/5/2019"
 output: html_document
 ---
@@ -92,11 +92,24 @@ with(babies, table(smoke, Premature))
 
 
 
-#### Brandan
+#### Brandon
+```{r}
+ggplot(data = babies, mapping = aes(x = as.factor(Premature), y = mpregwt, fill=as.factor(smoke))) + geom_boxplot() +
+  scale_fill_discrete(name="smoking",
+                      breaks=c(0,1),
+                      labels=c("Non smoking", "Smoking")) +
+  labs(x = "Premature")  +
+  ggtitle("Does the mothers pre-pregnancy weight affect the chances of premature babies?")
+```
+
+
+from this graph it can be seen that mothers who smoked and had premature babies weighed less on average than mothers who didn't smoke and had premature babies. Also smokers with premature babies weighed less than both somker and non smokers who did not have premature babies.
+I used geom_boxplot to show a better average for my comparison. Then i used the fill function to lable the difference between smokers and non smokers. Lastly i changed the legend title so it would not print "as.factor("smoke") and changed the variables 0 and 1 to non smoking and smoking.
 
 
 #### Bing
 ```{r}
+
 ggplot(data=babies)+geom_bar(mapping = aes(x = smoke, y = ..prop.., fill = med)) + 
   facet_grid(~med)
 ```
@@ -116,3 +129,5 @@ I also included a facet wrap showing the different catagories for the number of 
 
 ### Who did what
 Matt worked on Team Plot #1 and on his personal plot.
+
+Brandon worked on Team plot #1 and on his personal plot
