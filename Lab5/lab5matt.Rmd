@@ -1,0 +1,39 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(tidyverse)
+milk <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-01-29/state_milk_production.csv')
+
+milk <- milk %>%
+  mutate(milk_million = milk_produced/1000000)
+
+head(milk)
+```
+
+
+```{r}
+milk %>%
+  filter(year==1998) %>%
+  ggplot(aes(x=milk_million)) +
+  geom_histogram(bins=15) + 
+  ggtitle("Distribution of milk production in 1998") + 
+  labs(x="Million pounds of milk")
+```
+
+```{r}
+info <- milk %>%
+  group_by(state) %>%
+  summarise(mean = mean(milk_million), median=median(milk_million), maximum=max(milk_million), minimum=min(milk_million))
+info
+```
+
