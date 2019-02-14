@@ -17,10 +17,26 @@ babies <- na.omit(babies)
 ```
 
 ```{r}
-ggplot(data = babies, mapping = aes(x = as.factor(Premature), y = mpregwt, color = as.factor(smoke))) + geom_boxplot() +
-  scale_fill_discrete(name="Smoking",
-  breaks=c("0", "1"),
-  lables=c("Non Smoker", "Smoker"))
-  labs(x = "Premature") 
+ggplot(data = babies, mapping = aes(x = as.factor(Premature), y = mpregwt, fill=as.factor(smoke))) + geom_boxplot() +
+  scale_fill_discrete(name="smoking",
+                      breaks=c(0,1),
+                      labels=c("Non smoking", "Smoking")) +
+  labs(x = "Premature")  +
+  ggtitle("Does the mothers pre-pregnancy weight affect the chances of premature babies?")
+
+
 ```
+
+
+```{r, echo = FALSE, warning = FALSE}
+library(tidyverse)
+library(dplyr)
+babies <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-repo/master/babies2a.dat")
+babies <- rename(babies, bwtoz = `bwt/oz`)
+head(babies)
+ggplot(data=babies)+geom_bar(mapping = aes(x = smoke, y = ..prop.., fill = med)) + facet_grid(~med)
+
+
+```
+
 

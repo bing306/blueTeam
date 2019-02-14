@@ -1,138 +1,4 @@
-<<<<<<< HEAD
----
-title: "Lab 4"
-author: "Blue Team: Matt Lawson, Nick Zimmrman, Brandon Bowen, Bing Mitchell"
-date: "2/5/2019"
-output: html_document
----
-  
-  
-    
-    
-    
-    
-     
-     
 
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-
-```{r, include=F}
-library(tidyverse)
-babies <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-repo/master/babies2a.dat")
-babies <- rename(babies, bwtoz = `bwt/oz`) #renaming `bwt/oz` because the "/" sign requires special care
-babies <- na.omit(babies)
-```
-```{r, include=F}
-head(babies)
-```
-
-
-
-## Questions and Importance
-
-##### 1. Do mothers who smoke have increased rates of premature delivery (before 270 days)?
-  This is an important question because premature delivery can lead to many health problems for the baby. Lung, heart, and brain problems, cerebral palsy, learning imparment, and chronic health issues are some known problems.
-  ([www.mayoclinic.org](https://www.mayoclinic.org/diseases-conditions/premature-birth/symptoms-causes/syc-20376730))
-
-##### 2. Do the newborns of mothers who smoke have smaller birth weights at every gestational age (number of days into pregnancy when child is born)?
-
-
-
-
-## Team Plots
-```{r, include=F}
-
-babies$smoke <- factor(babies$smoke,
-  levels = c(0,1, 2, 3),
-  labels = c("Never", "Smokes now", "Until Preg", "Once did, not now"))
-```
-
-```{r}
-ggplot(data=babies, mapping=aes(x=as.factor(smoke), fill=as.factor(Premature)))+
-  geom_bar(aes(y = (..count..)/sum(..count..))) +
-  scale_fill_discrete(name="",
-    breaks=c(0, 1),
-    labels=c("Birth at normal gestational age", "Birth before a gestational age of 270 days")) +
-  labs(x="Smoker?", y="% of population", title="Somking's and premature births",
-       caption="Never: n=288        Smokes now: n=217")
-```
-
-This plot shows that the percentage of births at a normal gestational age is less for mothers that smoke now. Therefore Smoking should have some effect on premature birth. Although the difference is only about a seven percent proportion between smoking and non-smoking. There could also be a confounding variable based off the mothers weight before pregnancy. A lower weight could cause the mother not having enough nutrients to provide the baby or the mother's small stature not being able to fully develop the baby. Brandon created an indiviual graph based off this confounding variable if you would like more information.
-
-
-### Recomendation
-We recomend that mothers shouldn't smoke during the pregnacy. Also doctors should recomned to their patients not to smoke during child birth. 
-
-### Individual Findings
-
-
-#### Matt
-
-```{r}
-ggplot(data=babies) + 
-  geom_bar(mapping=aes(x=as.factor(smoke), fill=as.factor(med)), position="dodge") + 
-  scale_fill_discrete(name="Mother's Highest Education",
-                      breaks=c(0, 1, 2, 3, 4, 5, 7, 9),
-                      labels=c("Less than 8th grade", "Some high school", "High school graduate", "High school + trade school", "some college", "College graduate", "trade school", "Unknown")) +
-  labs(x="Smoker?")
-```
-
-
-Mothers that have some college experience or a college degree are much less likeley to have ever smoked.
-I used geom_bar to plot the mothers education for smokers and for non-smokers. I used color to see the different education leves. I also used position="dodge" to better compare the counts of each diffferent education level. I also changed the legend from numbers to the actual meaning so that the reader doesn't have to reference the help page.
-
-```{r, include=F}
-with(babies, table(smoke, Premature))
-# 41% of non-smokers are born prematurely, but 52% of smokers are born prematurely 
-```
-
-
-
-
-#### Brandon
-```{r}
-ggplot(data = babies, mapping = aes(x = as.factor(Premature), y = mpregwt, fill=as.factor(smoke))) + geom_boxplot() +
-  scale_fill_discrete(name="smoking",
-                      breaks=c(0,1),
-                      labels=c("Non smoking", "Smoking")) +
-  labs(x = "Premature")  +
-  ggtitle("Does the mothers pre-pregnancy weight affect the chances of premature babies?")
-```
-
-
-from this graph it can be seen that mothers who smoked and had premature babies weighed less on average than mothers who didn't smoke and had premature babies. Also smokers with premature babies weighed less than both somker and non smokers who did not have premature babies.
-I used geom_boxplot to show a better average for my comparison. Then i used the fill function to lable the difference between smokers and non smokers. Lastly i changed the legend title so it would not print "as.factor("smoke") and changed the variables 0 and 1 to non smoking and smoking.
-
-
-#### Bing
-```{r}
-
-ggplot(data=babies)+geom_bar(mapping = aes(x = smoke, y = ..prop.., fill = med)) + 
-  facet_grid(~med)
-```
-
-As we can see how the percentage of mothers wo smoke based, faceted by their education. Our plot shows that the percentage of mothers who smoke generally is less based on the greater education they have. The colors are denote each level of the mother's education.
-
-#### Nick
-```{r}
-ggplot(data = babies)+
-  geom_point(mapping = aes(x=gestation,y=bwtoz))+
-  facet_wrap(~number)+
-  geom_vline(xintercept=270, col="blue")
-```
-I plotted the birthweight vs the gestation time with a blue line idicating premature birth.
-I also included a facet wrap showing the different catagories for the number of cigarettes smoked per day for past and current smokers. My findings showed that there are many mothers who smoked 20-29 cigarettes per day and that it did show to have more probability that the babies would be born premature and/or lower birth weights, especially compared to mothers that don't smoke at all.  
-
-
-### Who did what
-Matt worked on Team Plot #1 and on his personal plot.
-
-Brandon worked on Team plot #1 and on his personal plot
-=======
 ---
 title: "Lab 4"
 author: "Blue Team: Matt Lawson, Nick Zimmrman, BLAH, BLAH"
@@ -140,15 +6,6 @@ date: "2/5/2019"
 output: html_document
 ---
   
-  
-    
-    
-    
-    
-     
-     
-
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -173,6 +30,7 @@ head(babies)
   ([www.mayoclinic.org](https://www.mayoclinic.org/diseases-conditions/premature-birth/symptoms-causes/syc-20376730))
 
 ##### 2. Do the newborns of mothers who smoke have smaller birth weights at every gestational age (number of days into pregnancy when child is born)?
+  This is important becuase babies with low birth weights may have heakth defects. Babies with  low birth weights have a harder time ganing weight, fighting off infection and growth issues. Based off this babies with low birth rates will have a harder time surving
 
 
 
@@ -200,6 +58,15 @@ This plot shows that the percentage of births at a normal gestational age is les
 ### Recomendation
 We recomend that mothers shouldn't smoke during the pregnacy. Also doctors should recomned to their patients not to smoke during pregnancy.
 
+### Team plot 2
+```{r}
+ggplot(data=babies) + geom_point(mapping = aes(x=gestation, y= bwtoz, color = smoke, alpha = 0.05))
+```
+
+from the graph it can be seen that averages of baby birth weight for smokers and non smokers is around the same. Although smokers have quite a few outlies with low baby birth weight
+
+### Recomindation
+although the averages may be similar becuase of the outliers it would be recomended that mothers don't smoke while pregnant.
 ### Individual Findings
 
 
@@ -222,9 +89,15 @@ I used geom_bar to plot the mothers education for smokers and for non-smokers. I
 
 
 #### Bing
-```{r}
-ggplot(data=babies)+geom_bar(mapping = aes(x = smoke, y = ..prop.., fill = med)) + 
-  facet_grid(~med)
+```{r, echo = FALSE, warning = FALSE}
+library(tidyverse)
+library(dplyr)
+babies <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-repo/master/babies2a.dat")
+babies <- rename(babies, bwtoz = `bwt/oz`)
+head(babies)
+ggplot(data=babies)+geom_bar(mapping = aes(x = smoke, y = ..prop.., fill = med)) + facet_grid(~med)
+
+
 ```
 
 As we can see how the percentage of mothers wo smoke based, faceted by their education. Our plot shows that the percentage of mothers who smoke generally is less based on the greater education they have. The colors are denote each level of the mother's education.
@@ -243,4 +116,9 @@ I also included a facet wrap showing the different catagories for the number of 
 
 ### Who did what
 Matt worked on Team Plot #1 and on his personal plot.
->>>>>>> master
+
+Brandon worked on team plot # 1 and his plot
+
+Bing worked on team plot # 2 and his plot
+
+Nick worked on team plot # 2 and his plot
