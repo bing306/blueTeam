@@ -190,33 +190,6 @@ $(document).ready(function () {
 </div>
 
 
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 3.1.0     ✔ purrr   0.2.5
-## ✔ tibble  2.0.1     ✔ dplyr   0.7.8
-## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
-## ✔ readr   1.3.1     ✔ forcats 0.3.0</code></pre>
-<pre><code>## Warning: package 'tibble' was built under R version 3.5.2</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>milk &lt;- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-01-29/state_milk_production.csv')</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   region = col_character(),
-##   state = col_character(),
-##   year = col_double(),
-##   milk_produced = col_double()
-## )</code></pre>
-<pre class="r"><code>milk &lt;- milk %&gt;%
-  mutate(milk_million = milk_produced/1000000)
-
-head(milk)</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["region"],"name":[1],"type":["chr"],"align":["left"]},{"label":["state"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["milk_produced"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["milk_million"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Northeast","2":"Maine","3":"1970","4":"6.19e+08","5":"619"},{"1":"Northeast","2":"New Hampshire","3":"1970","4":"3.56e+08","5":"356"},{"1":"Northeast","2":"Vermont","3":"1970","4":"1.97e+09","5":"1970"},{"1":"Northeast","2":"Massachusetts","3":"1970","4":"6.58e+08","5":"658"},{"1":"Northeast","2":"Rhode Island","3":"1970","4":"7.50e+07","5":"75"},{"1":"Northeast","2":"Connecticut","3":"1970","4":"6.61e+08","5":"661"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
 <pre class="r"><code>milk %&gt;%
   filter(year==1998) %&gt;%
   ggplot(aes(x=milk_million)) +
