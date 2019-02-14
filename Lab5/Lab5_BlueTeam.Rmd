@@ -66,9 +66,22 @@ milk %>%
 ```
 
 ```{r}
-info <- milk %>%
+byState <- milk %>%
+  select(state, year, milk_million) %>%
   group_by(state) %>%
-  summarise(mean = mean(milk_million), median=median(milk_million), maximum=max(milk_million), minimum=min(milk_million))
+  filter(year==1998) %>%
+  arrange(milk_million)
+byState
+
+minState = byState$state[byState$milk_million == min(byState$milk_million)]
+maxState = byState$state[byState$milk_million == max(byState$milk_million)]
+medianState = byState$state[byState$milk_million == quantile(byState$milk_million, 0.5, type=1)]
+
+
+info <- milk %>%
+  group_by(year) %>%
+  filter(year==1998) %>%
+  summarise(mean = mean(milk_million), median=medianState, maximum=maxState, minimum=minState) 
 
 info
 ```
