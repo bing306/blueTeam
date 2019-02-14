@@ -9,8 +9,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
-```{r}
+```{r, include=F}
 library(tidyverse)
 milk <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-01-29/state_milk_production.csv')
 

@@ -1,8 +1,8 @@
 ---
 title: "Lab 5"
-author: "Blue Team"
-date: "2/13/2019"
-output: html_document
+author: "Blue Team: Matt Lawson, "
+html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -15,29 +15,61 @@ milk <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/
 
 milk <- milk %>%
   mutate(milk_million = milk_produced/1000000)
+head(milk)
+```
 
-#milk
-
-#Team
-
-yearAvg = milk %>% group_by(year) %>% summarise(state = "All States", milk_million = mean(milk_million))
+## Team Plots
+```{r}
+yearAvg <- milk %>% group_by(year) %>% summarise(state = "All States", milk_million = mean(milk_million))
 
 milksub <- milk %>%
   filter(state %in% c('California','Colorado','Oregon','Washington','Arizona', 'All States')) %>% select(state, year, milk_million)
 
-milksub
+# milksub
 
 milksub <- bind_rows(milksub, yearAvg)
 
-ggplot(data = milksub) +geom_point(mapping = aes(x= year, y = milk_million, color =state)) 
+averageByYear <- milk %>% 
+  group_by(year) %>%
+  summarize(average=mean(milk_million))
 
-#Bing
+ggplot(data = milksub) +
+  geom_point(mapping = aes(x= year, y = milk_million, color =state)) + 
+  geom_smooth(data=averageByYear, aes(x=year, y=average), se=F, color="black")
+```
 
+
+## Individual Plots
+
+### Bing
+```{r}
 milk1998 <- milk %>%
   filter(year == 1998)
 
-#ggplot(data = milk1998, aes(x = milk_million)) + geom_histogram(bins = 10) + ggtitle('Histogram of milk produced in 1970 by state')
-
-#t <- milk1998 %>% group_by(state) %>% summarise(average = mean(milk_million), med = median(milk_produced), max = max(milk_million), low = min(milk_million)) %>% as_tibble()
-#t
+ggplot(data = milk1998, aes(x = milk_million)) + geom_histogram(bins = 10) + ggtitle('Histogram of milk produced in 1970 by state')
 ```
+```{r}
+t <- milk1998 %>% group_by(state) %>% summarise(average = mean(milk_million), med = median(milk_produced), max = max(milk_million), low = min(milk_million)) %>% as_tibble()
+t
+```
+
+
+### Matt
+
+```{r}
+milk %>%
+  filter(year==1998) %>%
+  ggplot(aes(x=milk_million)) +
+  geom_histogram(bins=15) + 
+  ggtitle("Distribution of milk production in 1998") + 
+  labs(x="Million pounds of milk")
+```
+
+```{r}
+info <- milk %>%
+  group_by(state) %>%
+  summarise(mean = mean(milk_million), median=median(milk_million), maximum=max(milk_million), minimum=min(milk_million))
+
+info
+```
+
