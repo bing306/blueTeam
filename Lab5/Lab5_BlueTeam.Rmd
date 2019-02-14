@@ -9,8 +9,9 @@ html_document:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, include=F}
+```{r, include=F, message=F}
 library(tidyverse)
+library(knitr)
 milk <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-01-29/state_milk_production.csv')
 
 milk <- milk %>%
@@ -19,15 +20,15 @@ head(milk)
 ```
 
 ## Team Plots
-```{r}
-yearAvg <- milk %>% group_by(year) %>% summarise(state = "All States", milk_million = mean(milk_million))
+```{r, message=F}
+# yearAvg <- milk %>% group_by(year) %>% summarise(state = "All States", milk_million = mean(milk_million))
 
 milksub <- milk %>%
   filter(state %in% c('California','Colorado','Oregon','Washington','Arizona', 'All States')) %>% select(state, year, milk_million)
 
 # milksub
 
-milksub <- bind_rows(milksub, yearAvg)
+# milksub <- bind_rows(milksub, yearAvg)
 
 averageByYear <- milk %>% 
   group_by(year) %>%
@@ -37,7 +38,43 @@ ggplot(data = milksub) +
   geom_point(mapping = aes(x= year, y = milk_million, color =state)) + 
   geom_smooth(data=averageByYear, aes(x=year, y=average), se=F, color="black")
 ```
+### Year with the most milk produced
+```{r}
 
+```
+
+
+
+
+
+### Year with the least milk produced
+```{r}
+
+```
+
+
+
+### Top 5 Producers of Milk in 2017
+```{r}
+mostMilk <- milk %>%
+  filter(year==2017) %>%
+  arrange(desc(milk_million)) %>%
+  top_n(5, milk_million) %>%
+  select(state)
+kable(mostMilk)
+```
+
+
+
+### Bottom 5 Producers of Milk in 2017
+```{r}
+leastMilk <- milk %>%
+  filter(year==2017) %>%
+  arrange(milk_million) %>%
+  top_n(-5, milk_million) %>%
+  select(state)
+kable(leastMilk)
+```
 
 ## Individual Plots
 
@@ -71,7 +108,6 @@ byState <- milk %>%
   group_by(state) %>%
   filter(year==1998) %>%
   arrange(milk_million)
-byState
 
 minState = byState$state[byState$milk_million == min(byState$milk_million)]
 maxState = byState$state[byState$milk_million == max(byState$milk_million)]

@@ -50,3 +50,20 @@ info
 
 ```
 
+```{r}
+mostMilk <- milk %>%
+  filter(year==2017) %>%
+  arrange(desc(milk_million)) %>%
+  top_n(5, milk_million)
+mostMilk
+```
+
+```{r}
+leastMilk <- milk %>%
+  filter(year==2017) %>%
+  arrange(milk_million) %>%
+  top_n(-5, milk_million)
+leastMilk
+```
+
+
