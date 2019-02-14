@@ -34,8 +34,8 @@ averageByYear <- milk %>%
   summarize(average=mean(milk_million))
 
 ggplot(data = milksub) +
-  geom_point(mapping = aes(x= year, y = milk_million, color =state))
-  geom_smooth(aes(x=year, y=average), se=F)
+  geom_point(mapping = aes(x= year, y = milk_million, color =state)) + 
+  geom_smooth(data=averageByYear, aes(x=year, y=average), se=F, color="black")
 ```
 
 
