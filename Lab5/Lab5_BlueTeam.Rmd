@@ -166,9 +166,30 @@ kable(info)
 ```
 
 ### Nick
+```{r}
+ggplot(data = filter(milk, year == 1992), aes(x = milk_million))+
+  geom_histogram(bins = 15)+
+  ggtitle("Histogram of milk produced in 1992 by state")
+```
 
+```{r}
+byState <- milk %>%
+  select(state, year, milk_million) %>%
+  group_by(state) %>%
+  filter(year==1992) %>%
+  arrange(milk_million)
 
+minState = byState$state[byState$milk_million == min(byState$milk_million)]
+maxState = byState$state[byState$milk_million == max(byState$milk_million)]
+medianState = byState$state[byState$milk_million == quantile(byState$milk_million, 0.5, type=1)]
 
+info <- milk %>%
+  group_by(year) %>%
+  filter(year==1992) %>%
+  summarise(mean = mean(milk_million), median=medianState, maximum=maxState, minimum=minState) 
+
+kable(info)
+```
 
 ### Team Report
 We found that having a good understanding of the data before manipulating it was helpful. Then, creating new variables ```like milk_million``` is super easy. Also, narrowing down the data with ```filter``` and ```select``` made it a lot easier to comprehend.  
