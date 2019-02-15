@@ -40,6 +40,7 @@ ggplot(data = milksub) +
 ### Plot information
 this plot displays that the average milk produced avergely across all states is substantialy lower than California. While the other four states it is shown that the average is close to the states actual production. This can be infered that most milk production in the United States is mostly produced by a few select states while all the other ones produce very little in comparision. This could be due to aviability of farmland in each state or how fetile the land is to raise cattle in mass.   
 
+
 ### Year with the most milk produced
 ```{r}
 #TODO
@@ -122,6 +123,7 @@ info <- milk %>%
 
 kable(info)
 ```
+
 ### Brandon 
 
 ```{r}
@@ -150,4 +152,13 @@ info <- milk %>%
 
 kable(info)
 ```
+### Nick
+
+
+
+
+### Team Report
+what we found to be most helpful in learning this data is first making the given data easier to read by manipulating it. For example creating the milk per million or making the data produce the years we need. Narrowing down the data into a select few years makes it easier to understand first becuase you are given 2400 objects to begin with which is a lot.After having a general understanding of the trend for a couple years you can begin to predict the trend for the other data points.
+
+### contribution
 
