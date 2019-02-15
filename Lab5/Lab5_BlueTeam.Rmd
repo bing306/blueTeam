@@ -96,13 +96,27 @@ kable(leastMilk)
 ### Bing
 ```{r}
 milk1998 <- milk %>%
-  filter(year == 1998)
+  filter(year == 1999)
 
-ggplot(data = milk1998, aes(x = milk_million)) + geom_histogram(bins = 10) + ggtitle('Histogram of milk produced in 1970 by state')
+ggplot(data = milk1998, aes(x = milk_million)) + geom_histogram(bins = 10) + ggtitle('Histogram of milk produced in 1999 by state')
 ```
 ```{r}
-t <- milk1998 %>% group_by(state) %>% summarise(average = mean(milk_million), med = median(milk_produced), max = max(milk_million), low = min(milk_million)) %>% as_tibble()
-t
+byState <- milk %>%
+  select(state, year, milk_million) %>%
+  group_by(state) %>%
+  filter(year==1999) %>%
+  arrange(milk_million)
+
+minState = byState$state[byState$milk_million == min(byState$milk_million)]
+maxState = byState$state[byState$milk_million == max(byState$milk_million)]
+medianState = byState$state[byState$milk_million == quantile(byState$milk_million, 0.5, type=1)]
+
+info <- milk %>%
+  group_by(year) %>%
+  filter(year==1999) %>%
+  summarise(mean = mean(milk_million), median=medianState, maximum=maxState, minimum=minState) 
+
+kable(info)
 ```
 
 
