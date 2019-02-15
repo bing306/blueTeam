@@ -21,12 +21,9 @@ head(milk)
 
 ## Team Plots
 ```{r, message=F}
-# yearAvg <- milk %>% group_by(year) %>% summarise(state = "All States", milk_million = mean(milk_million))
 milksub <- milk %>%
   filter(state %in% c('California','Colorado','Oregon','Washington','Arizona', 'All States')) %>% select(state, year, milk_million)
 
-# milksub
-# milksub <- bind_rows(milksub, yearAvg)
 averageByYear <- milk %>% 
   group_by(year) %>%
   summarize(average=mean(milk_million))
@@ -38,22 +35,37 @@ ggplot(data = milksub) +
 ```
 
 ### Plot information
-this plot displays that the average milk produced avergely across all states is substantialy lower than California. While the other four states it is shown that the average is close to the states actual production. This can be infered that most milk production in the United States is mostly produced by a few select states while all the other ones produce very little in comparision. This could be due to aviability of farmland in each state or how fetile the land is to raise cattle in mass.   
+
+This plot displays the milk produced by a few select states, as well as the U.S. average. The average is substantialy lower than California, a top milk producer, but prety close to the other four states. This pushes us to think that most milk in the United States is produced by a few states, while the majoroity of states produce very little. This could be due to aviability of farmland in each state or how fetile the land is.
 
 
 ### Year with the most milk produced
 ```{r}
-#TODO
+mostMilk <- milk %>%
+  group_by(year) %>%
+  summarize(average=mean(milk_million)) %>%
+  arrange(desc(average)) %>%
+  top_n(1, year)
+
+kable(mostMilk)
 ```
 
-
+The United States produced the most milk in 2017.
 
 
 
 ### Year with the least milk produced
 ```{r}
-#TODO
+mostMilk <- milk %>%
+  group_by(year) %>%
+  summarize(average=mean(milk_million)) %>%
+  arrange(average) %>%
+  top_n(-1, year)
+
+kable(mostMilk)
 ```
+
+The United States produced the least amount of milk in 1970.
 
 
 
@@ -152,13 +164,16 @@ info <- milk %>%
 
 kable(info)
 ```
+
 ### Nick
 
 
 
 
 ### Team Report
-what we found to be most helpful in learning this data is first making the given data easier to read by manipulating it. For example creating the milk per million or making the data produce the years we need. Narrowing down the data into a select few years makes it easier to understand first becuase you are given 2400 objects to begin with which is a lot.After having a general understanding of the trend for a couple years you can begin to predict the trend for the other data points.
+We found that having a good understanding of the data before manipulating it was helpful. Then, creating new variables ```like milk_million``` is super easy. Also, narrowing down the data with ```filter``` and ```select``` made it a lot easier to comprehend.  
+
 
 ### contribution
 
+Matt worked on his personal plots,the most produced/least produced years, and the 2017 reports.
