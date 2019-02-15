@@ -120,4 +120,32 @@ info <- milk %>%
 
 kable(info)
 ```
+### Brandon 
+
+```{r}
+milk %>%
+  filter(year == 2000) %>%
+ggplot(aes(x = milk_million)) +
+  geom_density() + 
+  ggtitle('Distribution estimate of milk produced in 2000 by state')
+```
+
+```{r}
+byState <- milk %>%
+  select(state, year, milk_million) %>%
+  group_by(state) %>%
+  filter(year==2000) %>%
+  arrange(milk_million)
+
+minState = byState$state[byState$milk_million == min(byState$milk_million)]
+maxState = byState$state[byState$milk_million == max(byState$milk_million)]
+medianState = byState$state[byState$milk_million == quantile(byState$milk_million, 0.5, type=1)]
+
+info <- milk %>%
+  group_by(year) %>%
+  filter(year==2000) %>%
+  summarise(mean = mean(milk_million), median=medianState, maximum=maxState, minimum=minState) 
+
+kable(info)
+```
 
