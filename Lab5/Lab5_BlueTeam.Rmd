@@ -37,6 +37,8 @@ ggplot(data = milksub) +
   labs(title="Milk Production by Year", y="Pounds of Milk (in millions)", caption="The black line is the average of all states.")
 ```
 
+### Plot information
+this plot displays that the average milk produced avergely across all states is substantialy lower than California. While the other four states it is shown that the average is close to the states actual production. This can be infered that most milk production in the United States is mostly produced by a few select states while all the other ones produce very little in comparision. This could be due to aviability of farmland in each state or how fetile the land is to raise cattle in mass.   
 
 ### Year with the most milk produced
 ```{r}
