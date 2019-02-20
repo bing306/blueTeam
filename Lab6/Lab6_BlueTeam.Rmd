@@ -1,0 +1,41 @@
+---
+title: "Lab 6"
+author: "Blue Team: Matt Lawson, "
+date: "2/22/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Importance
+
+```{r}
+
+```
+
+
+# Results and Conclusions
+
+```{r}
+
+```
+
+
+# Recomendation
+
+```{r}
+
+```
+
+
+# Findings
+
+```{r}
+
+```
+
+
+# Who Did What
