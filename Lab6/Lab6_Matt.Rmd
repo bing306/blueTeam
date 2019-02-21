@@ -9,30 +9,44 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, include=F}
+```{r}
 library(tidyverse)
-flights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/osfstorage/5a8ca28f57103100104584db")
+library(reshape2)
+```
 
+```{r}
+flights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/osfstorage/5a8ca28f57103100104584db")
 ```
 
 ```{r}
 flights <- filter(flights,ORIGIN=="DEN" | DEST=="DEN")
-head(flights)
-summary(flights)
-
+flights <- mutate(flights,
+  DAY_OF_WEEK = weekdays(as.Date(paste(flights$YEAR, flights$MONTH, flights$DAY_OF_MONTH, sep="-"))))
 ```
+
 ```{r}
-trial <- flights[1,]
-trial
-year = trial$YEAR
-month = trial$MONTH
-day = trial$DAY_OF_MONTH
-
-string <- paste(year, month, day, sep="/")
-string
-date <- as.Date(string)
-date
-weekdays(date)
+flights[1:15,]
 ```
 
+
+```{r}
+ days=c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+   
+delays <- flights %>%
+  filter(!is.na(CARRIER_DELAY)) %>%
+  group_by(DAY_OF_WEEK) %>%
+  summarize(carrier=mean(CARRIER_DELAY),weather=mean(WEATHER_DELAY), nas=mean(NAS_DELAY), security=mean(SECURITY_DELAY), late=mean(LATE_AIRCRAFT_DELAY)) %>%
+  mutate(DAY_OF_WEEK = factor(DAY_OF_WEEK, levels = days)) %>%
+  arrange(DAY_OF_WEEK) 
+
+delays
+```
+
+
+```{r}
+melted <- melt(delays[,c('DAY_OF_WEEK', 'carrier','weather','nas', 'security', 'late')],id.vars = 1)
+
+ggplot(melted, aes(x=DAY_OF_WEEK, y=value)) + 
+  geom_bar(aes(fill=variable), stat = 'identity', position="dodge")
+```
 
