@@ -151,9 +151,10 @@ percData <- data_frame(Flight_Time = c("Less than 90", "Greater than 90"), Perce
 
 
 ggplot(data = percData) + geom_col(mapping = aes(x=Flight_Time, y=Percentage_Late))
+```
 
 The first plot is a density plot showing for all delayed flights, what percentage came from each month. As we can see the most amount of delayed flights came from either June or July, so we can see those months affect the amount of delayed flights there are. As we can for the second plot, flights that are less than 90 minutes almost 30% of them are delayed, while just over 10% of flights that are over 90 minutes long are delayed.
-```
+
 
 # Who Did What
 
