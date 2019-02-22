@@ -1,0 +1,162 @@
+---
+title: "Lab 6"
+author: "Blue Team: Matt Lawson, Nick Zimmerman"
+date: "2/22/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(reshape2)
+flights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/osfstorage/5a8ca28f57103100104584db")
+```
+
+```{r}
+flights <- filter(flights, ORIGIN=="DEN" | DEST=="DEN")
+flights <- mutate(flights,
+  DAY_OF_WEEK = weekdays(as.Date(paste(flights$YEAR, flights$MONTH, flights$DAY_OF_MONTH, sep="-"))))
+```
+
+
+# Importance
+
+```{r}
+flights
+```
+
+
+# Results and Conclusions
+Maybe we can see if any of these factors are more important in predicting how much an airplane will be delayed by.
+```{r}
+delayed <-flights %>%
+  filter(ARR_DELAY>=15) %>%
+  group_by(ARR_DELAY) %>%
+  summarize(Carrier=sum(CARRIER_DELAY), Weather=sum(WEATHER_DELAY), NAS=sum(NAS_DELAY), Security=sum(SECURITY_DELAY), Late=sum(LATE_AIRCRAFT_DELAY))
+delayed
+  
+```
+
+
+# Recomendation
+
+```{r}
+
+```
+
+
+# Findings
+
+
+### Matt
+```{r}
+days=c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+delays <- flights %>%
+  filter(!is.na(CARRIER_DELAY)) %>%
+  group_by(DAY_OF_WEEK) %>%
+  summarize(Carrier=mean(CARRIER_DELAY),Weather=mean(WEATHER_DELAY), NAS=mean(NAS_DELAY), Security=mean(SECURITY_DELAY), Late_Arrival=mean(LATE_AIRCRAFT_DELAY)) %>%
+  mutate(DAY_OF_WEEK = factor(DAY_OF_WEEK, levels = days)) %>%
+  mutate("Total Delay" = Weather+NAS+Security+Late_Arrival) %>%
+  arrange(DAY_OF_WEEK) 
+```
+
+
+```{r}
+melted <- melt(delays[,c('DAY_OF_WEEK', 'Carrier','Weather','NAS', 'Security', 'Late_Arrival')],id.vars = 1)
+
+ggplot(melted, aes(x=DAY_OF_WEEK, y=value)) + 
+  geom_bar(aes(fill=variable),width=.75, stat = 'identity', position=position_dodge()) + 
+  labs(title="Average time of delay per day of the week", x="Day of the Week", y="Average delay time", fill="Type of delay")
+```
+
+This plot shows that weather and security delays are mostly constant throughout the week, but Carrier and Late Arrivals seem to vary.
+
+```{r, echo=FALSE}
+melted <- melt(delays[,c('DAY_OF_WEEK', 'Total Delay')],id.vars = 1)
+
+ggplot(melted, aes(x=DAY_OF_WEEK, y=value)) + 
+  geom_bar(stat = 'identity', fill="dodgerblue", color="dodgerblue4") + 
+  labs(y="Average minutes delayed (for any reason)")
+```
+
+This plot shows that if a flight is delayed, it will be delayed the most on Mondays and Fridays.
+
+
+### Brandon
+```{r}
+delayys <- flights %>%
+  filter(ARR_DELAY > 15) %>%
+  filter(is.na(ARR_DELAY))
+coLongflights <- flights %>%
+mutate("delay15" = ARR_DELAY > 15) %>%
+mutate("flightt" = AIR_TIME >= 3*60)%>%
+mutate("shortflight" = AIR_TIME < 2*60)%>%
+filter(!is.na(delay15)) 
+```  
+```{r}
+ggplot(coLongflights, aes(x = delay15, fill = flightt )) + 
+  geom_bar(position = "fill") +
+  scale_fill_discrete(name="Flight time",
+                      breaks=c(0,1),
+                      labels=c("Short Flights < 180 ", "Long Flights >= 180")) + 
+labs(x = "Delay greater than 15 minutes or less than 15 minutes")
+   
+  
+ 
+```
+
+This graph shows two things. First it shows that Long flights which were classified asgreater than 3 hours have a higher chance to be delayed compared to flights that were less than 3 hours. Next it shows that short flights are more likely to be on time. Therefore the Denver airport should expect flights longer than 3 hours are more likely to have a 15 or more minute delay than shoter flights.
+
+#Bing
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(reshape2)
+
+COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/osfstorage/5a8ca28f57103100104584db")
+
+head(COflights)
+
+delayed <- COflights %>% filter(DEP_DELAY > 0)
+
+allFlights <- nrow(COflights)
+
+total <- nrow(delayed)
+
+ggplot(data = delayed) + geom_density(mapping =aes(x=MONTH))
+
+
+e90 <- COflights %>% filter(AIR_TIME < 90)
+
+eTot <- nrow(e90)
+
+d <- e90 %>% filter(DEP_DELAY > 0)
+
+dTot <- nrow(d)
+
+dTot <- dTot / eTot
+
+a90 <- COflights %>% filter(AIR_TIME > 89)
+
+aTot <- nrow(a90)
+
+a <- a90 %>% filter(DEP_DELAY > 0)
+
+delTot <- nrow(d)
+
+delTot <- delTot / aTot
+
+percData <- data_frame(Flight_Time = c("Less than 90", "Greater than 90"), Percentage_Late = c(dTot, delTot))
+
+
+ggplot(data = percData) + geom_col(mapping = aes(x=Flight_Time, y=Percentage_Late))
+
+The first plot is a density plot showing for all delayed flights, what percentage came from each month. As we can see the most amount of delayed flights came from either June or July, so we can see those months affect the amount of delayed flights there are. As we can for the second plot, flights that are less than 90 minutes almost 30% of them are delayed, while just over 10% of flights that are over 90 minutes long are delayed.
+```
+
+# Who Did What
+
+Matt worked on his individual plots and
+
+Brandon worked on his individual plot and
