@@ -1,6 +1,6 @@
 ---
 title: "Lab 6"
-author: "Blue Team: Matt Lawson, "
+author: "Blue Team: Matt Lawson, Nick Zimmerman"
 date: "2/22/2019"
 output: html_document
 ---
