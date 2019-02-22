@@ -27,9 +27,14 @@ flights
 
 
 # Results and Conclusions
-
+Maybe we can see if any of these factors are more important in predicting how much an airplane will be delayed by.
 ```{r}
-
+delayed <-flights %>%
+  filter(ARR_DELAY>=15) %>%
+  group_by(ARR_DELAY) %>%
+  summarize(Carrier=sum(CARRIER_DELAY), Weather=sum(WEATHER_DELAY), NAS=sum(NAS_DELAY), Security=sum(SECURITY_DELAY), Late=sum(LATE_AIRCRAFT_DELAY))
+delayed
+  
 ```
 
 
@@ -46,7 +51,6 @@ flights
 ### Matt
 ```{r}
 days=c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
-
 delays <- flights %>%
   filter(!is.na(CARRIER_DELAY)) %>%
   group_by(DAY_OF_WEEK) %>%
@@ -54,8 +58,9 @@ delays <- flights %>%
   mutate(DAY_OF_WEEK = factor(DAY_OF_WEEK, levels = days)) %>%
   mutate("Total Delay" = Weather+NAS+Security+Late_Arrival) %>%
   arrange(DAY_OF_WEEK) 
-delays
 ```
+
+
 ```{r}
 melted <- melt(delays[,c('DAY_OF_WEEK', 'Carrier','Weather','NAS', 'Security', 'Late_Arrival')],id.vars = 1)
 
@@ -66,13 +71,16 @@ ggplot(melted, aes(x=DAY_OF_WEEK, y=value)) +
 
 This plot shows that weather and security delays are mostly constant throughout the week, but Carrier and Late Arrivals seem to vary.
 
-```{r}
+```{r, echo=FALSE}
 melted <- melt(delays[,c('DAY_OF_WEEK', 'Total Delay')],id.vars = 1)
 
 ggplot(melted, aes(x=DAY_OF_WEEK, y=value)) + 
-  geom_bar(stat = 'identity')
+  geom_bar(stat = 'identity', fill="dodgerblue", color="dodgerblue4") + 
+  labs(y="Average minutes delayed (for any reason)")
 ```
 
-This plot shows that Friday and Monday have the most total delays thatn other days. 
+This plot shows that if a flight is delayed, it will be delayed the most on Mondays and Fridays.
 
 # Who Did What
+
+Matt worked on his individual plots and 
