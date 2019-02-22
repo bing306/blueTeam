@@ -107,6 +107,53 @@ labs(x = "Delay greater than 15 minutes or less than 15 minutes")
 
 This graph shows two things. First it shows that Long flights which were classified asgreater than 3 hours have a higher chance to be delayed compared to flights that were less than 3 hours. Next it shows that short flights are more likely to be on time. Therefore the Denver airport should expect flights longer than 3 hours are more likely to have a 15 or more minute delay than shoter flights.
 
+#Bing
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(reshape2)
+
+COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/osfstorage/5a8ca28f57103100104584db")
+
+head(COflights)
+
+delayed <- COflights %>% filter(DEP_DELAY > 0)
+
+allFlights <- nrow(COflights)
+
+total <- nrow(delayed)
+
+ggplot(data = delayed) + geom_density(mapping =aes(x=MONTH))
+
+
+e90 <- COflights %>% filter(AIR_TIME < 90)
+
+eTot <- nrow(e90)
+
+d <- e90 %>% filter(DEP_DELAY > 0)
+
+dTot <- nrow(d)
+
+dTot <- dTot / eTot
+
+a90 <- COflights %>% filter(AIR_TIME > 89)
+
+aTot <- nrow(a90)
+
+a <- a90 %>% filter(DEP_DELAY > 0)
+
+delTot <- nrow(d)
+
+delTot <- delTot / aTot
+
+percData <- data_frame(Flight_Time = c("Less than 90", "Greater than 90"), Percentage_Late = c(dTot, delTot))
+
+
+ggplot(data = percData) + geom_col(mapping = aes(x=Flight_Time, y=Percentage_Late))
+
+The first plot is a density plot showing for all delayed flights, what percentage came from each month. As we can see the most amount of delayed flights came from either June or July, so we can see those months affect the amount of delayed flights there are. As we can for the second plot, flights that are less than 90 minutes almost 30% of them are delayed, while just over 10% of flights that are over 90 minutes long are delayed.
+```
 
 # Who Did What
 
