@@ -81,6 +81,35 @@ ggplot(melted, aes(x=DAY_OF_WEEK, y=value)) +
 
 This plot shows that if a flight is delayed, it will be delayed the most on Mondays and Fridays.
 
+
+### Brandon
+```{r}
+delayys <- flights %>%
+  filter(ARR_DELAY > 15) %>%
+  filter(is.na(ARR_DELAY))
+coLongflights <- flights %>%
+mutate("delay15" = ARR_DELAY > 15) %>%
+mutate("flightt" = AIR_TIME >= 3*60)%>%
+mutate("shortflight" = AIR_TIME < 2*60)%>%
+filter(!is.na(delay15)) 
+```  
+```{r}
+ggplot(coLongflights, aes(x = delay15, fill = flightt )) + 
+  geom_bar(position = "fill") +
+  scale_fill_discrete(name="Flight time",
+                      breaks=c(0,1),
+                      labels=c("Short Flights < 180 ", "Long Flights >= 180")) + 
+labs(x = "Delay greater than 15 minutes or less than 15 minutes")
+   
+  
+ 
+```
+
+This graph shows two things. First it shows that Long flights which were classified asgreater than 3 hours have a higher chance to be delayed compared to flights that were less than 3 hours. Next it shows that short flights are more likely to be on time. Therefore the Denver airport should expect flights longer than 3 hours are more likely to have a 15 or more minute delay than shoter flights.
+
+
 # Who Did What
 
-Matt worked on his individual plots and 
+Matt worked on his individual plots and
+
+Brandon worked on his individual plot and
