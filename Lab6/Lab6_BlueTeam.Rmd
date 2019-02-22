@@ -20,7 +20,9 @@ flights <- mutate(flights,
 
 
 # Importance
+The importance of flight delays is to increase the efficiency of the airport. If you are able to figure out the cause of delays you can either prevent the ones you can and increase efficiency or recognize the variables you can't change and plan accordingly.
 
+The importance of knowing the cause of delays from carrier, weather, NAS or security is important so the DIA can figure out what to fix if he can. If the carrier causes the most delays they can have less flights on a ceartin carrier or if NAS is the reason they can get better workers or try to have a less human error as possible. If the reason is either weather or security which the airport has no real control over then they will have to accept those delays and plan according to them.
 ```{r}
 flights
 ```
