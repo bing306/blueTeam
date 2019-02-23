@@ -1,6 +1,6 @@
 ---
 title: "Lab 6"
-author: "Blue Team: Matt Lawson, Nick Zimmerman"
+author: "Blue Team: Matt Lawson, Brandon Bowen, Bing Mitchell, Nick Zimmerman "
 date: "2/22/2019"
 output: html_document
 ---
@@ -20,35 +20,13 @@ flights <- mutate(flights,
 
 
 # Importance
+The importance of flight delays is to increase the efficiency of the airport. If you are able to figure out the cause of delays you can either prevent the ones you can and increase efficiency or recognize the variables you can't change and plan accordingly.
 
-```{r}
-flights
-```
-
-
-# Results and Conclusions
-Maybe we can see if any of these factors are more important in predicting how much an airplane will be delayed by.
-```{r}
-delayed <-flights %>%
-  filter(ARR_DELAY>=15) %>%
-  group_by(ARR_DELAY) %>%
-  summarize(Carrier=sum(CARRIER_DELAY), Weather=sum(WEATHER_DELAY), NAS=sum(NAS_DELAY), Security=sum(SECURITY_DELAY), Late=sum(LATE_AIRCRAFT_DELAY))
-delayed
-  
-```
+The importance of knowing the cause of delays from carrier, weather, NAS or security is important so the DIA can figure out what to fix if he can. If the carrier causes the most delays they can have less flights on a ceartin carrier or if NAS is the reason they can get better workers or try to have a less human error as possible. If the reason is either weather or security which the airport has no real control over then they will have to accept those delays and plan according to them.
 
 
-# Recomendation
-
-```{r}
-
-```
 
 
-# Findings
-
-
-### Matt
 ```{r}
 days=c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
 delays <- flights %>%
@@ -59,6 +37,45 @@ delays <- flights %>%
   mutate("Total Delay" = Weather+NAS+Security+Late_Arrival) %>%
   arrange(DAY_OF_WEEK) 
 ```
+
+
+```{r}
+melted <- melt(delays[,c('DAY_OF_WEEK', 'Carrier','Weather','NAS', 'Security', 'Late_Arrival')],id.vars = 1)
+
+ggplot(melted, aes(x=DAY_OF_WEEK, y=value)) + 
+  geom_bar(aes(fill=variable),width=.75, stat = 'identity', position=position_dodge()) + 
+  labs(title="Average time of delay per day of the week", x="Day of the Week", y="Average delay time", fill="Type of delay")
+```
+
+
+
+
+
+```{r}
+ggplot(flights, aes(x = DEP_DELAY, y = ARR_DELAY))+
+  geom_smooth()
+```
+
+
+# Results and Conclusions
+We can see that carrier is the main cause for delay between carrier, weather, NAS, and security. Furthermore a signifigant cause for arrival delay is departure delay. As shown by the graph it is clear that as departure delay increases so does arrival delay
+
+
+
+# Recomendation
+It is recomended that the airport should select which carriers were causing the most arrival delays and have less of them fly out of the Denver airport. The reason this is important becuase if you allow the carriers with consistent delays to continue flying out of the Denver airport it wil keep causing more and more delays for the whole airport. Since one late plane cuases another to be late and another until there are hundreds of late planes throughout the year. Furthermore you want to stop departure delay as much as possible becuase if you are able to depart on time you are more likely to arrive on time. 
+```{r}
+
+```
+
+
+# Findings
+Ways to prevent departure delays. Based off Matt's graph it is shown that Monday and Friday have the highest percent of arrival delays. Therefore more than likely those days should also have higher departure delays. Therefore having less flights on Monday and Friday can cause less flight delays. Based off Brandon's graph it is shown that longer flights are typically later than shorter flights. Although you can't control the time of the flight you can anticipate and prepare for longer flights to be later.Based off Bing's plot it can be seen from May to about September the amount of delayed flights increases. This could be due to summer holiday, but beside that airports can expect an increase of flights during those months and expect delays.
+
+### Individual section
+
+
+### Matt
 
 
 ```{r}
@@ -111,23 +128,17 @@ This graph shows two things. First it shows that Long flights which were classif
 
 ```{r}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
-library(reshape2)
 
-COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/osfstorage/5a8ca28f57103100104584db")
+delayed <- flights %>% filter(DEP_DELAY > 0)
 
-head(COflights)
-
-delayed <- COflights %>% filter(DEP_DELAY > 0)
-
-allFlights <- nrow(COflights)
+allFlights <- nrow(flights)
 
 total <- nrow(delayed)
 
 ggplot(data = delayed) + geom_density(mapping =aes(x=MONTH))
 
 
-e90 <- COflights %>% filter(AIR_TIME < 90)
+e90 <- flights %>% filter(AIR_TIME < 90)
 
 eTot <- nrow(e90)
 
@@ -137,7 +148,7 @@ dTot <- nrow(d)
 
 dTot <- dTot / eTot
 
-a90 <- COflights %>% filter(AIR_TIME > 89)
+a90 <- flights %>% filter(AIR_TIME > 89)
 
 aTot <- nrow(a90)
 
@@ -151,12 +162,29 @@ percData <- data_frame(Flight_Time = c("Less than 90", "Greater than 90"), Perce
 
 
 ggplot(data = percData) + geom_col(mapping = aes(x=Flight_Time, y=Percentage_Late))
+```
 
 The first plot is a density plot showing for all delayed flights, what percentage came from each month. As we can see the most amount of delayed flights came from either June or July, so we can see those months affect the amount of delayed flights there are. As we can for the second plot, flights that are less than 90 minutes almost 30% of them are delayed, while just over 10% of flights that are over 90 minutes long are delayed.
+
+### Nick
+```{r}
+local <- mutate(flights,
+                status = ifelse(ARR_DELAY < 0, "EARLY",
+                                ifelse(ARR_DELAY < 15, "ONTIME", "DELAYED")))
+local <- filter(local,DISTANCE < 2000)
+ggplot(data = local) +
+  geom_point(mapping = aes(x=DISTANCE, y = AIR_TIME)) +
+  facet_wrap(~status)
 ```
+
+This plot illustrates the of air time of all flights going in and out of DEN. Due to the high overlap of data points I faceted based of status.
 
 # Who Did What
 
-Matt worked on his individual plots and
+Matt worked on his individual plots and team plot. We didn't realize one of Matt's indivdual plots was also a team plot therefore we used them for the same thing so Matt would not be marked down for only one plot and answer.
 
-Brandon worked on his individual plot and
+Brandon worked on his individual plot and answered the team questions. The conclusiion, findings and recomindations
+
+Bing worked on his indivdual plot and answered the team questions. Helped with answering the conclusions and other quesions. 
+
+Nick worked on is individual plot 
