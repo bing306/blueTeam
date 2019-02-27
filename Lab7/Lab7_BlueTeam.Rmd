@@ -13,12 +13,10 @@ library(tidyverse)
 
 
 ```{r, warning=FALSE, message=FALSE}
-  energy <- read_delim("PATH TO FILE", delim=";",
+  energy <- read_delim("household_power_consumption.txt", delim=";",
     col_types=cols( Date = col_date(format="%d/%m/%Y"))
   )
-  # energy <- read_delim("https://archive.ics.uci.edu/ml/machine-learning-databases/00235/household_power_consumption.zip", delim=";")
 energy <- na.omit(energy)
-
 ```
 
 
@@ -46,7 +44,7 @@ ggplot(byDay, aes(x=DayOfYear, y=average, color=Year)) +
 (mean(energy$Global_active_power))
 ```
 
-It is easy to see that all of the years behave similarly. The energy useage decreases (linearly) until about day 200 (July 19), and then it begins to increase (linearly). It is important to note the summertime is when the energy useage is the least. One possible reason for this is that in the summer, people are outside more often than in the winter time. They are more likely to be outside during the day, eat out at night, and they wont need to use the lights as often. In the winter, people are more likely to be inside their house with the heat on. This could explain the shape of the graph. The average energy useage for the entire dataset is $1.09$ Kilowatts. 
+It is easy to see that all of the years behave similarly. The energy useage decreases (linearly) until about day 200 (July 19), and then it begins to increase (linearly). It is important to note the summertime is when the energy useage is the least. One possible reason for this is that in the summer, people are outside more often than in the winter time. They are more likely to be outside during the day, eat out at night, and they wont need to use the lights as often. In the winter, people are more likely to be inside their house with the heat on. This could explain the shape of the graph. The average energy useage for the entire dataset is 1.09 Kilowatts. 
 
 
 
