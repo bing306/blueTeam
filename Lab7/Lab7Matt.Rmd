@@ -1,0 +1,16 @@
+---
+title: "Lab 7 Matt"
+author: "Matt"
+date: "2/26/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+# read_delim("/Users/Matt/Desktop/household_power_consumption.zip", delim=";", n_max=100)
+energy <- read_delim("http://archive.ics.uci.edu/ml/machine-learning-databases/00235/household_power_consumption.zip", delim=";")
+```
