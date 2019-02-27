@@ -1,7 +1,7 @@
 ---
 title: "Lab 7"
 author: 'Blue Team: Matt Lawson,'
-date: "2/26/2019"
+date: "2/29/2019"
 output: html_document
 ---
 # Setup
@@ -13,7 +13,7 @@ library(tidyverse)
 
 
 ```{r, warning=FALSE, message=FALSE}
-  energy <- read_delim("household_power_consumption.txt", delim=";",
+  energy <- read_delim("/Users/Matt/Desktop/household_power_consumption.txt", delim=";",
     col_types=cols( Date = col_date(format="%d/%m/%Y"))
   )
 energy <- na.omit(energy)
