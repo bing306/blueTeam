@@ -13,7 +13,7 @@ library(tidyverse)
 
 
 ```{r, warning=FALSE, message=FALSE}
-  energy <- read_delim("/Users/Matt/Desktop/household_power_consumption.txt", delim=";",
+  energy <- read_delim("/Users/BamBam/Documents/Rstudio/household_power_consumption.txt", delim=";",
     col_types=cols( Date = col_date(format="%d/%m/%Y"))
   )
 energy <- na.omit(energy)
@@ -59,41 +59,34 @@ It is easy to see that all of the years behave similarly. The energy useage decr
   
 ## Bing
 ```{r, warning=FALSE,message=FALSE}
-library(lubridate)
-energy <- read_delim("/Users/bing/Desktop/household_power_consumption.txt", delim=";",
-    col_types=cols( Date = col_date(format="%d/%m/%Y"))
-  )
-energy <- na.omit(energy)
-
 #head(energy)
 
+##energy <- energy %>% mutate(onth = month(ymd(Date)))
 
-energy <- energy %>% mutate(month = month(ymd(Date)))
+##summer <- energy %>% filter((month > 5 & month < 9))
+##winter <- energy %>% filter((month > 11 | month < 3))
 
-summer <- energy %>% filter((month > 5 & month < 9))
-winter <- energy %>% filter((month > 11 | month < 3))
-
-sVolt <- summarise(summer, Avg = mean(Voltage))
-wVolt <- summarise(winter, Avg = mean(Voltage))
+##sVolt <- summarise(summer, Avg = mean(Voltage))
+##wVolt <- summarise(winter, Avg = mean(Voltage))
 
 #head(sVolt)
 #head(wVolt)
 
 
 
-VOLT <- bind_rows(sVolt, wVolt)
+##VOLT <- bind_rows(sVolt, wVolt)
 
-Season <- tribble(~season,
-                  "Summer",
-                  "Winter")
+##Season <- tribble(~season,
+                  ##"Summer",
+                  ##"Winter")
 
-head(Season)
+##head(Season)
 
-head(VOLT)
+##head(VOLT)
 
-Season <- cbind(Season, VOLT)
+##Season <- cbind(Season, VOLT)
 
-ggplot(data = Season) + geom_col(mapping = aes(x = season, y = Avg, color = season))
+##ggplot(data = Season) + geom_col(mapping = aes(x = season, y = Avg, color = season))
 
 
 
@@ -115,7 +108,7 @@ I wanted to see if more electrcity was used during or summer or winter, because 
 
 ### What appliances causes the most energy usage during the year? What times are they most active?
 
-```{r}
+```{r, message=F, waring=F}
 power <- energy %>%
   filter(!format(Date, '%Y') == 2006) %>%
   group_by(Date) %>%
@@ -124,7 +117,7 @@ power <- energy %>%
   mutate(allaverage = average1, average2, average3)
 ```
 
-```{r}
+```{r, message=F, waring=F}
  
  ggplot(power, aes(x = dayofyear, y = average1, color = Year )) +
   geom_smooth(se = FALSE) +
@@ -176,3 +169,7 @@ ggplot(filter(byHour, Hour == 17))+
 ```
 
 This graph is fairly straightforward. It is easy to see that more energy is being used when the Date gets closer to the new year. Obviously because this is during winter, when it will be much colder. But it is also intresting to notice that there is a slight upward trend in maximum active power. This would suggest that our winters are indeed getting colder as the years go by.
+
+
+## Comments
+There is an error with Bing's code. Could not figure it out in time but it works indvidualy in the R-markdown file but fails to load in the knit file.
