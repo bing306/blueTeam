@@ -55,11 +55,52 @@ It is easy to see that all of the years behave similarly. The energy useage decr
 
 
 ## Bing
+(December, January, February vs June, July, August)
+
+```{r, warning=FALSE,message=FALSE}
+library(lubridate)
+energy <- read_delim("/Users/bing/Desktop/household_power_consumption.txt", delim=";",
+    col_types=cols( Date = col_date(format="%d/%m/%Y"))
+  )
+energy <- na.omit(energy)
+
+#head(energy)
+
+
+energy <- energy %>% mutate(month = month(ymd(Date)))
+
+summer <- energy %>% filter((month > 5 & month < 9))
+winter <- energy %>% filter((month > 11 | month < 3))
+
+sVolt <- summarise(summer, Avg = mean(Voltage))
+wVolt <- summarise(winter, Avg = mean(Voltage))
+
+#head(sVolt)
+#head(wVolt)
+
+
+
+VOLT <- bind_rows(sVolt, wVolt)
+
+Season <- tribble(~season,
+                  "Summer",
+                  "Winter")
+
+head(Season)
+
+head(VOLT)
+
+Season <- cbind(Season, VOLT)
+
+ggplot(data = Season) + geom_col(mapping = aes(x = season, y = Avg, color = season))
 
 
 
 
 
+```
+
+I wanted to see if more electrcity was used during or summer or winter, because there are certain applications that get used during certain months such as heat vs AC. After conducting my research we can see that slightly more volatge is used during the winter, but not significantly more than the summer. So the answer to my question that while different applications are used during different seasons, the electric use remains about the same.
 
 
 
