@@ -19,6 +19,8 @@ library(tidyverse)
 energy <- na.omit(energy)
 ```
 
+## Team report
+The data shows the energy usage of a house over the course of a few years. The energy usage is recorded every minute for every day. It also also the global usage along with indivdual room usage. We removed the NA values by using the function na.omit(energy).
 
 
 ## Matt
