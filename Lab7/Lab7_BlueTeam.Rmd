@@ -70,6 +70,28 @@ It is easy to see that all of the years behave similarly. The energy useage decr
 
 ## Brandon
 
+### What appliances causes the most energy usage during the year? What times are they most active?
+
+```{r}
+power <- energy %>%
+  filter(!format(Date, '%Y') == 2006) %>%
+  group_by(Date) %>%
+  summarize(average = mean(Global_active_power), average1 = mean(Sub_metering_1), average2 = mean(Sub_metering_2), average3 = mean(Sub_metering_3), time = Time[which.max(Global_active_power)]) %>%
+  mutate(Year=as.factor(format(Date, '%Y')), Month=as.numeric(format(Date,'%m')), dayofyear=as.numeric(format(Date,'%j'))) %>%
+  mutate(allaverage = average1, average2, average3)
+```
+
+```{r}
+ggplot(power, aes(x = dayofyear, y = average1, color = Year )) +
+  geom_smooth(se = FALSE) 
+ggplot(power, aes(x = dayofyear, y = average2, color = Year )) +
+  geom_smooth(se = FALSE) 
+ggplot(power, aes(x = dayofyear, y = average3, color = Year )) +
+  geom_smooth(se = FALSE) 
+  
+```
+
+From the graphs it can be seen that the electric heater and air conditioner take up most of the energy usage.Besides the year 2007 the litchen and laundry room have around the same amount of energy use. While the energy usage drops drasticaly during the middle of the year this could be due to the summer months. People going on vacation and not using their electronics as much.lastly the energy usage goes up during the winter months. Since it's winter the electric heater would be used more often, People would cook more since it would be too cold to go outside and would use the laundry more often to was their warmer clothes. All of these could contribute to the higher energy usage during the winter months. I came up with question by determing if there was any factor to the energy usage for the house. Then I seperated out the averages for the different rooms and plotted them on three seprate graphs. Showing each average throught a whole year starting from 2007 since 2006 only had partial data.
 
 
 
