@@ -16,9 +16,7 @@ library(tidyverse)
   energy <- read_delim("/Users/Matt/Desktop/household_power_consumption.txt", delim=";",
     col_types=cols( Date = col_date(format="%d/%m/%Y"))
   )
-before <- nrow(energy)
 energy <- na.omit(energy)
-after <- nrow(energy)
 ```
 
 
