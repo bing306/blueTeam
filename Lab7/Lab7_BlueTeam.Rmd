@@ -13,7 +13,7 @@ library(tidyverse)
 
 
 ```{r, warning=FALSE, message=FALSE}
-  energy <- read_delim("/Users/Matt/Desktop/household_power_consumption.txt", delim=";",
+  energy <- read_delim("/Users/Nick/Desktop/household_power_consumption.txt", delim=";",
     col_types=cols( Date = col_date(format="%d/%m/%Y"))
   )
 energy <- na.omit(energy)
@@ -78,3 +78,22 @@ It is easy to see that all of the years behave similarly. The energy useage decr
 
 
 ##Nick
+
+## How does the energy usage during one hour vary as the years go by?
+
+I calculated the average Global_active_power per hour of each day. Then I choose one hour (5pm) and graphed the average Global_active_power at 5pm for each day in the data. 
+
+```{r, warning=FALSE,message=FALSE}
+byHour <- energy %>%
+  filter(!format(Date, '%Y') == 2006) %>%
+  separate(Time, into = c("Hour","Minute")) %>%
+  group_by(Date,Hour) %>%
+  summarise(Global_active_power = mean(Global_active_power))
+
+```
+```{r, warning=FALSE,message=FALSE}
+ggplot(filter(byHour, Hour == 17))+
+  geom_smooth(mapping = aes(x=Date,y=Global_active_power)) +
+  labs(title="Average active power at 5pm")
+```
+This graph is fairly straightforward. It is easy to see that more energy is being used when the Date gets closer to the new year. Obviously because this is during winter, when it will be much colder. But it is also intresting to notice that there is a slight upward trend in maximum active power. This would suggest that our winters are indeed getting colder as the years go by.
