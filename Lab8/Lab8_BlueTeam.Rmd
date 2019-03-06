@@ -11,23 +11,22 @@ library(tidyverse)
 ```
 
 
-```{r}
+```{r, message=F}
 df <- read_csv("us_avg_tuition.csv")
 
 df <-df%>%
-  gather(key=year, value=cost, "2004-05", "2005-06", "2006-07")
+  gather(key=Year, value=Cost, starts_with("20")) %>%
+  arrange(State) 
 
-df
-
+df$Cost <- parse_number(df$Cost)
+head(df)
 ```
 # How has the average tuition cost changed from 2004 to 2016
 
-<br><br> <br><br> <br><br>
+[This is where we got the dataset from.](https://github.com/rfordatascience/tidytuesday/tree/master/data/2018/2018-04-02)
+[And this is where the dataset originally came from.](https://onlinembapage.com/average-tuition-and-educational-attainment-in-the-united-states/)
 
-[This is where we got the dataset from](https://github.com/rfordatascience/tidytuesday/tree/master/data/2018/2018-04-02)
-
-[This is where the dataset originally came from](https://onlinembapage.com/average-tuition-and-educational-attainment-in-the-united-states/)
-  
+  <br><br> <br><br> <br><br>
 #And the conclusion to the overall quesion goes here
 <br><br> <br><br> <br><br>
 
@@ -51,6 +50,16 @@ df
 
 __How does the least expensive state change throughout the years?__
 <br><br>
+```{r}
+mattdf <- df %>%group_by(Year) %>%
+  summarize(Cheapest = min(Cost), Expensive = max(Cost))
+
+ggplot(mattdf) +
+  geom_line(aes(x=Year, y=Cheapest, group=1), color="blue") +
+  geom_line(aes(x=Year, y=Expensive, group=1), color="orange") + 
+  labs(y="Cost", title="Most expensive and least expensive cost per year") 
+  # scale_color_discrete(c("Least Expensive", "Most Expensive"))
+```
 
 
 #### Brandon
