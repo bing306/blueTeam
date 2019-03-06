@@ -1,0 +1,67 @@
+---
+title: "Lab 8"
+author: 'Blue Team: Matt Lawson,'
+date: "3/8/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Overall Question goes here
+<br><br> <br><br> <br><br>
+  
+#And the conclusion to the overall quesion goes here
+<br><br> <br><br> <br><br>
+
+
+
+#The team recomendation goes here and why its important to implement it
+<br><br> <br><br> <br><br>
+
+
+# A description of the dataset
+<br><br> <br><br> <br><br>
+
+
+
+
+
+
+# Individual Findings and Plots
+  
+#### Matt
+<br><br>
+
+
+#### Brandon
+<br><br>
+
+
+#### Nick
+<br><br>
+
+
+#### Bing
+<br><br><br><br>
+
+
+
+
+# Who Did what
+
+##### Matt
+<br><br>
+
+
+##### Brandon
+<br><br>
+
+
+##### Nick
+<br><br>
+
+
+##### Bing
