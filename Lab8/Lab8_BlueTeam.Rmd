@@ -10,8 +10,23 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
-# Overall Question goes here
+
+```{r}
+df <- read_csv("us_avg_tuition.csv")
+
+df <-df%>%
+  gather(key=year, value=cost, "2004-05", "2005-06", "2006-07")
+
+df
+
+```
+# How has the average tuition cost changed from 2004 to 2016
+
 <br><br> <br><br> <br><br>
+
+[This is where we got the dataset from](https://github.com/rfordatascience/tidytuesday/tree/master/data/2018/2018-04-02)
+
+[This is where the dataset originally came from](https://onlinembapage.com/average-tuition-and-educational-attainment-in-the-united-states/)
   
 #And the conclusion to the overall quesion goes here
 <br><br> <br><br> <br><br>
@@ -33,6 +48,8 @@ library(tidyverse)
 # Individual Findings and Plots
   
 #### Matt
+
+__How does the least expensive state change throughout the years?__
 <br><br>
 
 
