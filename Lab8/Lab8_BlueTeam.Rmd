@@ -94,6 +94,30 @@ In the plot above, the yellow line represents the maximum cost per year. Similar
 
 #### Bing
 
+```{r}
+ocean <- df %>% filter(State == "Washington" | State == "Oregon" | State == "California" | State == "Texas" | State == "Louisianna" | State == "Mississippi" | State == "Alabama" | State == "Florida" | State == "Georgia" | State == "South Carolina" | State == "North Carolina" | State == "Virginia" | State == "Maryland" | State == "Delaware" | State == "New Jersey" | State == "New York" | State == "Connecticut" | State == "Rhode Island" | State == "Massachussetts"| State == "New Hampshire" | State == "Maine" | State == "Hawaii" | State == "Alaska")
+
+landLocked <- df %>% filter(!(State == "Washington" | State == "Oregon" | State == "California" | State == "Texas" | State == "Louisianna" | State == "Mississippi" | State == "Alabama" | State == "Florida" | State == "Georgia" | State == "South Carolina" | State == "North Carolina" | State == "Virginia" | State == "Maryland" | State == "Delaware" | State == "New Jersey" | State == "New York" | State == "Connecticut" | State == "Rhode Island" | State == "Massachussetts"| State == "New Hampshire" | State == "Maine" | State == "Hawaii" | State == "Alaska"))
+
+#kable(view(ocean))
+#kable(view(landLocked))
+
+oceanSummary <- ocean %>%
+  group_by(Year) %>%
+  summarize(Average=mean(Cost), water = "yes")
+
+llSummary <- landLocked %>%
+  group_by(Year) %>%
+  summarize(Average=mean(Cost), water = "no")
+
+
+
+total <- bind_rows(oceanSummary, llSummary)
+#kable(view(total))
+
+ggplot(data = total) + geom_line(mapping = aes(x = Year, y = Average, group = water, color = water))
+```
+
 
 
 <br><br> <br><br>  
