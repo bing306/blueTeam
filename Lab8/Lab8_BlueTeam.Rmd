@@ -118,7 +118,7 @@ total <- bind_rows(oceanSummary, llSummary)
 ggplot(data = total) + geom_line(mapping = aes(x = Year, y = Average, group = water, color = water))
 ```
 
-
+In this plot we look at the difference and change in price for college in landlocked vs non-landlocked states. As we can see that throughout our whole data frame that colleges in non-landlocked states cost more than their counterpart. We can also see that after the big jump in price after the the 2008-2009 school year that non-landlocked schools also have a greater change in price per year.
 
 <br><br> <br><br>  
 
