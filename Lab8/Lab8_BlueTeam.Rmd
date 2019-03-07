@@ -24,9 +24,11 @@ head(df)
 # How has the average tuition cost changed from 2004 to 2016
 
 [This is where we got the dataset from.](https://github.com/rfordatascience/tidytuesday/tree/master/data/2018/2018-04-02)
+
 [And this is where the dataset originally came from.](https://onlinembapage.com/average-tuition-and-educational-attainment-in-the-united-states/)
 
   <br><br> <br><br> <br><br>
+  
 #And the conclusion to the overall quesion goes here
 <br><br> <br><br> <br><br>
 
@@ -45,6 +47,7 @@ head(df)
 
 
 # Individual Findings and Plots
+  <br><br>
   
 #### Matt
 
@@ -57,10 +60,11 @@ mattdf <- df %>%group_by(Year) %>%
 ggplot(mattdf) +
   geom_line(aes(x=Year, y=Cheapest, group=1), color="blue") +
   geom_line(aes(x=Year, y=Expensive, group=1), color="orange") + 
-  labs(y="Cost", title="Most expensive and least expensive cost per year") 
-  # scale_color_discrete(c("Least Expensive", "Most Expensive"))
+  labs(y="Cost", title="Most expensive and least expensive cost per year") +
+  scale_color_manual(values=c("Least Expensive", "Most Expensive"))
 ```
 
+In the plot above, the yellow line represents the maximum cost per year. Similarly, the blue line represents the minimum cost per year. Clearly they both increase with time. However, the maximum increases at a faster rate than the minimum. This is importantn because while prices are increasing in general, there are still low cost schools available.
 
 #### Brandon
 <br><br>
