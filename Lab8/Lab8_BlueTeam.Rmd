@@ -7,91 +7,116 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
+library(tidyverse); library(knitr)
 ```
 
 
-```{r, message=F}
-df <- read_csv("us_avg_tuition.csv")
-
-df <-df%>%
-  gather(key=Year, value=Cost, starts_with("20")) %>%
-  arrange(State) 
-
-df$Cost <- parse_number(df$Cost)
-head(df)
-```
 # How has the average tuition cost changed from 2004 to 2016
 
 [This is where we got the dataset from.](https://github.com/rfordatascience/tidytuesday/tree/master/data/2018/2018-04-02)
 
 [And this is where the dataset originally came from.](https://onlinembapage.com/average-tuition-and-educational-attainment-in-the-united-states/)
 
-  <br><br> <br><br> <br><br>
+
+```{r, message=F}
+df <- read_csv("us_avg_tuition.csv") %>%
+  gather(key=Year, value=Cost, starts_with("20")) %>%
+  arrange(State) 
+
+df$Cost <- parse_number(df$Cost)
+kable(head(df))
+```
+
+
+```{r}
+team <- df %>%
+  group_by(Year) %>%
+  summarize(Average=mean(Cost))
+
+ggplot(team) + 
+  geom_line(aes(x=Year, y=Average, group=1),color="Purple", size=1.3) + 
+  labs(x="School Year", y="Average Cost", title="Average Yearly Cost of Tuition in the U.S.")
+```
+
+  <br><br>
   
-#And the conclusion to the overall quesion goes here
-<br><br> <br><br> <br><br>
+# Conclusion:
+
+The averge cost of tuition in the U.S. has been steadily increasing since 2004.  
 
 
 
-#The team recomendation goes here and why its important to implement it
-<br><br> <br><br> <br><br>
+
+
+<br><br>
+
+# Recomendation:
+
+The team recomendation goes here and why its important to implement it
+
+<br><br>
 
 
 # A description of the dataset
-<br><br> <br><br> <br><br>
+
+This dataset is from [github/rfordatascience/tidytuesday](https://github.com/rfordatascience/tidytuesday). It contains 12 years of data for each state. For each year, every state has one data entry: The average cost of college tuition in that state. It wasn't fully tidy though. Each row contained 12 observations and there were values as columns instead of entries. This is because each year was a different column, and each state was a different observation. We needed to change it so a single observation was one state's cost for a single year. We had to gather all of the columns that represent years into one column, `Year`. Also, all of the values in the `Cost` column contained dollar signs and commas (ex: $5,683). This made `R` think that this column was a character vector. We had to run `parse_number` on this column to strip both the dollar signs and the commas.
+<br><br>
 
 
-
-
-
-
-# Individual Findings and Plots
+# Individual Findings and Plots:
   <br><br>
   
 #### Matt
 
-__How does the least expensive state change throughout the years?__
-<br><br>
+__How do the most and least expensive states change throughout the year?__
 ```{r}
 mattdf <- df %>%group_by(Year) %>%
   summarize(Cheapest = min(Cost), Expensive = max(Cost))
 
 ggplot(mattdf) +
-  geom_line(aes(x=Year, y=Cheapest, group=1), color="blue") +
-  geom_line(aes(x=Year, y=Expensive, group=1), color="orange") + 
-  labs(y="Cost", title="Most expensive and least expensive cost per year") +
-  scale_color_manual(values=c("Least Expensive", "Most Expensive"))
+  geom_line(aes(Year, Cheapest, group=1), color="blue", size=1.5) +
+  geom_line(aes(Year, Expensive, group=1), color="orange", size=1.5) + 
+  labs(x="School Year", y="Average Cost", title=" Yearly Cost of the Most Expensive and Least Expensive States")
 ```
 
 In the plot above, the yellow line represents the maximum cost per year. Similarly, the blue line represents the minimum cost per year. Clearly they both increase with time. However, the maximum increases at a faster rate than the minimum. This is importantn because while prices are increasing in general, there are still low cost schools available.
-
+ <br><br>
+ 
 #### Brandon
-<br><br>
 
+
+<br><br>  
 
 #### Nick
-<br><br>
 
+
+<br><br>  
 
 #### Bing
-<br><br><br><br>
 
 
 
+<br><br> <br><br>  
 
-# Who Did what
+# Who Did what:
 
-##### Matt
-<br><br>
+#### As a Team
+We tidied the data as a team. We only had to gather the columns and parse the `Cost` column.
 
-
-##### Brandon
-<br><br>
-
-
-##### Nick
-<br><br>
+#### Matt  
+Matt help writing the dataset description, plotting the team question, and his personal findings. 
 
 
-##### Bing
+<br><br>  
+
+#### Brandon
+
+
+<br><br>  
+
+#### Nick
+
+
+<br><br>  
+
+#### Bing
