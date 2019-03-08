@@ -38,11 +38,11 @@ ggplot(team) +
   labs(x="School Year", y="Average Cost", title="Average Yearly Cost of Tuition in the U.S.")
 ```
 
-  <br><br>
+  
   
 # Conclusion:
 
-The averge cost of tuition in the U.S. has been steadily increasing since 2004.  
+The averge cost of tuition in the U.S. has been steadily increasing since 2004. After the year of 2008 the cost of tutiton was incresed by a much larger margin then the previous years  
 
 
 
@@ -80,12 +80,32 @@ ggplot(mattdf) +
 ```
 
 In the plot above, the yellow line represents the maximum cost per year. Similarly, the blue line represents the minimum cost per year. Clearly they both increase with time. However, the maximum increases at a faster rate than the minimum. This is importantn because while prices are increasing in general, there are still low cost schools available.
- <br><br>
+ 
  
 #### Brandon
 
+```{r}
+pop1 <- df %>% filter(State == "California" | State == "Texas" | State == "Florida" | State == "New York" | State == "Pennsylvania")
+pop2 <- df %>% filter(State == "Wyoming" | State == "Vermont" | State == "North Dakota" | State == "Alaska" | State == "South Dakota" | State == "Arizona")
 
-<br><br>  
+
+highpop <- pop1 %>%
+  group_by(Year) %>%
+  summarize(Avg=mean(Cost), pop = "High")
+
+lowpop <- pop2 %>%
+  group_by(Year) %>%
+  summarize(Avg=mean(Cost), pop = "Low")
+
+
+population <- bind_rows(highpop, lowpop)
+
+
+ggplot(data = population) + geom_smooth(mapping = aes(x = Year, y = Avg, group = pop, color = pop), se = FALSE)
+
+```
+  
+In the plot I wanted to see if the population of the top 5 highest population States and the top 5 lowest population States affected the cost of tuition. On average the higher populated states and a higher average cost than those with a lower population. Also the gap has become larger as the time has progressed. Although this may not be completly accurate since Vermott had an absurdley high tutiton cost compared to every other state. This might have affected the low population average going up in retrospect to other low populous States  
 
 #### Nick
 
