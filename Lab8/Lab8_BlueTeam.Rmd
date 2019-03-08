@@ -260,8 +260,25 @@ In the plot I wanted to see if the population of the top 5 highest population St
 <br><br>
 
 #### Nick
+What are the top 5 states to have the most steady tuition costs?
 
+```{r warning = F, message=FALSE}
+tuition <- read_csv("/Users/Nick/Desktop/blueTeam/Lab8/us_avg_tuition.csv")
+tuition2 <- tuition %>%
+  gather(key = "Year", value = "Tuition", '2004-05', '2005-06', '2006-07', '2007-08', '2008-09', '2010-11', '2011-12', '2012-13', '2013-14', '2014-15', '2015-16', '2009-10')
+tuition2$Year <- parse_number(tuition2$Year)
+tuition2$Tuition <- parse_number(tuition2$Tuition)
 
+states <- unique(tuition2$State)
+dev <- vector("double",50)
+for (i in seq_along(states)){
+  dev[[i]] <- sd(filter(tuition2,State==states[[i]])$Tuition)
+}
+State_deviation <- tibble(State = states, SD = dev)
+State_deviation <- arrange(State_deviation,SD)
+best <- State_deviation$State[1:5]
+worst <- State_deviation$State[46:50]
+```
  
 
 #### Bing
