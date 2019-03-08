@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 title: "Lab 8"
 author: 'Blue Team: Matt Lawson,'
@@ -150,3 +151,170 @@ Matt help writing the dataset description, plotting the team question, and his p
 <br><br>  
 
 #### Bing
+=======
+---
+title: "Lab 8"
+author: 'Blue Team: Matt Lawson,'
+date: "3/8/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse); library(knitr)
+```
+
+
+# How has the average tuition cost changed from 2004 to 2016
+
+# Importance?
+  this question is important because we want to know why college is becoming harder for students to afford and why students are in larger debt then previously recorded.
+
+[This is where we got the dataset from.](https://github.com/rfordatascience/tidytuesday/tree/master/data/2018/2018-04-02)
+
+[And this is where the dataset originally came from.](https://onlinembapage.com/average-tuition-and-educational-attainment-in-the-united-states/)
+
+
+```{r, message=F}
+df <- read_csv("us_avg_tuition.csv") %>%
+  gather(key=Year, value=Cost, starts_with("20")) %>%
+  arrange(State) 
+
+df$Cost <- parse_number(df$Cost)
+kable(head(df))
+```
+
+
+```{r}
+team <- df %>%
+  group_by(Year) %>%
+  summarize(Average=mean(Cost))
+
+ggplot(team) + 
+  geom_line(aes(x=Year, y=Average, group=1),color="Purple", size=1.3) + 
+  labs(x="School Year", y="Average Cost", title="Average Yearly Cost of Tuition in the U.S.")
+```
+
+  
+  
+# Conclusion:
+
+The averge cost of tuition in the U.S. has been steadily increasing since 2004. After the year of 2008 the cost of tutiton was incresed by a much larger margin then the previous years. With the tuition increasing by a large amount in a short time frame it is easy to see why so many students are in debt or others simply can't afford to go to college.  
+
+
+# Recomendation:
+
+It is recomended that colleges should attempt to cut down on tuition cost. From the data is was seen that average tuition was about 6500 dollars while it has increased to about 9500. While inflation could be factor to increasing cost then span of only 12 years should not account for an increase of 3000 dollars on average. College's should cut down on tuition to allow more students to attend universities and have less students in debt. 
+
+
+
+
+# A description of the dataset
+
+This dataset is from [github/rfordatascience/tidytuesday](https://github.com/rfordatascience/tidytuesday). It contains 12 years of data for each state. For each year, every state has one data entry: The average cost of college tuition in that state. It wasn't fully tidy though. Each row contained 12 observations and there were values as columns instead of entries. This is because each year was a different column, and each state was a different observation. We needed to change it so a single observation was one state's cost for a single year. We had to gather all of the columns that represent years into one column, `Year`. Also, all of the values in the `Cost` column contained dollar signs and commas (ex: $5,683). This made `R` think that this column was a character vector. We had to run `parse_number` on this column to strip both the dollar signs and the commas.
+<br><br>
+
+
+# Individual Findings and Plots:
+  <br><br>
+  
+#### Matt
+
+__How do the most and least expensive states change throughout the year?__
+```{r}
+mattdf <- df %>%group_by(Year) %>%
+  summarize(Cheapest = min(Cost), Expensive = max(Cost))
+
+ggplot(mattdf) +
+  geom_line(aes(Year, Cheapest, group=1), color="blue", size=1.5) +
+  geom_line(aes(Year, Expensive, group=1), color="orange", size=1.5) + 
+  labs(x="School Year", y="Average Cost", title=" Yearly Cost of the Most Expensive and Least Expensive States")
+```
+
+In the plot above, the yellow line represents the maximum cost per year. Similarly, the blue line represents the minimum cost per year. Clearly they both increase with time. However, the maximum increases at a faster rate than the minimum. This is importantn because while prices are increasing in general, there are still low cost schools available.
+ 
+<br><br>
+
+#### Brandon 
+
+  How does Average tuition cost differ from the highest populated states and the lowest populated states?
+```{r, message=F}
+pop1 <- df %>% filter(State == "California" | State == "Texas" | State == "Florida" | State == "New York" | State == "Pennsylvania")
+pop2 <- df %>% filter(State == "Wyoming" | State == "Vermont" | State == "North Dakota" | State == "Alaska" | State == "South Dakota" | State == "Arizona")
+
+highpop <- pop1 %>%
+  group_by(Year) %>%
+  summarize(Avg=mean(Cost), pop = "High")
+
+lowpop <- pop2 %>%
+  group_by(Year) %>%
+  summarize(Avg=mean(Cost), pop = "Low")
+
+population <- bind_rows(highpop, lowpop)
+
+ggplot(data = population) + geom_smooth(mapping = aes(x = Year, y = Avg, group = pop, color = pop), se = FALSE)
+```
+  
+In the plot I wanted to see if the population of the top 5 highest population States and the top 5 lowest population States affected the cost of tuition. On average the higher populated states and a higher average cost than those with a lower population. Also the gap has become larger as the time has progressed. Although this may not be completly accurate since Vermott had an absurdley high tutiton cost compared to every other state. This might have affected the low population average going up in retrospect to other low populous States  
+
+<br><br>
+
+#### Nick
+
+
+ 
+
+#### Bing
+
+```{r}
+ocean <- df %>% filter(State == "Washington" | State == "Oregon" | State == "California" | State == "Texas" | State == "Louisianna" | State == "Mississippi" | State == "Alabama" | State == "Florida" | State == "Georgia" | State == "South Carolina" | State == "North Carolina" | State == "Virginia" | State == "Maryland" | State == "Delaware" | State == "New Jersey" | State == "New York" | State == "Connecticut" | State == "Rhode Island" | State == "Massachussetts"| State == "New Hampshire" | State == "Maine" | State == "Hawaii" | State == "Alaska")
+
+landLocked <- df %>% filter(!(State == "Washington" | State == "Oregon" | State == "California" | State == "Texas" | State == "Louisianna" | State == "Mississippi" | State == "Alabama" | State == "Florida" | State == "Georgia" | State == "South Carolina" | State == "North Carolina" | State == "Virginia" | State == "Maryland" | State == "Delaware" | State == "New Jersey" | State == "New York" | State == "Connecticut" | State == "Rhode Island" | State == "Massachussetts"| State == "New Hampshire" | State == "Maine" | State == "Hawaii" | State == "Alaska"))
+
+#kable(view(ocean))
+#kable(view(landLocked))
+
+oceanSummary <- ocean %>%
+  group_by(Year) %>%
+  summarize(Average=mean(Cost), water = "yes")
+
+llSummary <- landLocked %>%
+  group_by(Year) %>%
+  summarize(Average=mean(Cost), water = "no")
+
+
+
+total <- bind_rows(oceanSummary, llSummary)
+#kable(view(total))
+
+ggplot(data = total) + geom_line(mapping = aes(x = Year, y = Average, group = water, color = water))
+```
+
+In this plot we look at the difference and change in price for college in landlocked vs non-landlocked states. As we can see that throughout our whole data frame that colleges in non-landlocked states cost more than their counterpart. We can also see that after the big jump in price after the the 2008-2009 school year that non-landlocked schools also have a greater change in price per year.
+
+ 
+
+# Who Did what:
+
+#### As a Team
+We tidied the data as a team. We only had to gather the columns and parse the `Cost` column.
+
+#### Matt  
+Matt help writing the dataset description, plotting the team question, and his personal findings. 
+
+
+  
+
+#### Brandon
+Brandon helped with the recomendation and importance of the question, and his personal findings
+
+  
+
+#### Nick
+Nick worked on his personal findings and found the data set which we used.
+
+  
+
+#### Bing
+Bing worked on his personal findings and wrote the conclusion.
+>>>>>>> master
