@@ -1,160 +1,6 @@
-<<<<<<< HEAD
 ---
 title: "Lab 8"
-author: 'Blue Team: Matt Lawson, Brandon Bowen, Nick Zimmerman, Bing Mitchel'
-date: "3/8/2019"
-output: html_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse); library(knitr)
-```
-
-
-# How has the average tuition cost changed from 2004 to 2016
-
-[This is where we got the dataset from.](https://github.com/rfordatascience/tidytuesday/tree/master/data/2018/2018-04-02)
-
-[And this is where the dataset originally came from.](https://onlinembapage.com/average-tuition-and-educational-attainment-in-the-united-states/)
-
-
-```{r, message=F}
-df <- read_csv("us_avg_tuition.csv") %>%
-  gather(key=Year, value=Cost, starts_with("20")) %>%
-  arrange(State) 
-
-df$Cost <- parse_number(df$Cost)
-kable(head(df))
-```
-
-
-```{r}
-team <- df %>%
-  group_by(Year) %>%
-  summarize(Average=mean(Cost))
-
-ggplot(team) + 
-  geom_line(aes(x=Year, y=Average, group=1),color="Purple", size=1.3) + 
-  labs(x="School Year", y="Average Cost", title="Average Yearly Cost of Tuition in the U.S.")
-```
-
-  <br><br>
-  
-# Conclusion:
-
-The averge cost of tuition in the U.S. has been steadily increasing since 2004.  
-
-
-
-
-
-<br><br>
-
-# Recomendation:
-
-The team recomendation goes here and why its important to implement it
-
-<br><br>
-
-
-# A description of the dataset
-
-This dataset is from [github/rfordatascience/tidytuesday](https://github.com/rfordatascience/tidytuesday). It contains 12 years of data for each state. For each year, every state has one data entry: The average cost of college tuition in that state. It wasn't fully tidy though. Each row contained 12 observations and there were values as columns instead of entries. This is because each year was a different column, and each state was a different observation. We needed to change it so a single observation was one state's cost for a single year. We had to gather all of the columns that represent years into one column, `Year`. Also, all of the values in the `Cost` column contained dollar signs and commas (ex: $5,683). This made `R` think that this column was a character vector. We had to run `parse_number` on this column to strip both the dollar signs and the commas.
-<br><br>
-
-
-# Individual Findings and Plots:
-  <br><br>
-  
-#### Matt
-
-__How do the most and least expensive states change throughout the year?__
-```{r}
-mattdf <- df %>%group_by(Year) %>%
-  summarize(Cheapest = min(Cost), Expensive = max(Cost))
-
-ggplot(mattdf) +
-  geom_line(aes(Year, Cheapest, group=1), color="blue", size=1.5) +
-  geom_line(aes(Year, Expensive, group=1), color="orange", size=1.5) + 
-  labs(x="School Year", y="Average Cost", title=" Yearly Cost of the Most Expensive and Least Expensive States")
-```
-
-In the plot above, the yellow line represents the maximum cost per year. Similarly, the blue line represents the minimum cost per year. Clearly they both increase with time. However, the maximum increases at a faster rate than the minimum. This is importantn because while prices are increasing in general, there are still low cost schools available.
- <br><br>
- 
-#### Brandon
-
-
-<br><br>  
-
-#### Nick
-
-```{r}
-tuition <- read_csv("us_avg_tuition.csv")
-tuition2 <- tuition %>%
- gather(key = "Year", value = "Tuition", '2004-05', '2005-06', '2006-07', '2007-08', '2008-09', '2010-11', '2011-12', '2012-13', '2013-14', '2014-15', '2015-16', '2009-10')
-```
-
-
-<br><br>  
-
-#### Bing
-
-```{r}
-ocean <- df %>% filter(State == "Washington" | State == "Oregon" | State == "California" | State == "Texas" | State == "Louisianna" | State == "Mississippi" | State == "Alabama" | State == "Florida" | State == "Georgia" | State == "South Carolina" | State == "North Carolina" | State == "Virginia" | State == "Maryland" | State == "Delaware" | State == "New Jersey" | State == "New York" | State == "Connecticut" | State == "Rhode Island" | State == "Massachussetts"| State == "New Hampshire" | State == "Maine" | State == "Hawaii" | State == "Alaska")
-
-landLocked <- df %>% filter(!(State == "Washington" | State == "Oregon" | State == "California" | State == "Texas" | State == "Louisianna" | State == "Mississippi" | State == "Alabama" | State == "Florida" | State == "Georgia" | State == "South Carolina" | State == "North Carolina" | State == "Virginia" | State == "Maryland" | State == "Delaware" | State == "New Jersey" | State == "New York" | State == "Connecticut" | State == "Rhode Island" | State == "Massachussetts"| State == "New Hampshire" | State == "Maine" | State == "Hawaii" | State == "Alaska"))
-
-#kable(view(ocean))
-#kable(view(landLocked))
-
-oceanSummary <- ocean %>%
-  group_by(Year) %>%
-  summarize(Average=mean(Cost), water = "yes")
-
-llSummary <- landLocked %>%
-  group_by(Year) %>%
-  summarize(Average=mean(Cost), water = "no")
-
-
-
-total <- bind_rows(oceanSummary, llSummary)
-#kable(view(total))
-
-ggplot(data = total) + geom_line(mapping = aes(x = Year, y = Average, group = water, color = water))
-```
-
-In this plot we look at the difference and change in price for college in landlocked vs non-landlocked states. As we can see that throughout our whole data frame that colleges in non-landlocked states cost more than their counterpart. We can also see that after the big jump in price after the the 2008-2009 school year that non-landlocked schools also have a greater change in price per year.
-
-<br><br> <br><br>  
-
-# Who Did what:
-
-#### As a Team
-We tidied the data as a team. We only had to gather the columns and parse the `Cost` column.
-
-#### Matt  
-Matt help writing the dataset description, plotting the team question, and his personal findings. 
-
-
-<br><br>  
-
-#### Brandon
-
-
-<br><br>  
-
-#### Nick
-
-
-<br><br>  
-
-#### Bing
-=======
----
-title: "Lab 8"
-author: 'Blue Team: Matt Lawson,'
+author: 'Blue Team: Matt Lawson,Brandon Bowen, Nick Zimmerman, Bing Mitchel'
 date: "3/8/2019"
 output: html_document
 ---
@@ -260,10 +106,10 @@ In the plot I wanted to see if the population of the top 5 highest population St
 <br><br>
 
 #### Nick
-What are the top 5 states to have the most steady tuition costs?
+
 
 ```{r warning = F, message=FALSE}
-tuition <- read_csv("/Users/Nick/Desktop/blueTeam/Lab8/us_avg_tuition.csv")
+tuition <- read_csv("us_avg_tuition.csv")
 tuition2 <- tuition %>%
   gather(key = "Year", value = "Tuition", '2004-05', '2005-06', '2006-07', '2007-08', '2008-09', '2010-11', '2011-12', '2012-13', '2013-14', '2014-15', '2015-16', '2009-10')
 tuition2$Year <- parse_number(tuition2$Year)
@@ -279,7 +125,7 @@ State_deviation <- arrange(State_deviation,SD)
 best <- State_deviation$State[1:5]
 worst <- State_deviation$State[46:50]
 ```
- 
+
 ```{r}
 ggplot(mapping = aes(x = Year, y = Tuition))+
   geom_smooth(data=filter(tuition2,State=="Montana"), se = FALSE)+
@@ -288,6 +134,7 @@ ggplot(mapping = aes(x = Year, y = Tuition))+
   geom_smooth(data=filter(tuition2,State=="Missouri"), se = FALSE)+
   geom_smooth(data=filter(tuition2,State=="Ohio"), se = FALSE)
 ```
+
 The states with the least deviation are Montana, Maryland, Wyoming, Missouri, and Ohio
 
 ```{r}
@@ -298,7 +145,10 @@ ggplot(mapping = aes(x = Year, y = Tuition))+
   geom_smooth(data=filter(tuition2,State=="Hawaii"), se = FALSE)+
   geom_smooth(data=filter(tuition2,State=="Arizona"), se = FALSE)
 ```
+
 The states with the most deviation are California, Washington, New Hampshire, Hawaii, and Arizona
+
+ 
 
 #### Bing
 
@@ -353,4 +203,3 @@ Nick worked on his personal findings and found the data set which we used.
 
 #### Bing
 Bing worked on his personal findings and wrote the conclusion.
->>>>>>> master
