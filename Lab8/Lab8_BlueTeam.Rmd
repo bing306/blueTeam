@@ -280,6 +280,25 @@ best <- State_deviation$State[1:5]
 worst <- State_deviation$State[46:50]
 ```
  
+```{r}
+ggplot(mapping = aes(x = Year, y = Tuition))+
+  geom_smooth(data=filter(tuition2,State=="Montana"), se = FALSE)+
+  geom_smooth(data=filter(tuition2,State=="Maryland"), se = FALSE)+
+  geom_smooth(data=filter(tuition2,State=="Wyoming"), se = FALSE)+
+  geom_smooth(data=filter(tuition2,State=="Missouri"), se = FALSE)+
+  geom_smooth(data=filter(tuition2,State=="Ohio"), se = FALSE)
+```
+The states with the least deviation are Montana, Maryland, Wyoming, Missouri, and Ohio
+
+```{r}
+ggplot(mapping = aes(x = Year, y = Tuition))+
+  geom_smooth(data=filter(tuition2,State=="California"), se = FALSE)+
+  geom_smooth(data=filter(tuition2,State=="Washington"), se = FALSE)+
+  geom_smooth(data=filter(tuition2,State=="New Hampshire"), se = FALSE)+
+  geom_smooth(data=filter(tuition2,State=="Hawaii"), se = FALSE)+
+  geom_smooth(data=filter(tuition2,State=="Arizona"), se = FALSE)
+```
+The states with the most deviation are California, Washington, New Hampshire, Hawaii, and Arizona
 
 #### Bing
 
