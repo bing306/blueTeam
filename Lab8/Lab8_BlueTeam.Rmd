@@ -89,6 +89,12 @@ In the plot above, the yellow line represents the maximum cost per year. Similar
 
 #### Nick
 
+```{r}
+tuition <- read_csv("us_avg_tuition.csv")
+tuition2 <- tuition %>%
+ gather(key = "Year", value = "Tuition", '2004-05', '2005-06', '2006-07', '2007-08', '2008-09', '2010-11', '2011-12', '2012-13', '2013-14', '2014-15', '2015-16', '2009-10')
+```
+
 
 <br><br>  
 
