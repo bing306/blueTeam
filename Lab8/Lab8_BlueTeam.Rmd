@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 ---
 title: "Lab 8"
-author: 'Blue Team: Matt Lawson,'
+author: 'Blue Team: Matt Lawson, Brandon Bowen, Nick Zimmerman, Bing Mitchel'
 date: "3/8/2019"
 output: html_document
 ---
