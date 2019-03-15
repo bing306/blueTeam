@@ -1,0 +1,52 @@
+---
+title: "Lab 9"
+author: 'Blue Team: Matt Lawson,'
+date: "3/14/2019"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=F, message=F, warning=F}
+library(tidyverse)
+library(lubridate)
+library(OpenStreetMap)
+```
+
+
+```{r, message=F}
+trips <- read_csv("Nice_ride_trip_history_2017_season.csv", col_types=cols(
+  "Start date"=col_datetime(format="%m/%d/%Y %H:%M"), "End date"=col_datetime(format="%m/%d/%Y %H:%M"), "Account type"=col_factor()
+))
+
+stations <- read_csv("Nice_ride_2017_Station_Locations.csv")
+stations
+trips
+```
+
+
+
+### Matt
+
+__Do members or casual riders ride for longer times?__
+
+
+
+
+
+
+### Bing
+
+
+
+
+### Brandon
+
+
+
+
+### Nick
