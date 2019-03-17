@@ -124,26 +124,23 @@ State_deviation <- tibble(State = states, SD = dev)
 State_deviation <- arrange(State_deviation,SD)
 best <- State_deviation$State[1:5]
 worst <- State_deviation$State[46:50]
+
+bestStates <- filter(tuition2, State == "Montana" | State == "Maryland" | State == "Wyoming" | State == "Missouri" | State == "Ohio")
+
+worstStates <- filter(tuition2, State == "California" | State == "Washington" | State == "New Hampshire" | State == "Hawaii" | State == "Arizona")
+
 ```
 
 ```{r}
-ggplot(mapping = aes(x = Year, y = Tuition))+
-  geom_smooth(data=filter(tuition2,State=="Montana"), se = FALSE)+
-  geom_smooth(data=filter(tuition2,State=="Maryland"), se = FALSE)+
-  geom_smooth(data=filter(tuition2,State=="Wyoming"), se = FALSE)+
-  geom_smooth(data=filter(tuition2,State=="Missouri"), se = FALSE)+
-  geom_smooth(data=filter(tuition2,State=="Ohio"), se = FALSE)
+ggplot(data = bestStates)+
+  geom_smooth(mapping = aes(x=Year,y=Tuition,color=State),se=FALSE)
 ```
 
 The states with the least deviation are Montana, Maryland, Wyoming, Missouri, and Ohio
 
 ```{r}
-ggplot(mapping = aes(x = Year, y = Tuition))+
-  geom_smooth(data=filter(tuition2,State=="California"), se = FALSE)+
-  geom_smooth(data=filter(tuition2,State=="Washington"), se = FALSE)+
-  geom_smooth(data=filter(tuition2,State=="New Hampshire"), se = FALSE)+
-  geom_smooth(data=filter(tuition2,State=="Hawaii"), se = FALSE)+
-  geom_smooth(data=filter(tuition2,State=="Arizona"), se = FALSE)
+ggplot(data = worstStates)+
+  geom_smooth(mapping = aes(x=Year,y=Tuition,color=State),se=FALSE)
 ```
 
 The states with the most deviation are California, Washington, New Hampshire, Hawaii, and Arizona

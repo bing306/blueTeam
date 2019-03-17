@@ -1,0 +1,57 @@
+---
+title: "Lab 9"
+author: 'Blue Team: Matt Lawson,'
+date: "3/14/2019"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=F, message=F, warning=F}
+library(tidyverse)
+library(lubridate)
+library(OpenStreetMap)
+```
+
+
+```{r, message=F, warning=F}
+trips <- read_csv("Nice_ride_trip_history_2017_season.csv", col_types=cols(
+  "Start date"=col_datetime(format="%m/%d/%Y %H:%M"), "End date"=col_datetime(format="%m/%d/%Y %H:%M"), "Account type"=col_factor(levels=c("Member", "Casual"))
+))
+
+stations <- read_csv("Nice_ride_2017_Station_Locations.csv")
+trips <- na.omit(trips)
+```
+
+
+
+### Matt
+
+__Do members or casual riders ride for longer times?__
+
+```{r}
+colnames(trips)[colnames(trips)=="Total duration (Seconds)"] <- "time"
+colnames(trips)[colnames(trips)=="Account type"] <- "account"
+
+mattdf <- trips %>% group_by(account) %>% summarize(time = mean(time), count = n())
+mattdf
+```
+
+We can see here that casual users spends just over 5 times as long on average. However, members have riden nearly 2 times more than casual members have.
+
+
+### Bing
+
+
+
+
+### Brandon
+
+
+
+
+### Nick
