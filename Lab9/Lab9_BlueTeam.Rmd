@@ -51,6 +51,26 @@ We can see here that casual users spends just over 5 times as long on average. H
 
 ### Bing
 
+What station has the longest ride times?
+
+```{r}
+  colnames(trips)[colnames(trips)=="Total duration (Seconds)"] <- "time"
+  colnames(trips)[colnames(trips)=="Start station"] <- "sStation"
+
+  eachStation <- trips %>% group_by(sStation) %>% summarize(time = mean(time)) 
+  eachStation
+  
+  ggplot(data = eachStation) + geom_col(mapping = aes(x= sStation, y = time))
+  
+  topStations <- eachStation %>% filter(time > 75000)
+  
+  ggplot(data = topStations) + geom_col(mapping = aes(x= sStation, y = time))
+  
+
+```
+As we can see from our 2 plots that there are 200 stations, but there are 3 out of the stations that are the most popular and have the longest trips. From our second plot we can see that West Broadway & Logan Ave N, Girard Ave N & W Broadway Ave, and Bryant & West Broadway have the longest rides, showing that these are the stations farthest from the center of the city and the commuters are going the farthest distance.
+
+
 
 
 
