@@ -27,6 +27,11 @@ stations <- read_csv("Nice_ride_2017_Station_Locations.csv")
 trips <- na.omit(trips)
 ```
 
+### What Stations make the most revenue and by which member Account type
+
+
+
+
 
 
 ### Matt
@@ -50,8 +55,50 @@ We can see here that casual users spends just over 5 times as long on average. H
 
 
 ### Brandon
+What Stations docks the most bikes
+```{r}
+colnames(stations)[colnames(stations)=="Name"] <- "name"
+colnames(stations)[colnames(stations)=="Total docks"] <- "docks"
+
+brandondf <- stations %>% group_by(name) %>%
+summarize(docks = mean(docks), count = n()) %>%
+filter(name == "Hennepin County Government Center" | name == "Lake Street & Knox Ave S" | name == "Coffman Union" | name == "Washington Ave SE & Union Street SE" | name == "100 Main Street SE")
+
+arrange(brandondf, desc(docks))
+```
+
+This data shows the top five stations with the most docked bikes.
 
 
+```{r}
+ggplot(data = brandondf) + geom_bar(mapping = aes(x = name, y = docks), stat = "identity")
+```
 
 
 ### Nick
+
+
+
+
+
+
+
+
+### Who did what
+
+
+
+### Matt
+Matt worked on his individual section. Matt transformed his coloumn names and then summarized them and displayed the membership versus casual
+
+### Brandon
+Brandon worked on his individual porition and the transformed formed his coloumns and also summarized the dock numbers in descending order in order to get the stations with the most docks.
+
+
+
+
+
+
+
+
+
