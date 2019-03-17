@@ -1,6 +1,6 @@
 ---
 title: "Lab 9"
-author: 'Blue Team: Matt Lawson,'
+author: 'Blue Team: Matt Lawson, Nick Zimmerman'
 date: "3/14/2019"
 output:
   html_document:
@@ -97,7 +97,25 @@ ggplot(data = brandondf) + geom_bar(mapping = aes(x = name, y = docks), stat = "
 
 ### Nick
 
+There are a total of 19,496 unique trips in this data. 
 
+```{r}
+Trips <- trips %>% mutate( trip_id = paste(trips$start_station, trips$end_station, sep = " -> ") )
+tripId <- unique(Trips$trip_id)
+used <- vector("double",19496)
+
+
+for(i in seq_along(tripId)){
+  used[[i]] <- nrow(filter(Trips, trip_id == i))
+}
+histo <- tibble(Trip = tripId, Used = used)
+histo <- arrange(histo,Used)
+
+ten <- head(histo,10)
+
+ggplot(data = ten)+
+  geom_count(mapping = aes(x= Trip))
+```
 
 
 
