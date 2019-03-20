@@ -1,0 +1,57 @@
+---
+title: "Lab 10"
+author: "Blue Team: Matt Lawson, "
+date: "March 22, 2019"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse); library(stringr)
+```
+
+```{r, message=F, warning=F}
+questions <- read_csv("data/Questions_trunc.csv")
+answers <- read_csv("data/Answers_trunc.csv")
+
+questions <- questions %>% select(Id:Body)
+answers <- answers %>% select(Id:Body)
+```
+
+
+
+```{r}
+head(questions); head(answers)
+```
+
+
+
+## Team
+
+
+
+### Matt
+
+```{r}
+mattq <- questions
+matta <- answers
+```
+
+
+### Brandon
+
+
+
+
+
+
+### Nick
+
+
+
+
+
+### Bing
