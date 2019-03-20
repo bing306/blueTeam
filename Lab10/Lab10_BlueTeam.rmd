@@ -36,8 +36,11 @@ head(questions); head(answers)
 ### Matt
 
 ```{r}
-mattq <- questions
-matta <- answers
+mattq <- questions %>% mutate(ContainsCode = str_detect(Body, pattern="<code>"))
+matta <- answers %>% mutate(ContainsCode = str_detect(Body, pattern="<code>"))
+
+mattq
+matta
 ```
 
 
