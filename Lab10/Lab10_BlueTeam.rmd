@@ -3,24 +3,22 @@ title: "Lab 10"
 author: "Blue Team: Matt Lawson, Nick Zimmerman "
 date: "March 22, 2019"
 output:
-  html_document:
-    df_print: paged
+  html_document
+    # df_print: paged
 ---
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse); library(stringr)
-library(dplyr)
-library(lubridate)
+library(tidyverse); library(stringr); library(forcats); library(lubridate); library(gridExtra)
 ```
 
 ```{r, message=F, warning=F}
 questions <- read_csv("data/Questions_trunc.csv")
 answers <- read_csv("data/Answers_trunc.csv")
 
-questions <- questions %>% select(Id:Body)
-answers <- answers %>% select(Id:Body)
+questions <- questions %>% select(Id:Body) %>% na.omit()
+answers <- answers %>% select(Id:Body) %>% na.omit()
 ```
 
 
@@ -36,15 +34,43 @@ head(questions); head(answers)
 
 
 ### Matt
-
+__Does the `<code>` tag affect the score of a question or answer?__
 ```{r}
 mattq <- questions %>% mutate(ContainsCode = str_detect(Body, pattern="<code>"))
 matta <- answers %>% mutate(ContainsCode = str_detect(Body, pattern="<code>"))
+# head(mattq)
 
-mattq
-matta
+
+questionMeans <- tribble(
+  ~Code, ~Mean, 
+  "Yes", colMeans( mattq[mattq$ContainsCode, "Score"], na.rm = TRUE),
+  "No", colMeans( mattq[!mattq$ContainsCode, "Score"], na.rm = TRUE)
+)
+
+
+answerMeans <- tribble(
+  ~Code, ~Mean, 
+  "Yes", colMeans( matta[matta$ContainsCode, "Score"], na.rm = TRUE),
+  "No", colMeans( matta[!matta$ContainsCode, "Score"], na.rm = TRUE)
+)
+
+# questionMeans
+# answerMeans
+
+
+ q <- ggplot(data=questionMeans) + 
+  geom_bar(aes(x=Code, weight=Mean, fill=Code)) + 
+  labs(title="Average Score for Questions", x="Contains Code?", y="Score") + 
+   guides(fill=FALSE)
+a <- ggplot(data=answerMeans) + 
+  geom_bar(aes(x=Code, weight=Mean, fill=Code)) + 
+  labs(title="Average Score for Answers", x="Contains Code?", y="Score") +  guides(fill=FALSE)
+
+grid.arrange(q, a, ncol=2)
+
 ```
 
+Questions and answers that contain code both have higher scores than questions and answers that do not contain code. The difference is much larger in answers. Questions with code in them receive 6 more points on average than questions without code. Answers with code receive 14 more points on average than answers without code. So, if you want to have a question or an answer with a high score, include some code.
 
 ### Brandon
 
