@@ -1,6 +1,6 @@
 ---
 title: "Lab 10"
-author: "Blue Team: Matt Lawson, "
+author: "Blue Team: Matt Lawson, Nick Zimmerman "
 date: "March 22, 2019"
 output:
   html_document:
@@ -11,6 +11,8 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse); library(stringr)
+library(dplyr)
+library(lubridate)
 ```
 
 ```{r, message=F, warning=F}
@@ -53,7 +55,25 @@ matta
 
 ### Nick
 
+```{r, warning=FALSE}
 
+Answers <- read_csv("data/Answers_trunc.csv") 
+Answers <- select(Answers, -X7)
+Questions <- read_csv("data/Questions_trunc.csv")
+Questions <- select(Questions, -X7)
+
+Qs <- select(Questions, Id, CreationDate)
+colnames(Qs)[2] <- "QuestionDate"
+Ans <- inner_join(Answers, Qs, by = c("ParentId" = "Id"))
+Ans <- Ans %>% mutate(responseTime =  difftime(CreationDate,QuestionDate, units = "hours") )
+Ans <- Ans %>% mutate(order = 0)
+
+```
+
+```{r}
+ggplot(filter(Ans, responseTime > 0 & responseTime < 24))+
+  geom_point(mapping = aes(responseTime,Score))
+```
 
 
 
