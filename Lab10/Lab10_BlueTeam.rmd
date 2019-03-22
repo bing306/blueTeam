@@ -3,8 +3,8 @@ title: "Lab 10"
 author: "Blue Team: Matt Lawson, Nick Zimmerman "
 date: "March 22, 2019"
 output:
-  html_document
-    # df_print: paged
+  html_document:
+    df_print: paged
 ---
 
 
@@ -38,25 +38,17 @@ __Does the `<code>` tag affect the score of a question or answer?__
 ```{r}
 mattq <- questions %>% mutate(ContainsCode = str_detect(Body, pattern="<code>"))
 matta <- answers %>% mutate(ContainsCode = str_detect(Body, pattern="<code>"))
-# head(mattq)
-
 
 questionMeans <- tribble(
   ~Code, ~Mean, 
   "Yes", colMeans( mattq[mattq$ContainsCode, "Score"], na.rm = TRUE),
   "No", colMeans( mattq[!mattq$ContainsCode, "Score"], na.rm = TRUE)
 )
-
-
 answerMeans <- tribble(
   ~Code, ~Mean, 
   "Yes", colMeans( matta[matta$ContainsCode, "Score"], na.rm = TRUE),
   "No", colMeans( matta[!matta$ContainsCode, "Score"], na.rm = TRUE)
 )
-
-# questionMeans
-# answerMeans
-
 
  q <- ggplot(data=questionMeans) + 
   geom_bar(aes(x=Code, weight=Mean, fill=Code)) + 
@@ -70,7 +62,7 @@ grid.arrange(q, a, ncol=2)
 
 ```
 
-Questions and answers that contain code both have higher scores than questions and answers that do not contain code. The difference is much larger in answers. Questions with code in them receive 6 more points on average than questions without code. Answers with code receive 14 more points on average than answers without code. So, if you want to have a question or an answer with a high score, include some code.
+Questions and answers that contain code both have higher scores than questions and answers that do not contain code. The difference is much larger in answers. Questions with code in them receive 6 more points on average than questions without code. Answers with code receive 14 more points on average than answers without code. So, if you want to have a question or an answer with a high score, include some code. This is expected because questions about problems with code should include the code in the question. Similarly, answers about code problems should include the fixed code. Formatting code in the proper "code" section of a stack overflow post makes it very easy for future readers to find and read the code.
 
 ### Brandon
 
@@ -81,7 +73,7 @@ Questions and answers that contain code both have higher scores than questions a
 
 ### Nick
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=F}
 
 Answers <- read_csv("data/Answers_trunc.csv") 
 Answers <- select(Answers, -X7)
@@ -96,7 +88,7 @@ Ans <- Ans %>% mutate(order = 0)
 
 ```
 
-```{r}
+```{r, message=F, warning=F}
 ggplot(filter(Ans, responseTime > 0 & responseTime < 24))+
   geom_point(mapping = aes(responseTime,Score))
 ```
