@@ -10,7 +10,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse); library(stringr); library(forcats); library(lubridate); library(gridExtra)
+library(tidyverse); library(stringr); library(forcats); library(lubridate); #library(gridExtra)
 ```
 
 ```{r, message=F, warning=F}
@@ -24,7 +24,8 @@ answers <- answers %>% select(Id:Body) %>% na.omit()
 
 
 ```{r}
-head(questions); head(answers)
+head(questions)
+head(answers)
 ```
 
 
@@ -96,3 +97,28 @@ ggplot(filter(Ans, responseTime > 0 & responseTime < 24))+
 
 
 ### Bing
+
+My features are is how is the score affected when the word API is in the question?
+
+```{r}
+  APIquestions <- questions %>% filter(grepl("API",Title))
+  APIanswers <- answers %>% filter(grepl("API",Body))
+  
+  #APIquestions
+  #APIanswers
+  
+  t1 <- APIquestions %>% summarise(type = "questions about API", mean = mean(Score))
+  t2 <- APIanswers %>% summarise(type = "answers about API", mean = mean(Score))
+  t3 <- questions %>% summarise(type = "all questions", mean = mean(Score))
+  t4 <- answers %>% summarise(type = "all answers", mean = mean(Score))
+  
+  t5 <- bind_rows(t1,t2, t3, t4)
+  
+  t5
+  
+  ggplot(data = t5) + geom_col(mapping = aes(x = type, y = mean, fill = type))
+  
+
+```
+
+As we can see from our table that questions and answers about API are less than questions and answers in general. In my experience answers on forums about APIs have been hard to understand and implement, so it would make sense that the score is less for them. This can also be attributed to the fact that most people are not looking up and asking questions about APIs, with less exposure it would make it hard for the score for questions and answers about APIs to be more than the general population.
