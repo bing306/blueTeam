@@ -10,7 +10,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse); library(stringr); library(forcats); library(lubridate); #library(gridExtra)
+library(tidyverse); library(stringr); library(forcats); library(lubridate); library(gridExtra);
 ```
 
 ```{r, message=F, warning=F}
