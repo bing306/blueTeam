@@ -1,6 +1,6 @@
 ---
 title: "Lab 10"
-author: "Blue Team: Matt Lawson, Nick Zimmerman "
+author: "Blue Team: Matt Lawson, Nick Zimmerman, Brandon Bowen, Bing Mitchel "
 date: "March 22, 2019"
 output:
   html_document:
@@ -23,14 +23,12 @@ answers <- answers %>% select(Id:Body) %>% na.omit()
 
 
 
-```{r}
-head(questions)
-head(answers)
-```
 
 
 
-## Team
+
+## Team What effects the score of a question the most?
+We looked at if the question contained code, started with How, the amount of time it took to answer the question and API. From our data and graphs it can be seen that code, How questions and time all have positive effects on the team scores. Although API actualy had a negative affect which can be due to the difficulty of the questions. A good question to ask to expect fast respond time is To start the question with How which will be searched alot by other users and to include code for the question since we dealing with a type of forumn about python. 
 
 
 
@@ -67,6 +65,26 @@ Questions and answers that contain code both have higher scores than questions a
 
 ### Brandon
 
+ Does opening the question with a question word such as how increase feed back.
+```{r}
+brandonq <- questions %>% mutate(How = str_detect(Title, pattern="^How"))
+brandonMeans <- tribble(~How, ~Mean, "Yes", colMeans( brandonq[brandonq$How, "Score"], na.rm = TRUE),
+"No", colMeans( brandonq[!brandonq$How, "Score"], na.rm = TRUE)
+)
+
+
+ggplot(data=brandonMeans) + 
+  geom_bar(aes(x=How, weight=Mean, fill=How)) + 
+  labs(title="Average Score for Questions Starting with How", x="Begins with How", y="Score") + 
+   guides(fill=FALSE)
+
+
+
+
+
+```
+
+From the above graph it can be seen that that questions that begin with How on average have about 15 more points then questions that don't begin with How. This can be because How grabs a persons attention when looking for questions to answer. Also when people look up similar problems most people will begin their question with "How" when they don't know how to do something.
 
 
 
