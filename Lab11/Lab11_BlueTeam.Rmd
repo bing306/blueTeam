@@ -40,19 +40,51 @@ head(babynames, 2)
 ```{r}
 ariel <- filter(babynames, str_detect(babynames$name, "Ar[iy]+.l+[^a]?$")) %>%
   filter(year==1973 | year==1988 | year==1990) %>%
-  group_by(year, name)#%>% summarize(count = sum(n), sumprop = sum(prop))# %>% mutate(name="Ariel")
+  group_by(year, name) %>% summarize(count = sum(n), sumprop = sum(prop))
+ariel1973 <- ariel %>% filter(year==1973) %>% nrow()
+ariel1988 <- ariel %>% filter(year==1988) %>% nrow()
+ariel1990 <- ariel %>% filter(year==1990) %>% nrow()
 ariel
 
+rachel <- filter(babynames, str_detect(babynames$name, "Ra[ey]?ch.*l")) %>%
+  filter(year==1973 | year==1988 | year==1990) %>%
+  group_by(year, name) %>% summarize(count = sum(n), sumprop = sum(prop))
 
-# rachel <- filter(babynames, str_detect(babynames$name, "Ra[ey]?ch.*l")) %>%
-#   filter(year==1973 | year==1988 | year==1990) %>%
-#   group_by(year) %>% 
-#   summarize(count = sum(n), sumprop = sum(prop)) %>% mutate(name="Ariel")
-# 
-# total <- ariel %>% rbind(rachel) %>% arrange(year)
-# total
-# 
-# total %>% group_by(year) %>% summarize(totalProp = sum(sumprop))
+rachel1973 <- rachel %>% filter(year==1973) %>% nrow()
+rachel1988 <- rachel %>% filter(year==1988) %>% nrow()
+rachel1990 <- rachel %>% filter(year==1990) %>% nrow()
+
+
+arielRachel <- tribble(
+  ~Name, ~Year, ~`Unique Spellings`,
+  "Ariel", 1973, ariel1973,
+  "Ariel", 1988, ariel1988,
+  "Ariel", 1990, ariel1990,
+  "Rachel", 1973, rachel1973,
+  "Rachel", 1988, rachel1988,
+  "Rachel", 1990, rachel1990
+)
+
+# arielRachel
+```
+
+```{r}
+
+
+
+ariel <- filter(babynames, str_detect(babynames$name, "Ar[iy]+.l+[^a]?$")) %>%
+  filter(sex=="F" & (year==2017 | year==1988 | year==1990)) %>%
+  group_by(year) %>% summarize(count = sum(n), sumprop = sum(prop)) %>% mutate(name="Ariel")
+
+rachel <- filter(babynames, str_detect(babynames$name, "Ra[ey]?ch.*l")) %>%
+  filter(sex=="F" & (year==2017 | year==1988 | year==1990)) %>%
+ group_by(year) %>% summarize(count = sum(n), sumprop = sum(prop)) %>% mutate(name="Rachel")
+
+
+
+total <- ariel %>% rbind(rachel) %>% arrange(year)  %>% group_by(year) %>% summarize(totalProp = sum(sumprop))
+total
+
 ```
 
 
