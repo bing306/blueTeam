@@ -25,11 +25,32 @@ head(babynames, 2)
 ## Individual plots of your name’s popularity over time
 
 ```{r}
+startWithMat <- filter(babynames, str_detect(babynames$name, "^Mat")) %>% group_by(year) %>% 
+  summarize(sumprop = sum(prop))
 
+Matt <- babynames %>% 
+  filter(str_detect(name, paste(c( "^Matthew$", "^Mathew$", "^Mat$", "^Matt$"),collapse = '|'))) %>%
+  group_by(year) %>% 
+  summarize(sumprop = sum(prop))
+
+ggplot() + 
+  geom_line(data=startWithMat, mapping=aes(x=year, y=sumprop, color="Starts with 'Mat'"), size=1.25) + 
+  geom_line(data=Matt, mapping=aes(x=year, y=sumprop, color="Matt/Matthew"), size=1.25) + 
+  labs(x="year", y="Proportion", title="Start with 'Mat' vs. name is 'Matt/Matthew' (or a common spelling)" , color="Type")
+
+nameNowBorn <- Matt %>% filter(year==1998 | year==2017)
+startNowBorn <- startWithMat %>% filter(year==2017)
+
+
+nameDif <- as.numeric(nameNowBorn[2,2] - nameNowBorn[1,2])
+nowDif <- as.numeric(nameNowBorn[2,2] / startNowBorn[1,2] )
+
+nameDif*100
+nowDif*100
 ```
 
-
-
+My name has dropped in percentage of total names by 0.99% since I was born until now. My name makes up 0.3
+My name makes up 44.7% of the names that start with the first three letters.
 
 
 
@@ -41,11 +62,11 @@ head(babynames, 2)
 ariel <- filter(babynames, str_detect(babynames$name, "Ar[iy]+.l+[^a]?$")) %>%
   filter(year==1973 | year==1988 | year==1990) %>%
   group_by(year, name) %>% summarize(count = sum(n), sumprop = sum(prop))
+
 ariel1973 <- ariel %>% filter(year==1973) %>% nrow()
 ariel1988 <- ariel %>% filter(year==1988) %>% nrow()
 ariel1990 <- ariel %>% filter(year==1990) %>% nrow()
-ariel
-
+#############################################################################################################
 rachel <- filter(babynames, str_detect(babynames$name, "Ra[ey]?ch.*l")) %>%
   filter(year==1973 | year==1988 | year==1990) %>%
   group_by(year, name) %>% summarize(count = sum(n), sumprop = sum(prop))
@@ -64,29 +85,37 @@ arielRachel <- tribble(
   "Rachel", 1988, rachel1988,
   "Rachel", 1990, rachel1990
 )
+```
+<br> </br>
+__Number of different ways to spell [Ariel, Rachel] for different years__
 
-# arielRachel
+```{r, echo=F}
+arielRachel
 ```
 
+<br> </br>
+<br> </br>
+
 ```{r}
-
-
-
 ariel <- filter(babynames, str_detect(babynames$name, "Ar[iy]+.l+[^a]?$")) %>%
-  filter(sex=="F" & (year==2017 | year==1988 | year==1990)) %>%
+  filter(sex=="F" & (year==1973 | year==1988 | year==1990 | year==2017)) %>%
   group_by(year) %>% summarize(count = sum(n), sumprop = sum(prop)) %>% mutate(name="Ariel")
 
 rachel <- filter(babynames, str_detect(babynames$name, "Ra[ey]?ch.*l")) %>%
-  filter(sex=="F" & (year==2017 | year==1988 | year==1990)) %>%
+  filter(sex=="F" & (year==1973 | year==1988 | year==1990 | year==2017)) %>%
  group_by(year) %>% summarize(count = sum(n), sumprop = sum(prop)) %>% mutate(name="Rachel")
 
 
 
 total <- ariel %>% rbind(rachel) %>% arrange(year)  %>% group_by(year) %>% summarize(totalProp = sum(sumprop))
-total
-
+names(total)[2] <- "Chance"
 ```
+<br> </br>
+__Chances a girl would be named either Rachel or Ariel (Including different spellings) for the given year__
 
+```{r, echo=F}
+total
+```
 
 
 
@@ -102,14 +131,14 @@ total
 ## Your names
 
 ```{r}
-Matt1 <- babynames %>% filter(year<=2017 & year>=1979) %>% 
+Matt <- babynames %>% filter(year<=2017 & year>=1979) %>% 
   filter(str_detect(name, paste(c( "^Matthew$", "^Mathew$", "^Mat$", "^Matt$"),collapse = '|'))) %>%
   group_by(year) %>%
   summarize( name = "Matthew", totalProp = sum(prop))
-mattBirthYear <- subset(Matt1, year == 1998)
+mattBirthYear <- subset(Matt, year == 1998)
 ggplot() + 
-  geom_bar(data = Matt1, mapping=aes(x=year, weight=totalProp), fill="orange", color="black") +
-  geom_bar(dat=mattBirthYear, mapping=aes(x=year, weight=totalProp), fill="red", color="black") + 
-  labs(title="Number of babies named 'Matt' from 1979-2017", y="number", caption="My birth year (1998) in red.")
+  geom_line(data = Matt, mapping=aes(x=year, y=totalProp), color="orange") +
+  geom_point(dat=mattBirthYear, mapping=aes(x=year, y=totalProp), color="red", size=3) + 
+  labs(title="Number of babies named 'Matt' from 1979-2017", y="Proportion", caption="My birth year (1998) in red.")
 
 ```
