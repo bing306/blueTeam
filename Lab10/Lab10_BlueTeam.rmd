@@ -96,6 +96,22 @@ ggplot(filter(Ans, responseTime > 0 & responseTime < 24))+
   geom_point(mapping = aes(responseTime,Score))
 ```
 
+In this graph we can certainly see that the answeres with a very quick response time also are much more likely to recieve a greater score. 
+
+
+```{r}
+
+users <- summarise(group_by(select(Ans, OwnerUserId, Score ), OwnerUserId), total = sum(Score))
+users <- na.omit(users)
+
+top_users <- head(arrange(users,desc(total)))
+
+show(top_users)
+
+```
+
+Here is a chart that shows the top 6 users and their total combined score.
+This chart shows that some of the highest scored answers were posted by the same uses. 
 
 
 ### Bing
