@@ -1,0 +1,19 @@
+---
+title: "Lab 11"
+author: 'Blue Team: Matt Lawson,'
+date: "4/3/2019"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse); library(babynames); library(forcats)
+```
+
+
+```{r}
+head(babynames)
+```
+

@@ -10,7 +10,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse); library(stringr); library(forcats); library(lubridate); library(gridExtra);
+library(tidyverse); library(stringr); library(forcats); library(lubridate); library(gridExtra)
 ```
 
 ```{r, message=F, warning=F}
@@ -86,6 +86,8 @@ colnames(Qs)[2] <- "QuestionDate"
 Ans <- inner_join(Answers, Qs, by = c("ParentId" = "Id"))
 Ans <- Ans %>% mutate(responseTime =  difftime(CreationDate,QuestionDate, units = "hours") )
 Ans <- Ans %>% mutate(order = 0)
+
+Ans
 
 ```
 
