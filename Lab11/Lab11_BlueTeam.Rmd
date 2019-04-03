@@ -1,7 +1,7 @@
 ---
 title: "Lab 11"
 author: 'Blue Team: Matt Lawson,'
-date: "4/3/2019"
+date: "4/5/2019"
 output:
   html_document:
     df_print: paged
@@ -9,11 +9,66 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse); library(babynames); library(forcats)
+library(tidyverse); library(babynames); library(forcats); library(stringr)
+```
+
+# About `babynames` package
+  - Baby name data provided by the SSA (Social Security Administration)
+  - Includes names with at least 5 uses
+  - Includes year, sex, name, number of occurances, and prop
+      - Prop = proportion of people of that sex with that name born in that year
+
+
+
+## Individual plots of your name’s popularity over time
+```{r}
+Matt1 <- babynames %>% filter(year<=2018 & year>=1998) %>% 
+  filter(str_detect(name, paste(c( "^Matthew$", "^Mathew$", "^Mat$", "^Matt$"),collapse = '|'))) %>%
+  group_by(year) %>%
+  summarize( name = "Matthew", total = sum(n))
+
+ggplot(data=Matt1) +
+  geom_bar(aes(x=year, weight=total), fill="orange", color="black") +
+  labs(title="Number of babies named 'matt' from 1998-2017", y="number")
+
+#######################################################################
+Matt2 <- babynames %>% filter(year>=1979 & year<=1998) %>% 
+  filter(str_detect(name, paste(c( "^Matthew$", "^Mathew$", "^Mat$", "^Matt$"),collapse = '|'))) %>%
+  group_by(year) %>%
+  summarize( name = "Matthew", total = sum(n))
+
+
+ggplot(data=Matt2) +
+  geom_bar(aes(x=year, weight=total), fill="orange", color="black") +
+  labs(title="number of babies named 'Matt' from 1979-1998", y="number")
+
 ```
 
 
-```{r}
+
+
+
+
+
+
+## Ariel and Rachel regexs
+
+
+
+
+
+
+
+## The _Little Mermaid_ Effect
+
+
+
+
+
+
+## Your names
+
+```{r, include=F}
 head(babynames)
 ```
 
