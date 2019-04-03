@@ -18,29 +18,13 @@ library(tidyverse); library(babynames); library(forcats); library(stringr)
   - Includes year, sex, name, number of occurances, and prop
       - Prop = proportion of people of that sex with that name born in that year
 
-
+```{r, include=F}
+head(babynames, 2)
+```
 
 ## Individual plots of your name’s popularity over time
+
 ```{r}
-Matt1 <- babynames %>% filter(year<=2018 & year>=1998) %>% 
-  filter(str_detect(name, paste(c( "^Matthew$", "^Mathew$", "^Mat$", "^Matt$"),collapse = '|'))) %>%
-  group_by(year) %>%
-  summarize( name = "Matthew", total = sum(n))
-
-ggplot(data=Matt1) +
-  geom_bar(aes(x=year, weight=total), fill="orange", color="black") +
-  labs(title="Number of babies named 'matt' from 1998-2017", y="number")
-
-#######################################################################
-Matt2 <- babynames %>% filter(year>=1979 & year<=1998) %>% 
-  filter(str_detect(name, paste(c( "^Matthew$", "^Mathew$", "^Mat$", "^Matt$"),collapse = '|'))) %>%
-  group_by(year) %>%
-  summarize( name = "Matthew", total = sum(n))
-
-
-ggplot(data=Matt2) +
-  geom_bar(aes(x=year, weight=total), fill="orange", color="black") +
-  labs(title="number of babies named 'Matt' from 1979-1998", y="number")
 
 ```
 
@@ -53,6 +37,23 @@ ggplot(data=Matt2) +
 
 ## Ariel and Rachel regexs
 
+```{r}
+ariel <- filter(babynames, str_detect(babynames$name, "Ar[iy]+.l+[^a]?$")) %>%
+  filter(year==1973 | year==1988 | year==1990) %>%
+  group_by(year, name)#%>% summarize(count = sum(n), sumprop = sum(prop))# %>% mutate(name="Ariel")
+ariel
+
+
+# rachel <- filter(babynames, str_detect(babynames$name, "Ra[ey]?ch.*l")) %>%
+#   filter(year==1973 | year==1988 | year==1990) %>%
+#   group_by(year) %>% 
+#   summarize(count = sum(n), sumprop = sum(prop)) %>% mutate(name="Ariel")
+# 
+# total <- ariel %>% rbind(rachel) %>% arrange(year)
+# total
+# 
+# total %>% group_by(year) %>% summarize(totalProp = sum(sumprop))
+```
 
 
 
@@ -68,7 +69,15 @@ ggplot(data=Matt2) +
 
 ## Your names
 
-```{r, include=F}
-head(babynames)
-```
+```{r}
+Matt1 <- babynames %>% filter(year<=2017 & year>=1979) %>% 
+  filter(str_detect(name, paste(c( "^Matthew$", "^Mathew$", "^Mat$", "^Matt$"),collapse = '|'))) %>%
+  group_by(year) %>%
+  summarize( name = "Matthew", totalProp = sum(prop))
+mattBirthYear <- subset(Matt1, year == 1998)
+ggplot() + 
+  geom_bar(data = Matt1, mapping=aes(x=year, weight=totalProp), fill="orange", color="black") +
+  geom_bar(dat=mattBirthYear, mapping=aes(x=year, weight=totalProp), fill="red", color="black") + 
+  labs(title="Number of babies named 'Matt' from 1979-2017", y="number", caption="My birth year (1998) in red.")
 
+```
