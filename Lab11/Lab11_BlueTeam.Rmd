@@ -142,3 +142,40 @@ ggplot() +
   labs(title="Number of babies named 'Matt' from 1979-2017", y="Proportion", caption="My birth year (1998) in red.")
 
 ```
+
+
+
+## Who Did What
+
+__Matt__
+
+  - Created and setup the team markdown file
+  - Created the template for the name popularity over time
+  - Completed the Ariel and Rachel Regex section
+  - Created the template for the first plot of the names section
+
+<br></br>
+<br></br>
+
+
+__Brandon__
+
+<br></br>
+<br></br>
+
+
+
+__Bing__
+
+Bing put in what part of the lab you did
+
+<br></br>
+<br></br>
+
+
+__Nick__
+
+Nick put in what part of the lab you did
+
+<br></br>
+<br></br>
