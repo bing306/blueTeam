@@ -99,11 +99,6 @@ ggplot(mapping = aes(year,sumprop))+
 This plot shows the proportions of babies named Nick (and spelling variations) and all babies with names that start with the letters 'Nic'.  As you can see they follow the same basic trends, but the larger one is so much larger because there are many female babies that were born that also have names that start with 'Nic' like "Nicole","Nicey", etc. 
 
 
-
-
-
-
-
 ## Ariel and Rachel regexs
 
 ```{r}
@@ -232,7 +227,15 @@ ggplot() +
 
 ```
 
+```{r}
+Nick <- babynames %>% filter(year <= 2017 & year >= 1967) %>%
+    filter(str_detect(name, paste(c( "^Ni(c|ck)$", "^Ni(c|ch)olas$"),collapse = '|')))
 
+ggplot(data = Nick %>% group_by(year) %>% summarize(sumprop = sum(prop))) +
+  geom_line(mapping = aes(x= year, y= sumprop))+
+  geom_vline(xintercept = 1992)
+
+```
 
 
 ## Who Did What
