@@ -123,9 +123,50 @@ total
 
 ## The _Little Mermaid_ Effect
 
+__Did The Little Mermaid cause more baby girls to be named Ariel (and various spellings)?__
+
+
+```{r, echo=F}
+moreAriel <- babynames %>% 
+  filter(str_detect(babynames$name, "Ar[iy]+.l+[^a]?$") & babynames$sex == "F") %>% 
+  filter(between(year, 1989-10, 1989+10)) %>% 
+  group_by(year) %>% 
+  summarize(name="Ariel", number = sum(n), totalProp = sum(prop))
+# moreAriel
+
+ggplot(data=moreAriel) + 
+  geom_line(mapping=aes(x=year, y=number), color="orange") +
+  geom_vline(aes(xintercept=1989), color="red") + 
+  labs(x="Year", y='Number of babies"', title='Baby girls named "Ariel" (or another common spelling)', 
+       caption = 'The red line shows the year that "The Little Mermaid" was released.')
+```
+
+From the year before the movie released to 2 years after the movie released, the number of baby girls named "Ariel" rose from under 2000 to over 7000. But how did the number of baby girls increase in that time?
+
+
+```{r, echo=F}
+allGirls <- babynames %>% 
+  filter(sex=="F") %>%
+  filter(between(year, 1989-10, 1989+10)) %>% 
+  group_by(year) %>% 
+  summarize(number = sum(n), totalProp = sum(prop))
+
+ggplot() + 
+  geom_line(data=allGirls, mapping=aes(x=year, y=number), color="blue") +
+  geom_vline(aes(xintercept=1989), color="red") +
+  labs(x="Year", y='Total Number of babies"', title='Number of baby girls born', 
+       caption = 'The red line shows the year that "The Little Mermaid" was released.')
+  
+```
+
+This plot shows that the number of baby girls actually increased at a similar rate. Could this mean that the increase in girls named "Ariel" could be simply from the increase in the number of baby girls?
+
+e
 
 
 
+
+__What was the change in proportion in female Ariel baby names?__
 
 
 ## Your names
@@ -152,7 +193,9 @@ __Matt__
   - Created and setup the team markdown file
   - Created the template for the name popularity over time
   - Completed the Ariel and Rachel Regex section
+  - Worked on _The Little Mermaid_ Effect section
   - Created the template for the first plot of the names section
+  
 
 <br></br>
 <br></br>
