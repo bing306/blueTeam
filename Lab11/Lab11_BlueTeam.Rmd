@@ -98,6 +98,26 @@ ggplot(mapping = aes(year,sumprop))+
 
 This plot shows the proportions of babies named Nick (and spelling variations) and all babies with names that start with the letters 'Nic'.  As you can see they follow the same basic trends, but the larger one is so much larger because there are many female babies that were born that also have names that start with 'Nic' like "Nicole","Nicey", etc. 
 
+## Brandon
+
+```{r}
+startWithBra <- filter(babynames, str_detect(babynames$name, "^Bra")) %>% group_by(year) %>% 
+  summarize(sumprop = sum(prop))
+
+Brandon <- babynames %>% 
+  filter(str_detect(name, paste(c( "^Brand"),collapse = '|'))) %>%
+  group_by(year) %>% 
+  summarize(sumprop = sum(prop))
+
+ggplot() + 
+  geom_line(data=startWithBra, mapping=aes(x=year, y=sumprop, color="Starts with 'Bra'"), size=2) + 
+  geom_line(data=Brandon, mapping=aes(x=year, y=sumprop, color="Brandon variants"), size=2) + 
+  labs(x="year", y="Proportion", title="Start with Bra versus Brandon names" , color="Type")
+
+
+```
+
+FOr my graph I only used the filter for names that start with Brand becuase in my research all names that have the samn origins as Brandon such as their english roots are only speeled differently at the end of their name such as an "an", "en", "yn", "in" and more. Furthermore no other names that I could in the data with Brand as the beggining affect the data or the names with Brand originate from the same meaning even if speeled differently. My name since 1999 and all other forms has been drooping off in popularity increasingly
 
 
 
@@ -232,6 +252,20 @@ ggplot() +
 
 ```
 
+
+
+```{r}
+Brand <- babynames %>% filter(year<=2017 & year>=1981) %>% 
+  filter(str_detect(name, paste(c( "^Brand" ),collapse = '|'))) %>%
+  group_by(year) %>%
+  summarize( name = "Brandon", totalProp = sum(prop))
+BirthYear <- subset(Brand, year == 1999)
+ggplot() + 
+  geom_line(data = Brand, mapping=aes(x=year, y=totalProp), color="black") +
+  geom_point(dat= BirthYear, mapping=aes(x=year, y=totalProp), color="blue", size=5) + 
+  labs(title="Babies named Brandon or variations from 1981 to 2017", y="Proportion")
+
+```
 
 
 
