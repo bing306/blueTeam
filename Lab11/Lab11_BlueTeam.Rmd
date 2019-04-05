@@ -52,6 +52,54 @@ nowDif*100
 My name has dropped in percentage of total names by 0.99% since I was born until now. My name makes up 0.3
 My name makes up 44.7% of the names that start with the first three letters.
 
+##Bing
+
+```{r, echo = TRUE}
+Bing <- babynames %>%  
+  filter(str_detect(name, paste(c( "^Bingham$", "^Bing$"),collapse = '|'))) %>%
+  group_by(year) %>%
+  summarize( name = "Bingham", totalProp = sum(prop))
+
+Bin <- babynames  %>% filter( str_detect(babynames$name, "^Bin")) %>% group_by(year) %>% 
+  summarize(name = "Bin",totalProp = sum(prop))
+
+bingBirthYear <- subset(Bing, year == 1980 | year == 2017)
+
+print(bingBirthYear) 
+
+ggplot() +
+geom_line(data = Bin, mapping=aes(x=year, y=totalProp), color="blue") +
+  geom_line(data = Bing, mapping=aes(x=year, y=totalProp), color="orange") +
+  geom_vline(xintercept = 1998, linetype= "solid", color = "red", size=0.25) + 
+  labs(title="Number of babies named 'Bingham' from 1979-2017", y="Proportion", caption="My birth year (1998) in red.")
+```
+While my name did not register for the year that I was born, I chose 1980 which was the closest year before I was born. In 1980, Bingham was 0.00027 of the population, however it has gone up since then and is up to 0.000509 of the population.
+
+
+## Nick
+
+```{r}
+startsWithNic <- babynames %>% 
+  filter(str_detect(babynames$name, "^Nic")) %>%
+  group_by(year) %>% summarize(sumprop = sum(prop))
+
+Nick <- babynames %>% 
+  filter(str_detect(name, paste(c( "^Ni(c|ck)$", "^Ni(c|ch)olas$"),collapse = '|'))) %>%
+  group_by(year) %>% summarize(sumprop = sum(prop))
+
+
+ggplot(mapping = aes(year,sumprop))+
+  geom_line(data = startsWithNic, mapping = aes(color = "Starts with Nic")) +
+  geom_line(data = Nick, mapping = aes(color = "Nick")) +
+  labs(x="Year", y="Proportion", title="Starts with 'Nic' vs. name is 'Nick/Nicholas'" , color="Type")
+
+
+```
+
+This plot shows the proportions of babies named Nick (and spelling variations) and all babies with names that start with the letters 'Nic'.  As you can see they follow the same basic trends, but the larger one is so much larger because there are many female babies that were born that also have names that start with 'Nic' like "Nicole","Nicey", etc. 
+
+
+
 
 
 
@@ -202,26 +250,6 @@ ggplot() +
 ```
 
 
-## Nick
-
-```{r}
-startsWithNic <- babynames %>% 
-  filter(str_detect(babynames$name, "^Nic")) %>%
-  group_by(year) %>% summarize(sumprop = sum(prop))
-
-Nick <- babynames %>% 
-  filter(str_detect(name, paste(c( "^Ni(c|ck)$", "^Ni(c|ch)olas$"),collapse = '|'))) %>%
-  group_by(year) %>% summarize(sumprop = sum(prop))
-
-
-ggplot()+
-  geom_line(data = startsWithNic, mapping = aes(year,sumprop,color = "Starts with Nic")) +
-  geom_line(data = Nick, mapping = aes(year,sumprop,color = "Nick")) +
-  labs(x="year", y="Proportion", title="Start with 'Nic' vs. name is 'Nick/Nicholas'" , color="Type")
-
-```
-
-This plot shows the proportions of babies named Nick (and spelling variations) and all babies with names that start with the letters 'Nic'.  As you can see they follow the same basic trends, but the larger one is so much larger because there are many female babies that were born that also have names that start with 'Nic' like "Nicole","Nicey", etc. 
 
 
 ## Who Did What
@@ -248,7 +276,7 @@ __Brandon__
 
 __Bing__
 
-Bing put in what part of the lab you did
+Created Individual Plot
 
 <br></br>
 <br></br>
@@ -256,7 +284,7 @@ Bing put in what part of the lab you did
 
 __Nick__
 
-Nick put in what part of the lab you did
+Created individual plot
 
 <br></br>
 <br></br>
