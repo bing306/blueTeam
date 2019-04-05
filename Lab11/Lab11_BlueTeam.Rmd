@@ -137,7 +137,7 @@ moreAriel <- babynames %>%
 ggplot(data=moreAriel) + 
   geom_line(mapping=aes(x=year, y=number), color="orange") +
   geom_vline(aes(xintercept=1989), color="red") + 
-  labs(x="Year", y='Number of babies"', title='Baby girls named "Ariel" (or another common spelling)', 
+  labs(x="Year", y='Number of babies', title='Baby girls named "Ariel" (or another common spelling)', 
        caption = 'The red line shows the year that "The Little Mermaid" was released.')
 ```
 
@@ -154,14 +154,31 @@ allGirls <- babynames %>%
 ggplot() + 
   geom_line(data=allGirls, mapping=aes(x=year, y=number), color="blue") +
   geom_vline(aes(xintercept=1989), color="red") +
-  labs(x="Year", y='Total Number of babies"', title='Number of baby girls born', 
+  labs(x="Year", y='Total Number of babies', title='Number of baby girls born', 
        caption = 'The red line shows the year that "The Little Mermaid" was released.')
   
 ```
 
 This plot shows that the number of baby girls actually increased at a similar rate. Could this mean that the increase in girls named "Ariel" could be simply from the increase in the number of baby girls?
 
-e
+
+```{r}
+startWithVowel <- babynames %>% 
+  filter(str_detect(name, "^[AEIOUaeiou]")) %>%
+  filter(between(year, 1988, 1990) & sex=="F") %>%
+  group_by(year) %>%
+  summarize(name="Starts with vowel", n = sum(n), prop = sum(prop))
+
+ariel <-  babynames %>% 
+  filter(str_detect(name, "Ar[iy]+.l+[^a]?$")) %>%
+  filter(between(year, 1988, 1990) & sex=="F") %>%
+  group_by(year) %>%
+  summarize(name="Ariel", n = sum(n), prop = sum(prop))
+  
+startWithVowel <- rbind(ariel, startWithVowel)
+startWithVowel
+
+```
 
 
 
