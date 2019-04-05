@@ -1,6 +1,6 @@
 ---
 title: "Lab 11"
-author: 'Blue Team: Matt Lawson,'
+author: 'Blue Team: Matt Lawson, Brandon Bowen, Bing Mitchel, Nick Zimmerman'
 date: "4/5/2019"
 output:
   html_document:
@@ -277,6 +277,9 @@ ggplot(data = Nick %>% group_by(year) %>% summarize(sumprop = sum(prop))) +
 
 ```
 
+## Name changes over the years 
+From the three names we have Both Brandon and Matt's name have been on a steady decline with Brandon's name on lowest end of popularity. For the name Nick and other various spellings it ddin't go on a decline until 1995 where it decreased alot in popularity
+
 
 ## Who Did What
 
@@ -287,7 +290,8 @@ __Matt__
   - Completed the Ariel and Rachel Regex section
   - Worked on _The Little Mermaid_ Effect section
   - Created the template for the first plot of the names section
-  
+
+
 
 <br></br>
 <br></br>
@@ -295,6 +299,9 @@ __Matt__
 
 __Brandon__
 
+-Created indivdual plots 
+-helped answer the team Questions. 
+-Provided data for the Little mermaid effect.
 <br></br>
 <br></br>
 
