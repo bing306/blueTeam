@@ -57,13 +57,15 @@ perm_cor <- function(perms = 1000, x, y){
   }
   
   # Return new updated vector
-  return(output)
+  return(enframe(output, name = NULL, value = "value"))
 }
 ```
 
 
 
 ### Nick
+
+### Two sample permutation
 
 ```{r}
 
@@ -78,21 +80,17 @@ ggplot(data = perm_mean(perms = 1000, America_Australia$lifeExp, 12))+
 ```
 
 
+### Corelation Permutation
 
-### Matt
+Is there a relation between life expectancy and the disparaty between population and gdp
 
+```{r}
 
+gap_by_country <- gapminder %>% group_by(country) %>% summarise(lifeExp = mean(lifeExp), pop = mean(pop), gdpPercap = mean(gdpPercap))
 
+ggplot(data = perm_cor(perms = 1000, gap_by_country$pop, gap_by_country$gdpPercap))+
+  geom_density(mapping = aes(x = value))
 
-
-### Bing
-
-
-
-
-
-### Brandon
-
-
+```
 
 
