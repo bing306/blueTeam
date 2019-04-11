@@ -65,7 +65,17 @@ perm_cor <- function(perms = 1000, x, y){
 
 ### Nick
 
+```{r}
 
+America_Australia <- filter(gapminder, country == "United States" | country == "Australia")
+America_lifeExp <- filter(gapminder, country == "United States") %>% summarise(mean = mean(lifeExp))
+
+ggplot(data = perm_mean(perms = 1000, America_Australia$lifeExp, 12))+
+  geom_density(mapping = aes(x = value))+
+  geom_vline(xintercept = America_lifeExp$mean)
+
+
+```
 
 
 
