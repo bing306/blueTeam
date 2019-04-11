@@ -2,7 +2,9 @@
 title: "Lab 12"
 author: 'Blue Team: Matt Lawson,'
 date: "4/10/2019"
-output: html_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -14,7 +16,7 @@ library(tidyverse); library(gapminder)
 
 
 ```{r}
-head(gapminder, 2)
+head(gapminder_unfiltered, 2)
 dim(gapminder)
 ```
 
