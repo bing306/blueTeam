@@ -17,57 +17,33 @@ library(tidyverse); library(gapminder)
 
 ```{r}
 head(gapminder_unfiltered, 2)
-dim(gapminder)
+# dim(gapminder_unfiltered)
+data=gapminder_unfiltered
 ```
 
 
 # Two-Sample Permutation Test
 
 ```{r}
-perm_mean <- function(perms = 1000, values, n1)
-{
-  ## Variables ##
-  # perms: The number of permutations 
-  # values (num): 
-  # n1 (int): Size of group 1
-  ###############
-  
-  # Step 1:
-  # Create vector of zeroes of length "perms" to store
-  # permuted mean differnces
+perm_mean <- function(perms = 1000, values, n1) {
   output <- vector("double", length(perms))
   
-  # Loop throught number of permutations
-  for (i in c(1:perms))
-  {
-    # Step 2:
-    # Randomly separate vector "values" into disjoint 
-    # groups of size "n1" and "length(values) - n1" respectively
-    
+  for (i in c(1:perms)) {
     A <- sample(values, n1)
     B <- setdiff(values, A)
-    
-    # Step 3:
-    # Compute the sample means for the two groups from 
-    # step 2
+
     meanA <- mean(A)
     meanB <- mean(B)
     
-    # Step 4: 
-    # Compute the difference in sample means, store the
-    # value in the vector from step 1
     output[[i]] <- meanA - meanB
   }
-  
-  # Step 5:
-  # Return new updated vector, created in step 1
   return(output)
 }
 ```
   
 ```{r}
-set.seed(1)
-diffs <- perm_mean(1000, gapminder$lifeExp, 1000)
+# set.seed(1)
+diffs <- perm_mean(1000, data$lifeExp, 1000)
 mean(diffs)
 hist(diffs)
 ```
@@ -80,42 +56,19 @@ hist(diffs)
 
 
 ```{r}
-perm_cor <- function(perms = 1000, x, y)
-{
-  ## Variables ##
-  # perms: The number of permutations 
-  # x: Vector 1 - for computing correlation
-  # y: Vector 2 - for computing correlation
-  ###############
-  
-  # Step 1:
-  # Create vector of zeroes of length "perms" to store
-  # permuted mean differnces
+perm_cor <- function(perms = 1000, x, y) {
   output <- vector("double", length(perms))
   
-  # Loop throught number of permutations
-  for (i in c(1:perms))
-  {
-    # Step 2:
-    # Randomly mix up the values in the vector "y"
+  for (i in c(1:perms)) {
     y <- sample(y)
-    
-    # Step 3:
-    # Compute the correlation between x and the randomly mixed
-    # up y-vector. Store this value in the vector from step 1.
     output[[i]] <- cor(x, y)
-    
   }
-  
-  # Step 4:
-  # Return new updated vector, created in step 1
   return(output)
-  
 }
 ```
 
 ```{r}
-diffs <- perm_cor(1000, gapminder$lifeExp, gapminder$pop)
+diffs <- perm_cor(1000, data$lifeExp, data$pop)
 hist(diffs)
 ```
 

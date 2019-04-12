@@ -1,8 +1,10 @@
 ---
 title: "Lab 12"
-author: "Nick"
-date: "4/9/2019"
-output: html_document
+author: "Blue Team: Nick Zimmerman, Matt Lawson, "
+date: "4/12/2019"
+output:
+  html_document:
+    df_print: paged
 ---
 
 
@@ -67,14 +69,14 @@ perm_cor <- function(perms = 1000, x, y){
 
 ### Two sample permutation
 
-```{r}
+```{r, warning=F, message=F}
+set.seed(9999)
+America_Australia <- filter(gapminder_unfiltered, country == "United States" | country == "Australia")
+America_lifeExp <- filter(gapminder_unfiltered, country == "United States") %>% summarise(mean = mean(lifeExp))
 
-America_Australia <- filter(gapminder, country == "United States" | country == "Australia")
-America_lifeExp <- filter(gapminder, country == "United States") %>% summarise(mean = mean(lifeExp))
-
-ggplot(data = perm_mean(perms = 1000, America_Australia$lifeExp, 12))+
-  geom_density(mapping = aes(x = value))+
-  geom_vline(xintercept = America_lifeExp$mean)
+ggplot(data = perm_mean(perms = 1000, America_Australia$lifeExp, 12)) +
+  geom_histogram(mapping = aes(x = value),color="black", fill="white") +
+  geom_vline(xintercept = America_lifeExp$mean, color="red", size=1.25)
 
 
 ```
@@ -82,15 +84,17 @@ ggplot(data = perm_mean(perms = 1000, America_Australia$lifeExp, 12))+
 
 ### Corelation Permutation
 
-Is there a relation between life expectancy and the disparaty between population and gdp
+Is there a relation between life expectancy and the disparaty between population and gdp?
 
-```{r}
+```{r, warning=F, message=F}
 
-gap_by_country <- gapminder %>% group_by(country) %>% summarise(lifeExp = mean(lifeExp), pop = mean(pop), gdpPercap = mean(gdpPercap))
+gap_by_country <- gapminder_unfiltered %>% group_by(country) %>% summarise(lifeExp = mean(lifeExp), pop = mean(pop), gdpPercap = mean(gdpPercap))
 
 ggplot(data = perm_cor(perms = 1000, gap_by_country$pop, gap_by_country$gdpPercap))+
-  geom_density(mapping = aes(x = value))
+  geom_histogram(mapping = aes(x = value),color="black", fill="white") + 
+  labs(x="Correlation")
 
 ```
 
 
+This plot shows that for nearly all of the trials, the correlation between population and GDP per Capita is very close to 0. WE conclude that they are not corrrelated
