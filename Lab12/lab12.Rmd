@@ -67,6 +67,8 @@ perm_cor <- function(perms = 1000, x, y){
 
 ### Two sample permutation
 
+Is there a difference in life expectancy between America and Australia?
+
 ```{r}
 
 America_Australia <- filter(gapminder, country == "United States" | country == "Australia")
@@ -93,4 +95,15 @@ ggplot(data = perm_cor(perms = 1000, gap_by_country$pop, gap_by_country$gdpPerca
 
 ```
 
+```{r}
+
+gap_by_continent <- gapminder %>% group_by(continent) %>% summarise(lifeExp = mean(lifeExp), pop = mean(pop), gdpPercap = mean(gdpPercap))
+
+ggplot(data = perm_cor(perms = 1000, gap_by_continent$pop, gap_by_continent$gdpPercap))+
+  geom_density(mapping = aes(x = value))
+
+ggplot(data = perm_cor(perms = 1000, gap_by_continent$lifeExp, gap_by_continent$gdpPercap))+
+  geom_density(mapping = aes(x = value))
+
+```
 
