@@ -1,75 +1,111 @@
 ---
 title: "Lab 12"
-author: 'Blue Team: Matt Lawson,'
-date: "4/10/2019"
+author: "Blue Team: Nick Zimmerman, Matt Lawson, "
+date: "4/12/2019"
 output:
   html_document:
     df_print: paged
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse); library(gapminder)
+
+
+```{r include=FALSE}
+library(tidyverse)
+library(gapminder)
+library(dbplyr)
 ```
 
 
-
-
-```{r}
-head(gapminder_unfiltered, 2)
-# dim(gapminder_unfiltered)
-data=gapminder_unfiltered
-```
-
-
-# Two-Sample Permutation Test
 
 ```{r}
 perm_mean <- function(perms = 1000, values, n1) {
   output <- vector("double", length(perms))
-  
   for (i in c(1:perms)) {
-    A <- sample(values, n1)
-    B <- setdiff(values, A)
-
-    meanA <- mean(A)
-    meanB <- mean(B)
+    control <- sample(values,n1)
+    test <- values[-control]
     
-    output[[i]] <- meanA - meanB
+    control_mean <- mean(control)
+    test_mean <- mean(test)
+    
+    # output[[i]] <- control_mean - (control_mean - test_mean)/2 
+    output[[i]] <- control_mean -test_mean
   }
-  return(output)
+  return(enframe(output, name = NULL, value = "value"))
 }
-```
-  
-```{r}
-# set.seed(1)
-diffs <- perm_mean(1000, data$lifeExp, 1000)
-mean(diffs)
-hist(diffs)
-```
 
 
-
-
-
-# Correlation Permuation Test
-
-
-```{r}
 perm_cor <- function(perms = 1000, x, y) {
   output <- vector("double", length(perms))
-  
   for (i in c(1:perms)) {
-    y <- sample(y)
-    output[[i]] <- cor(x, y)
+    mix_y <- sample(y)
+    
+    output[[i]] <- cor(x,mix_y)
   }
-  return(output)
+  return(enframe(output, name = NULL, value = "value"))
 }
 ```
 
-```{r}
-diffs <- perm_cor(1000, data$lifeExp, data$pop)
-hist(diffs)
+<br></br>
+<br></br>
+<br></br>
+
+### Two sample permutation
+
+__Is there a difference in life expectancy between the U.S. and Australia?__
+
+```{r, warning=F, message=F}
+set.seed(9999)
+America_Australia <- filter(gapminder_unfiltered, country == "United States" | country == "Australia")
+America_lifeExp <- filter(gapminder_unfiltered, country == "United States") %>% summarise(mean = mean(lifeExp))
+Australia_lifeExp <- filter(gapminder_unfiltered, country=="Australia") %>% summarise(mean=mean(lifeExp))
+
+actualDifferenceInMeans <- America_lifeExp$mean - Australia_lifeExp$mean
+
+data <- perm_mean(perms = 50000, America_Australia$lifeExp, 12)
+
+ggplot(data = data) +
+  geom_histogram(mapping = aes(x = value),color="black", fill="white") +
+  geom_vline(xintercept = actualDifferenceInMeans, color="red", size=1.25) + 
+  labs(x="Difference")
+
+
 ```
 
-$\rho$ (the pearson correlation coeficient) is very close to 0, so we can assume that life expectancy and population are not coorelated.
+The red line above is the difference between the average life expectancey in the U.S. vs Australia. The distribution is the average life expectancy between two randomly selected groups from U.S. and Australia. The actual isn't too far from the center of random trial distribution. Since we ran 50,000 trials, there is very low error. We can conclude that there is a difference between U.S. life expectancy and Australia life expectancy
+
+<br></br>
+<br></br>
+<br></br>
+
+### Corelation Permutation
+
+__Is there a relation between life expectancy and the disparaty between population and gdp?__
+
+```{r, warning=F, message=F}
+set.seed(999)
+
+gap_by_country <- gapminder_unfiltered %>% group_by(country) %>% summarise(lifeExp = mean(lifeExp), pop = mean(pop), gdpPercap = mean(gdpPercap))
+
+data <- perm_cor(perms = 50000, gap_by_country$pop, gap_by_country$gdpPercap)
+
+ggplot(data = data) +
+  geom_histogram(mapping = aes(x = value),color="black", fill="white") + 
+  labs(x="Correlation")
+
+```
+
+The histogram above shows that nearly all of the trials have a correlation $\approx$ 0. We can conclude that there is no correlation between population and GDP per Capita.
+
+
+```{r}
+
+gap_by_continent <- gapminder %>% group_by(continent) %>% summarise(lifeExp = mean(lifeExp), pop = mean(pop), gdpPercap = mean(gdpPercap))
+
+ggplot(data = perm_cor(perms = 1000, gap_by_continent$pop, gap_by_continent$gdpPercap))+
+  geom_density(mapping = aes(x = value))
+
+ggplot(data = perm_cor(perms = 1000, gap_by_continent$lifeExp, gap_by_continent$gdpPercap))+
+  geom_density(mapping = aes(x = value))
+
+```
+
