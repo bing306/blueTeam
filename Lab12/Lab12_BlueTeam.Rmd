@@ -104,6 +104,11 @@ The histogram above shows that nearly all of the trials have a correlation $\app
   - Setup the .RMD file.
   - Helped with the plots.
   - Wrote the explanation for each plot
+  
+
+### Nick
+  - Implemented and refined functions
+  - Helped with plots
 
 
 ```{r, echo=F, include=F}
