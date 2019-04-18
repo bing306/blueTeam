@@ -1,0 +1,18 @@
+---
+title: "Lab13BlueTeam"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Bing
+Null Hypothesis: Nuclear Energy use per person hasnt changed in European countries from 1989 to 2009
+
+Alternate Hypothesis: Nuclear Energy use per person has increased in European coutnries from 1989 to 2009
+
+Test Statistic: The mean average of 2009 - the mean average of 1989
+```{r}
+  
+```
