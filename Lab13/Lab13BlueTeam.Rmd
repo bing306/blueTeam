@@ -16,16 +16,16 @@ Alternate Hypothesis: Nuclear Energy use per person has increased in European co
 Test Statistic: The average of 2009 - the average of 1989
 
 ```{r}
-  data <- read_csv("nuclear_power_generation_per_person.csv") %>%
+  nuclear <- read_csv("nuclear_power_generation_per_person.csv") %>%
 gather(2:53, key="year", value="TOEperPerson")  %>% na.omit()
 
  # TOE per person = amount of electricity produced by nuclear power per person, in tons of oil equivalent
-data
+nuclear
 ```
 
 
 ```{r}
-permTest <- function(x, y, n) {
+permTestBING <- function(x, y, n) {
   output <- vector("double", length(n))
   master <- rbind(x, y)
   nrow(master);nrow(x)
@@ -47,14 +47,58 @@ permTest <- function(x, y, n) {
 
 
 ```{r}
-data89 <- data %>% filter(year=="1989") %>% select(year, TOEperPerson)
-data09 <- data %>% filter(year=="2009") %>% select(year, TOEperPerson)
+set.seed(999)
+nuclear89 <- nuclear %>% filter(year=="1989") %>% select(year, TOEperPerson)
+nuclear09 <- nuclear %>% filter(year=="2009") %>% select(year, TOEperPerson)
 
 # nrow(data89); nrow(data09)
 
-testStat <- permTest(data89, data09, 1000)
+testStat <- permTestBING(nuclear89, nuclear09, 1000)
 # hist(testStat)
 
 ggplot() + 
   geom_histogram(mapping=aes(x=testStat), fill="white", color="black")
+```
+
+
+
+
+
+## Matt
+```{r message=FALSE, warning=FALSE}
+  coal <- read_csv("coal_consumption_per_cap.csv")  %>%
+  gather(2:53, key="year", value="TOEperPerson")  %>% na.omit()
+
+ # TOE per person = Coal consuumption per person (in tons of oil)
+coal89 <- coal %>% filter(year=="1989") %>% select(year, TOEperPerson)
+coal09 <- coal %>% filter(year=="2009") %>% select(year, TOEperPerson)
+```
+
+```{r}
+permTestMATT <- function(x, y, n, func) {
+  set.seed(1)
+  output <- vector("double", length(n))
+  master <- rbind(x, y)
+  for (i in c(1:n)) {
+    sample <- sample(nrow(master), min(nrow(x), nrow(y)))
+    randomX <- master[sample,]
+    randomY <- master[-sample,]
+
+    meanX <- map_dbl(randomX, func)
+    meanY <- map_dbl(randomY, func)
+    
+    output[[i]] <- meanX[[2]] - meanY[[2]]
+  }
+  return(output)
+}
+```
+
+```{r warning=FALSE}
+statMatt <- permTestMATT(coal89, coal09, 1000, mean)
+```
+
+```{r}
+ggplot() + 
+  geom_histogram(aes(x=statMatt), color="black", fill="white")
+
 ```
