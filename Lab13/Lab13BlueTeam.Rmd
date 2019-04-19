@@ -20,21 +20,63 @@ __Has average energy consumption per person changed from the 1980s to the 2000s?
 
 __Description of the Datasets:__
 
-Description goes here
+This data comes from Gapminder about energy consumption in the world.
+
+```{r message=FALSE, warning=FALSE}
+  total <- read_csv("energy_use_per_person.csv")  %>%
+  gather(2:53, key="year", value="TotalperPerson", convert = TRUE)  %>% na.omit()
+
+ # TOE per person = Coal consuumption per person (in Tons of Oil Equivalency)
+total80 <- total %>% filter(between(year, 1980, 1989)) %>% select(year, TotalperPerson)
+total00 <- total %>% filter(between(year, 2000, 2009)) %>% select(year, TotalperPerson)
+
+```
+
+
+```{r}
+permTestTeam <- function(x, y, n, func) {
+  set.seed(1)
+  output <- vector("double", length(n))
+  master <- rbind(x, y)
+  for (i in c(1:n)) {
+    sample <- sample(nrow(master), min(nrow(x), nrow(y)))
+    randomX <- master[sample,]
+    randomY <- master[-sample,]
+
+    meanX <- map_dbl(randomX, func)
+    meanY <- map_dbl(randomY, func)
+    
+    output[[i]] <- meanX[[2]] - meanY[[2]]
+  }
+  return(output)
+}
+```
 
 
 
+<br></br>
+<br></br>
 
 
+```{r warning=FALSE}
+statTeam <- permTestTeam(total80, total00, 1000, mean)
+TeamrealX <- mean(total80$TotalperPerson)
+TeamrealY <- mean(total00$TotalperPerson)
+percentile <- sum(statTeam < (TeamrealX-TeamrealY))/length(statTeam)*100
+```
 
 
+<br></br>
 
 
+```{r echo=F, message=F, warning=TRUE}
+ggplot() + 
+  geom_histogram(aes(x=statTeam), color="black", fill="white") + 
+  geom_vline(xintercept=(TeamrealX-TeamrealY), color="red")
 
+```
 
-
-
-
+From the Graoh it can be seen that energy consumption has increased alot since the 1980's which is to be expected from our subset questions which include different types of energy consumption
 
 ## Bing
 Sub Question: Has nuclear energy use increased from 1989 to 2009?
@@ -250,7 +292,7 @@ ggplot() +
   geom_vline(xintercept=(realsX-realsY), color="red")
 
 ```
-
+From the graph it can be seen that hydro energy consumption has changed from the 1980's to the 2000's but it is not that signifignt
 
 
 
