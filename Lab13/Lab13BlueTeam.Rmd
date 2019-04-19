@@ -1,12 +1,40 @@
 ---
-title: "Lab13BlueTeam"
-output: html_document
+title: "Lab 13"
+author: "Blue Team: Matt Lawson, Bing Mitchell, Brandon Bowen, Nick Zimmerman"
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
+
+
+# Team Section
+
+__Has average energy consumption per person changed from the 1980s to the 2000s?__
+
+<br></br>
+
+__Description of the Datasets:__
+
+Description goes here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Bing
 Null Hypothesis: Nuclear Energy use per person hasnt changed in European countries from 1989 to 2009
@@ -20,7 +48,7 @@ Test Statistic: The average of 2009 - the average of 1989
 gather(2:53, key="year", value="TOEperPerson")  %>% na.omit()
 
  # TOE per person = amount of electricity produced by nuclear power per person, in tons of oil equivalent
-nuclear
+# nuclear
 ```
 
 
@@ -65,13 +93,49 @@ ggplot() +
 
 
 ## Matt
+
+$\bf{H_0:}$ There is no difference in average coal consumption in the 1980s and the average coal consumption in the 2000s
+
+$\bf{H_1:}$ There is a significant difference in average coal consumption in the 1980s and the average coal consumption in the 2000s
+
+__Test Statistic:__ Difference in sample means $\bar{X}_x - \bar{X}_y$
+
+<br></br>
+
+__Subquestion: Is there a difference in coal consumption from the 1980s to the 2000s?__
+
+If there is a difference in energy consumption per person from these decades, then maybe there is a difference in coal consumption during the same time.
+
+<br></br>
+
+__Map Function__
+
+```
+meanX <- map_dbl(randomX, func);
+meanY <- map_dbl(randomY, func)
+ ```
+ 
+ This `map_dbl` function takes in a dataframe and applies the function `func` to the columns of it.
+ 
+ <br></br>
+ 
+ __Function with Function Argument__
+ 
+ the function `permTestMATT` below takes in an argument called `func`. `func` gets uses in the map above.
+
+
+<br></br>
+<br></br>
+<br></br>
+
 ```{r message=FALSE, warning=FALSE}
   coal <- read_csv("coal_consumption_per_cap.csv")  %>%
-  gather(2:53, key="year", value="TOEperPerson")  %>% na.omit()
+  gather(2:53, key="year", value="TOEperPerson", convert = TRUE)  %>% na.omit()
 
- # TOE per person = Coal consuumption per person (in tons of oil)
-coal89 <- coal %>% filter(year=="1989") %>% select(year, TOEperPerson)
-coal09 <- coal %>% filter(year=="2009") %>% select(year, TOEperPerson)
+ # TOE per person = Coal consuumption per person (in Tons of Oil Equivalency)
+coal80 <- coal %>% filter(between(year, 1980, 1989)) %>% select(year, TOEperPerson)
+coal00 <- coal %>% filter(between(year, 2000, 2009)) %>% select(year, TOEperPerson)
+
 ```
 
 ```{r}
@@ -93,23 +157,26 @@ permTestMATT <- function(x, y, n, func) {
 }
 ```
 
+<br></br>
+<br></br>
+
+
 ```{r warning=FALSE}
-statMatt <- permTestMATT(coal89, coal09, 1000, mean)
-realX <- mean(coal89$TOEperPerson)
-realY <- mean(coal09$TOEperPerson)
-
+statMatt <- permTestMATT(coal80, coal00, 1000, mean)
+realX <- mean(coal80$TOEperPerson)
+realY <- mean(coal00$TOEperPerson)
+percentile <- sum(statMatt < (realX-realY))/length(statMatt)*100
 ```
 
-```{r}
+<br></br>
 
-quantile(statMatt)
-```
+The real data is the `r percentile` percentile of the random distribution.
 
-
-```{r}
+```{r echo=F, message=F, warning=TRUE}
 ggplot() + 
   geom_histogram(aes(x=statMatt), color="black", fill="white") + 
   geom_vline(xintercept=(realX-realY), color="red")
 
 ```
-The labels matter. The actual difference of means is much different from the random difference of means.
+
+We can conclude that there is a difference between the average coal consumption per person in the 1980s and the average coal consumption per person in the 2000s. We reject $H_0$ in favor of $H_1$.
