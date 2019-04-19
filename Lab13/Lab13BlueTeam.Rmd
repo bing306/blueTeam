@@ -84,11 +84,18 @@ nuclear09 <- nuclear %>% filter(year=="2009") %>% select(year, TOEperPerson)
 testStat <- permTestBING(nuclear89, nuclear09, 1000)
 # hist(testStat)
 
+realX <- mean(nuclear89$TOEperPerson)
+realY <- mean(nuclear09$TOEperPerson)
+percentile <- sum(testStat < (realX-realY))/length(testStat)*100
+
+
 ggplot() + 
-  geom_histogram(mapping=aes(x=testStat), fill="white", color="black")
+  geom_histogram(mapping=aes(x=testStat), fill="white", color="black") + geom_vline(xintercept=(realX-realY), color="red")
+
+
 ```
 
-
+We get that the change in Nuclear use from 1989 to 2009 is only the 46th percentile, so we fail to reject our null hypthesis that there hasn't been a change in the nuclear use in the time from 1989 to 2009.
 
 
 
