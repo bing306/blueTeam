@@ -194,3 +194,70 @@ ggplot() +
 ```
 
 We can conclude that there is a difference between the average coal consumption per person in the 1980s and the average coal consumption per person in the 2000s. We reject $H_0$ in favor of $H_1$.
+
+
+## Brandon 
+
+Sub Question: is ther a change of hydro energy consumption per person from 1989 to 2009
+
+Null Hypothesis: There is no signifigant change in energy consumption
+
+Alternative: There is signifigant change in energy consumption
+
+```{r message=FALSE, warning=FALSE}
+  hydro <- read_csv("hydro_power_generation_per_person.csv")  %>%
+  gather(2:53, key="year", value="HydroperPerson", convert = TRUE)  %>% na.omit()
+
+ # Hydro per person = Hydro consumption per person 
+hydro80 <- hydro %>% filter(between(year, 1980, 1989)) %>% select(year, HydroperPerson)
+hydro09 <- hydro %>% filter(between(year, 2000, 2009)) %>% select(year, HydroperPerson)
+
+```
+
+
+
+```{r}
+permTestBrandon <- function(x, y, n, func) {
+  set.seed(1)
+  output <- vector("double", length(n))
+  master <- rbind(x, y)
+  for (i in c(1:n)) {
+    sample <- sample(nrow(master), min(nrow(x), nrow(y)))
+    randomX <- master[sample,]
+    randomY <- master[-sample,]
+
+    meanX <- map_dbl(randomX, func)
+    meanY <- map_dbl(randomY, func)
+    
+    output[[i]] <- meanX[[2]] - meanY[[2]]
+  }
+  return(output)
+}
+```
+
+
+```{r warning=FALSE}
+stat <- permTestBrandon(hydro80, hydro09, 1000, mean)
+realsX <- mean(hydro80$HydroperPerson)
+realsY <- mean(hydro09$HydroperPerson)
+percentile <- sum(stat < (realsX-realsY))/length(stat)*100
+```
+
+
+```{r echo=F, message=F, warning=TRUE}
+ggplot() + 
+  geom_histogram(aes(x=stat), color="black", fill="white") + 
+  geom_vline(xintercept=(realsX-realsY), color="red")
+
+```
+
+
+
+
+
+
+
+
+
+
+
