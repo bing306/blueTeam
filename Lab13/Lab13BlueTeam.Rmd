@@ -264,7 +264,7 @@ Altenate hypothesis: Consumption has changed
  
 Test statistic: Average oil consumption per person in Europe
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(gapminder)
 europe_countries <- gapminder %>% filter(continent == "Europe")
 europe_countries <- unique(europe_countries$country)
@@ -278,7 +278,7 @@ oil_2010 <- oil %>% filter(between(year, 2005, 2010)) %>% select(year, `Oil/Pers
 
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 permTestNick <- function(x, y, n, func){
   set.seed(1)
   output <- vector("double", length(n))
@@ -298,7 +298,7 @@ permTestNick <- function(x, y, n, func){
 
 ```
 
-```{r warning=FALSE}
+```{r warning=FALSE, include=FALSE}
 statNick <- permTestNick(coal80, coal00, 1000, mean)
 realX_Nick <- mean(oil_1985$`Oil/Person`)
 realY_Nick <- mean(oil_2010$`Oil/Person`)
