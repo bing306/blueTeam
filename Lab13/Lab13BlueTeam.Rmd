@@ -254,10 +254,61 @@ ggplot() +
 
 
 
+### Nick
 
+Sub question: Has Europe's consumption of oil experienced a significant decrease from 1985 to 2010
 
+Null hypothesis: Consumption hasn't changed
 
+Altenate hypothesis: Consumption has changed
+ 
+Test statistic: Average oil consumption per person in Europe
 
+```{r}
+library(gapminder)
+europe_countries <- gapminder %>% filter(continent == "Europe")
+europe_countries <- unique(europe_countries$country)
 
+oil <- read_csv("oil_consumption_per_cap.csv")
+oil <- filter(oil, country %in% europe_countries)
+oil <- oil %>% gather(2:53, key = "year", value = "Oil/Person", na.rm = TRUE, convert = TRUE)
 
+oil_1985 <- oil %>% filter(between(year, 1985, 1990)) %>% select(year, `Oil/Person`)
+oil_2010 <- oil %>% filter(between(year, 2005, 2010)) %>% select(year, `Oil/Person`)
+
+```
+
+```{r}
+permTestNick <- function(x, y, n, func){
+  set.seed(1)
+  output <- vector("double", length(n))
+  master <- rbind(x, y)
+  for (i in c(1:n)) {
+    sample <- sample(nrow(master), min(nrow(x), nrow(y)))
+    randomX <- master[sample,]
+    randomY <- master[-sample,]
+
+    meanX <- map_dbl(randomX, func)
+    meanY <- map_dbl(randomY, func)
+    
+    output[[i]] <- meanX[[2]] - meanY[[2]]
+  }
+  return(output)
+}
+
+```
+
+```{r warning=FALSE}
+statNick <- permTestNick(coal80, coal00, 1000, mean)
+realX_Nick <- mean(oil_1985$`Oil/Person`)
+realY_Nick <- mean(oil_2010$`Oil/Person`)
+percentile <- sum(statNick < (realX_Nick - realY_Nick))/length(statNick)*100
+```
+
+```{r echo=F, message=F, warning=TRUE}
+ggplot() + 
+  geom_histogram(aes(x=statNick), color="black", fill="white") + 
+  geom_vline(xintercept=(realX_Nick - realY_Nick), color="red")
+
+```
 
