@@ -37,13 +37,15 @@ Description goes here
 
 
 ## Bing
+Sub Question: Has nuclear energy use increased from 1989 to 2009?
+
 Null Hypothesis: Nuclear Energy use per person hasnt changed in European countries from 1989 to 2009
 
 Alternate Hypothesis: Nuclear Energy use per person has increased in European coutnries from 1989 to 2009
 
 Test Statistic: The average of 2009 - the average of 1989
 
-```{r}
+```{r, echo = FALSE}
   nuclear <- read_csv("nuclear_power_generation_per_person.csv") %>%
 gather(2:53, key="year", value="TOEperPerson")  %>% na.omit()
 
@@ -51,8 +53,13 @@ gather(2:53, key="year", value="TOEperPerson")  %>% na.omit()
 # nuclear
 ```
 
+permTest Function
 
-```{r}
+it is a perumation test that takes in values for 2 years and gives the mean difference in nuclear use per year 
+
+
+
+```{r, echo=TRUE}
 permTestBING <- function(x, y, n) {
   output <- vector("double", length(n))
   master <- rbind(x, y)
@@ -74,7 +81,7 @@ permTestBING <- function(x, y, n) {
 
 
 
-```{r}
+```{r, echo = FALSE}
 set.seed(999)
 nuclear89 <- nuclear %>% filter(year=="1989") %>% select(year, TOEperPerson)
 nuclear09 <- nuclear %>% filter(year=="2009") %>% select(year, TOEperPerson)
