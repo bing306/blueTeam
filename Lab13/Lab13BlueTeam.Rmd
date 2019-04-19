@@ -95,10 +95,21 @@ permTestMATT <- function(x, y, n, func) {
 
 ```{r warning=FALSE}
 statMatt <- permTestMATT(coal89, coal09, 1000, mean)
+realX <- mean(coal89$TOEperPerson)
+realY <- mean(coal09$TOEperPerson)
+
 ```
 
 ```{r}
+
+quantile(statMatt)
+```
+
+
+```{r}
 ggplot() + 
-  geom_histogram(aes(x=statMatt), color="black", fill="white")
+  geom_histogram(aes(x=statMatt), color="black", fill="white") + 
+  geom_vline(xintercept=(realX-realY), color="red")
 
 ```
+The labels matter. The actual difference of means is much different from the random difference of means.
