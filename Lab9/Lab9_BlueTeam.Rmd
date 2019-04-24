@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, echo=F, message=F, warning=F}
 library(tidyverse)
 library(lubridate)
-library(OpenStreetMap)
+
 ```
 
 
@@ -27,7 +27,23 @@ stations <- read_csv("Nice_ride_2017_Station_Locations.csv")
 trips <- na.omit(trips)
 ```
 
-### What Stations make the most revenue and by which member Account type
+### What docks make the most money and by who
+
+```{r}
+colnames(trips)[colnames(trips)=="Start station"] <- "station"
+colnames(trips)[colnames(trips)=="Total duration (Seconds)"] <- "time"
+colnames(trips)[colnames(trips)=="Account type"] <- "account"
+teamdf <- trips %>% group_by(station) %>%  summarize(time = mean(time), count = n()) %>%
+filter(time > 75000)
+ 
+```
+
+
+```{r}
+ggplot(data = teamdf) + geom_bar(mapping = aes(x = station, y = time,), stat = "identity")
+```
+
+We also wanted to plot the membership on this graph but was not able to do it. But using Matt's data we can conclude the three stations with the most run time and that Casuals spend 5 times more using the bikes therefore, casuals should be most of the income the company makes. Although we are not explicitly told how the money is made, if is based off were you docked is where you payed then looking at Brandon's data you would see the top 5 stations with the most dockage.
 
 
 
@@ -55,7 +71,7 @@ What station has the longest ride times?
 
 ```{r}
   colnames(trips)[colnames(trips)=="Total duration (Seconds)"] <- "time"
-  colnames(trips)[colnames(trips)=="Start station"] <- "sStation"
+  colnames(trips)[colnames(trips)=="station"] <- "sStation"
 
   eachStation <- trips %>% group_by(sStation) %>% summarize(time = mean(time)) 
   eachStation
@@ -99,23 +115,6 @@ ggplot(data = brandondf) + geom_bar(mapping = aes(x = name, y = docks), stat = "
 
 There are a total of 19,496 unique trips in this data. 
 
-```{r}
-Trips <- trips %>% mutate( trip_id = paste(trips$start_station, trips$end_station, sep = " -> ") )
-tripId <- unique(Trips$trip_id)
-used <- vector("double",19496)
-
-
-for(i in seq_along(tripId)){
-  used[[i]] <- nrow(filter(Trips, trip_id == i))
-}
-histo <- tibble(Trip = tripId, Used = used)
-histo <- arrange(histo,Used)
-
-ten <- head(histo,10)
-
-ggplot(data = ten)+
-  geom_count(mapping = aes(x= Trip))
-```
 
 
 
@@ -132,6 +131,11 @@ Matt worked on his individual section. Matt transformed his coloumn names and th
 ### Brandon
 Brandon worked on his individual porition and the transformed formed his coloumns and also summarized the dock numbers in descending order in order to get the stations with the most docks.
 
+### Bing
+Bing worked on his individual porition and the team section. Transformed formed his coloumns and also summarized the ride time with the docks with the most ride time.
+
+### Nick
+Nick worke don his indivdual portion. Transformed his data by using mutate and a for loop. Nick could not get his code to work
 
 
 

@@ -1,6 +1,6 @@
 ---
 title: "Lab 12"
-author: "Blue Team: Nick Zimmerman, Matt Lawson, "
+author: "Blue Team: Nick Zimmerman, Matt Lawson, Brandon Bowen, Bing Mitchel "
 date: "4/12/2019"
 output:
   html_document:
@@ -114,12 +114,4 @@ The histogram above shows that nearly all of the trials have a correlation $\app
 ```{r, echo=F, include=F}
 
 gap_by_continent <- gapminder %>% group_by(continent) %>% summarise(lifeExp = mean(lifeExp), pop = mean(pop), gdpPercap = mean(gdpPercap))
-
-ggplot(data = perm_cor(perms = 1000, gap_by_continent$pop, gap_by_continent$gdpPercap))+
-  geom_density(mapping = aes(x = value))
-
-ggplot(data = perm_cor(perms = 1000, gap_by_continent$lifeExp, gap_by_continent$gdpPercap))+
-  geom_density(mapping = aes(x = value))
-
-```
 
