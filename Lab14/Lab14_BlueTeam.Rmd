@@ -1,0 +1,20 @@
+---
+title: "Lab 14"
+author: "Blue Team: Matt Lawson, "
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+
+Possible Labs to redo:
+
+  - Lab 5 (milk)
+  - Lab 6 (flights)
+  - Lab 7 (energy consumption)
+  - Lab 8 (college prices)
