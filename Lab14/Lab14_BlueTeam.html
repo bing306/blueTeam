@@ -192,13 +192,30 @@ $(document).ready(function () {
 </div>
 
 
-<p>Possible Labs to redo:</p>
-<ul>
-<li>Lab 5 (milk)</li>
-<li>Lab 6 (flights)</li>
-<li>Lab 7 (energy consumption)</li>
-<li>Lab 8 (college prices)</li>
-</ul>
+<pre class="r"><code># Everyone copy the energy dataset (mattdf &lt;- energy) and then mutate/alter it instead of reading in the file again
+
+ energy &lt;- read_delim(&quot;/Users/Matt/Google Drive/A Spring 2019/Data Science/household_power_consumption.txt&quot;, delim=&quot;;&quot;,
+    col_types=cols( Date = col_date(format=&quot;%d/%m/%Y&quot;))
+  )
+energy &lt;- na.omit(energy)
+head(energy)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Date"],"name":[1],"type":["date"],"align":["right"]},{"label":["Time"],"name":[2],"type":["S3: hms"],"align":["right"]},{"label":["Global_active_power"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Global_reactive_power"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Voltage"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Global_intensity"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Sub_metering_1"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Sub_metering_2"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Sub_metering_3"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"2006-12-16","2":"17:24:00","3":"4.216","4":"0.418","5":"234.84","6":"18.4","7":"0","8":"1","9":"17"},{"1":"2006-12-16","2":"17:25:00","3":"5.360","4":"0.436","5":"233.63","6":"23.0","7":"0","8":"1","9":"16"},{"1":"2006-12-16","2":"17:26:00","3":"5.374","4":"0.498","5":"233.29","6":"23.0","7":"0","8":"2","9":"17"},{"1":"2006-12-16","2":"17:27:00","3":"5.388","4":"0.502","5":"233.74","6":"23.0","7":"0","8":"1","9":"17"},{"1":"2006-12-16","2":"17:28:00","3":"3.666","4":"0.528","5":"235.68","6":"15.8","7":"0","8":"1","9":"17"},{"1":"2006-12-16","2":"17:29:00","3":"3.520","4":"0.522","5":"235.02","6":"15.0","7":"0","8":"2","9":"17"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div id="has-the-enregy-consumption-changed-from-2007-to-2010" class="section level1">
+<h1>Has the enregy consumption changed from 2007 to 2010?</h1>
+<pre class="r"><code># TEAM STUFF</code></pre>
+<p><br /> <br /></p>
+</div>
+<div id="matt" class="section level1">
+<h1>Matt</h1>
+<div id="how-does-the-average-energy-used-per-day-change-throughout-the-year-does-it-differ-from-2007-to-2010" class="section level2">
+<h2>How does the average energy used per day change throughout the year? Does it differ from 2007 to 2010?</h2>
+<pre class="r"><code>mattdf &lt;- energy</code></pre>
+</div>
+</div>
 
 
 

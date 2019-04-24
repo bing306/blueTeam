@@ -13,7 +13,7 @@ library(tidyverse)
 
 
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 # Everyone copy the energy dataset (mattdf <- energy) and then mutate/alter it instead of reading in the file again
 
  energy <- read_delim("/Users/Matt/Google Drive/A Spring 2019/Data Science/household_power_consumption.txt", delim=";",
@@ -21,5 +21,24 @@ library(tidyverse)
   )
 energy <- na.omit(energy)
 head(energy)
+```
+
+# Has the enregy consumption changed from 2007 to 2010?
+
+```{r}
+# TEAM STUFF
+```
+
+
+<br></br>
+<br></br>
+
+
+# Matt
+
+## How does the average energy used per day change throughout the year? Does it differ from 2007 to 2010?
+
+```{r}
+mattdf <- energy
 ```
 
