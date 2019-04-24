@@ -152,10 +152,6 @@ output: html_document
 ---
 # Setup
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
-```
 
 
 ```{r, warning=FALSE, message=FALSE}
