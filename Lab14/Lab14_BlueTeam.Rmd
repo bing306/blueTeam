@@ -12,9 +12,14 @@ library(tidyverse)
 ```
 
 
-Possible Labs to redo:
 
-  - Lab 5 (milk)
-  - Lab 6 (flights)
-  - Lab 7 (energy consumption)
-  - Lab 8 (college prices)
+```{r}
+# Everyone copy the energy dataset (mattdf <- energy) and then mutate/alter it instead of reading in the file again
+
+ energy <- read_delim("/Users/Matt/Google Drive/A Spring 2019/Data Science/household_power_consumption.txt", delim=";",
+    col_types=cols( Date = col_date(format="%d/%m/%Y"))
+  )
+energy <- na.omit(energy)
+head(energy)
+```
+
