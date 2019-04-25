@@ -1,6 +1,7 @@
 ---
 title: "Lab 14"
 author: "Blue Team: Matt Lawson, "
+date: "4/26/2019"
 output:
   html_document:
     df_print: paged
@@ -13,17 +14,17 @@ library(tidyverse)
 
 
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE }
 # Everyone copy the energy dataset (mattdf <- energy) and then mutate/alter it instead of reading in the file again
 
  energy <- read_delim("/Users/Matt/Google Drive/A Spring 2019/Data Science/household_power_consumption.txt", delim=";",
     col_types=cols( Date = col_date(format="%d/%m/%Y"))
   )
 energy <- na.omit(energy)
-head(energy)
+# head(energy)
 ```
 
-# Has the enregy consumption changed from 2007 to 2010?
+# Has the enregy consumption changed from 2007 to 2009?
 
 ```{r}
 # TEAM STUFF
@@ -36,9 +37,105 @@ head(energy)
 
 # Matt
 
-## How does the average energy used per day change throughout the year? Does it differ from 2007 to 2010?
+### Does the average energy used per day change from 2007 to 2009?
+
+$\bf{H_0:}$ There is no difference in the average energy used per day in 2007 and in 2009.
+
+$\bf{H_1:}$ There is a significant difference in average energy used per day in 2007 and in 2009.
+
+__Test Statistic:__ average difference in energy used per day
+
+This is important because if there is a change in energy consumption from 2007 to 2009, we would probably see a change in the average energy used per day. Similarly, if there is __not__ a change in energy consumption from 2007 to 2009, we will probably __not__ see a change in the average energy used per day.
+
+<br></br>
 
 ```{r}
-mattdf <- energy
+mattdf <- energy %>%
+  group_by(Date) %>% summarize(average= mean(Global_active_power)) %>%
+  mutate(Year=as.factor(format(Date, '%Y')), DayOfYear=as.numeric(format(Date,'%j'))) %>% select(DayOfYear, Year, average)
+matt2007 <- mattdf %>% filter(Year==2007)
+matt2009 <- mattdf %>% filter(Year==2009)
 ```
 
+
+```{r}
+Iterate <- function(A, B, n) {
+  set.seed(1)
+  C <-  vector("double", nrow(A))
+  for (i in c(1:n)) { # Do n times
+    x <- rbinom(size=1,n=nrow(A), prob=0.5)
+    for (j in c(1:nrow(A))){ # For each day of the year
+      if(x[[j]]==1){
+        C[[j]] = C[[j]] + as.numeric(A[j,3]) - as.numeric(B[j,3])
+      }else {
+        C[[j]] = C[[j]] + as.numeric(B[j,3]) - as.numeric(B[j,3])
+      }
+    }
+  }
+  for(i in c(1:length(C))){
+    C[[i]] = C[[i]]/n
+  }
+  return(C)
+}
+```
+
+
+
+```{r}
+random <- Iterate(matt2007, matt2009, 1000)
+```
+
+```{r}
+real <- matt2009[,3] - matt2007[,3]
+
+toPlot <- tibble(
+  DayOfYear = matt2007$DayOfYear,
+  random = random,
+  real = real$average,
+  difference = real-random
+  
+)
+```
+
+```{r message=F, warning=F}
+ggplot(data=toPlot, aes(x=DayOfYear)) + 
+  geom_smooth(aes(y=real),se=F, color="green3") + 
+  geom_smooth(aes( y=random), se=F, color="orange2") +
+  labs(x="Day of the Year", y="Difference between group A and group B") 
+```
+
+The green line is the difference between average daily energy usage in 2007 and 2009.
+
+The orange line is the difference between average daily energy useage in two groups. The groups were made by randomly swapping the daily average for days in the 2007 and 2009 datasets.
+
+
+__Conclusion__  
+These lines are very different, so we reject $H_0$ in favor of $H_1$ We conclude that there is a difference between the average daily energy useage in 2009 and 2007.
+
+__New Tools:__  
+  - Use of functions  
+  - Use of for loops  
+  - Use of Hypothesis tests  
+
+```{r, message=F, waring=F}
+ggplot(mattdf, aes(x=DayOfYear, y=average, color=Year)) + 
+  geom_smooth(se=F) + 
+  labs(title="Average Energy by day of the Year", x="Day of the Year", y="Average Energy Useage (KiloWatt)")
+```
+
+
+
+
+
+
+
+
+
+
+
+## Who did what:
+
+__Matt__  
+  - Created the lab template
+  - Worked on Matt's part
+  - Helped choose the overall question
