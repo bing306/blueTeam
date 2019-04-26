@@ -1,6 +1,7 @@
 ---
 title: "Lab 14"
-author: "Blue Team: Matt Lawson, "
+author: "Blue Team: Matt Lawson,Brandon Bowen, Bing Mitchell, Nick Zimmerman "
+date: "4/26/2019"
 output:
   html_document:
     df_print: paged
@@ -12,14 +13,295 @@ library(tidyverse)
 ```
 
 
-
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 # Everyone copy the energy dataset (mattdf <- energy) and then mutate/alter it instead of reading in the file again
 
- energy <- read_delim("/Users/Matt/Google Drive/A Spring 2019/Data Science/household_power_consumption.txt", delim=";",
-    col_types=cols( Date = col_date(format="%d/%m/%Y"))
-  )
+energy <- read_delim("/Users/BamBam/Documents/Rstudio/household_power_consumption.txt", delim=";",
+                     col_types=cols( Date = col_date(format="%d/%m/%Y"))
+)
 energy <- na.omit(energy)
-head(energy)
+# head(energy)
 ```
 
+# Has the enregy consumption changed from 2007 to 2009?
+
+```{r, echo=F, message=F, warning=F}
+
+mattdf <- energy %>% group_by(Date) %>% summarize(average= mean(Global_active_power)) %>%
+  mutate(Year=as.factor(format(Date, '%Y')), DayOfYear=as.numeric(format(Date,'%j'))) %>% select(DayOfYear, Year, average)
+matt2007 <- mattdf %>% filter(Year==2007)
+matt2009 <- mattdf %>% filter(Year==2009)
+
+ggplot() + 
+  geom_smooth(data=matt2007, mapping=aes(x=DayOfYear, y=average), color="purple", se=FALSE) + 
+  geom_smooth(data=matt2009, mapping=aes(x=DayOfYear, y=average), color="orange2", se=FALSE) +
+  labs(caption="Purple = 2007        Orange = 2009                                                                                                                                            ")
+```
+
+From this plot, it doesn't seem like the energy consumption has changed much from 2007 to 2009.
+
+<br></br>
+<br></br>
+
+
+# Matt
+
+### Does the average energy used per day change from 2007 to 2009?
+
+$\bf{H_0:}$ There is no difference in the average energy used per day in 2007 and in 2009.
+
+$\bf{H_1:}$ There is a significant difference in average energy used per day in 2007 and in 2009.
+
+__Test Statistic:__ average difference in energy used per day
+
+This is important because if there is a change in energy consumption from 2007 to 2009, we would probably see a change in the average energy used per day. Similarly, if there is __not__ a change in energy consumption from 2007 to 2009, we will probably __not__ see a change in the average energy used per day.
+
+<br></br>
+
+```{r}
+mattdf <- energy %>% group_by(Date) %>% summarize(average= mean(Global_active_power)) %>%
+  mutate(Year=as.factor(format(Date, '%Y')), DayOfYear=as.numeric(format(Date,'%j'))) %>% select(DayOfYear, Year, average)
+matt2007 <- mattdf %>% filter(Year==2007)
+matt2009 <- mattdf %>% filter(Year==2009)
+```
+
+
+```{r}
+IterateThroughYear <- function(A, B, n) {
+  set.seed(1)
+  C <-  vector("double", nrow(A))
+  for (i in c(1:n)) { # Do n times
+    x <- rbinom(size=1,n=nrow(A), prob=0.5)
+    for (j in c(1:nrow(A))){ # For each day of the year
+      if(x[[j]]==1){
+        C[[j]] = C[[j]] + as.numeric(A[j,3]) - as.numeric(B[j,3])
+      }else {
+        C[[j]] = C[[j]] + as.numeric(B[j,3]) - as.numeric(B[j,3])
+      }
+    }
+  }
+  for(i in c(1:length(C))){
+    C[[i]] = C[[i]]/n
+  }
+  return(C)
+}
+```
+
+
+
+```{r}
+random <- IterateThroughYear(matt2007, matt2009, 1000)
+```
+
+```{r}
+real <- matt2009[,3] - matt2007[,3]
+
+toPlot <- tibble(
+  DayOfYear = matt2007$DayOfYear,
+  random = random,
+  real = -1*real$average,
+  difference = real-random
+  
+)
+```
+
+```{r message=F, warning=F}
+ggplot(data=toPlot, aes(x=DayOfYear)) + 
+  geom_smooth(aes(y=real),se=F, color="green3") + 
+  geom_smooth(aes( y=random), se=F, color="orange2") +
+  labs(x="Day of the Year", y="Difference in Average Energy Useage") 
+```
+
+The green line is the actual difference between average daily energy usage in 2007 and 2009.
+
+The orange line is the random difference between average daily energy useage in two groups. The groups were made by randomly swapping the daily average for days in the 2007 and 2009 datasets.
+
+<br></br>
+
+__Conclusion__  
+These real difference is very similar to the random difference, so we fail to reject $H_0$. We conclude that there is not a statistically significant difference between the average daily energy useage in 2009 and 2007.
+
+<br></br>
+
+__New Tools:__  
+  - Use of functions  
+  - Use of for loops  
+  - Use of Hypothesis tests  
+
+<br></br>
+<br></br>
+<br></br>
+
+## Bing
+
+My subquestion is how did the energy use during the day change from 2007 to 2009?
+
+```{r}
+library(lubridate)
+
+
+ 
+
+energySum <- energy %>% filter(hour(Time) > 8 & hour(Time) < 22) %>% filter(month(Date) > 3 & month(Date) < 10) %>% group_by(Date) %>% summarise(GAP = mean(Global_active_power)) 
+
+energyWint <- energy %>% filter(hour(Time) > 8 & hour(Time) < 22) %>% filter(xor(month(Date) < 4, month(Date) > 9)) %>% group_by(Date) %>% summarise(GAP = mean(Global_active_power)) 
+
+energySum <- cbind(energySum, "time"=1:nrow(energySum)) 
+energySum
+
+
+#ggplot(data = energySum) + geom_point(mapping = aes(x = time, y = GAP))
+
+
+model = lm(GAP ~ time, data = energySum)
+
+#plot(GAP ~ observation, data = energySum)
+#abline(model)
+
+energyWint
+
+energyWint <- cbind(energyWint, "time"=1:nrow(energyWint)) 
+
+
+
+#ggplot(data = energyWint) + geom_point(mapping = aes(x = time, y = GAP))
+
+
+model2 = lm(GAP ~ time, data = energyWint)
+
+plot(GAP ~ time, data = energyWint, xaxt='n')
+points(GAP ~ time, data = energyWint, col = 2)
+abline(model2)
+abline(model)
+
+
+
+
+
+```
+This is the plot of data with the time going linearly from 2007 to 2009 and each line on the plot is the least squares regression line for the summer months and the winter months. As we can see the winter months have a significantly higher averae and you can see a decrease over time, while in the summer its lower and stays constant throughout. While overall it is hard to see if energy consumption has changed but as we can see that it has, but we had to see this because most people only change there ways in the winter when they are using more.
+
+New Tools used:
+Making Linear Models
+Making Multiple Models
+
+
+
+
+
+
+## Brandon
+$H_0$ There is no difference between the energy usage in the heater/air condition room from 2007 and 2009
+$H_1$ There is a difference between the energy usage in the heater/ air condition room from 2007 and 2009
+```{r}
+
+Brandondf <- energy %>% group_by(Date) %>% summarize(average= mean(Sub_metering_3)) %>%
+  mutate(Year=as.factor(format(Date, '%Y')), DayOfYear=as.numeric(format(Date,'%j'))) %>% select(DayOfYear, Year, average)
+heater07 <- Brandondf %>% filter(Year==2007)
+heater09 <- Brandondf %>% filter(Year==2009)
+
+Iterate <- function(A, B, n) {
+  set.seed(1)
+  C <-  vector("double", nrow(A))
+  for (i in c(1:n)) { # Do n times
+    x <- rbinom(size=1,n=nrow(A), prob=0.5)
+    for (j in c(1:nrow(A))){ # For each day of the year
+      if(x[[j]]==1){
+        C[[j]] = C[[j]] + as.numeric(A[j,3]) - as.numeric(B[j,3])
+      }else {
+        C[[j]] = C[[j]] + as.numeric(B[j,3]) - as.numeric(B[j,3])
+      }
+    }
+  }
+  for(i in c(1:length(C))){
+    C[[i]] = C[[i]]/n
+  }
+  return(C)
+}
+generated <- Iterate(heater07, heater09, 1000)
+```
+
+```{r}
+actual <- heater09[,3] - heater07[,3]
+
+Graph <- tibble(
+  DayOfYear = heater07$DayOfYear,
+  generated = generated,
+  actual = -1*actual$average,
+  difference = actual-generated
+  
+)
+```
+
+```{r message=F, warning=F}
+ggplot(data=Graph, aes(x=DayOfYear)) + 
+  geom_smooth(aes(y=actual),se=F, color="red") + 
+  geom_smooth(aes( y=generated), se=F, color="black") +
+  labs(x="Day of the Year", y="Difference in Average Energy Useage") 
+```
+
+
+From my graph it can be seen that "Red" The actual energy consumption and "black" the randomly generated one do have some differences. During the middle half of the year which is the biggest change, but this can be contributed to the fact that people use their air conditioning during the summer and towards the end of the year which is colder people will use their heater.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Nick 
+
+$H_0$ There is no difference between the energy usage per hour of day from 2007 and 2009
+$H_1$ There is a difference between the energy usage per hour of day from 2007 and 2009
+Test statistic: averaged energy usage by hour 
+
+```{r}
+
+nick_2007 <- energy %>% filter(year(Date) > 2006 & year(Date) < 2008) %>% group_by(Time) %>% summarize(Average = mean(Global_active_power))
+
+nick_2009 <- energy %>% filter(year(Date) > 2008 & year(Date) < 2010) %>% group_by(Time) %>% summarize(Average = mean(Global_active_power))
+
+
+energyHour <- function(df){
+  hour_of_day <- vector("double", 24)
+  avg_energy <- vector("double", 24)
+  for (i in c(1:24)) {
+    hour_of_day[i] = i
+    avg_energy[i] = mean(filter(df, hour(Time) < i)$Average) 
+  }
+  return(tibble(hour_of_day,avg_energy))
+}
+
+
+ggplot(mapping = aes(x = hour_of_day, y = avg_energy))+
+  geom_smooth(data = energyHour(nick_2007), se = FALSE, color = "red")+
+  geom_smooth(data = energyHour(nick_2009), se = FALSE, color = "blue")
+
+
+```
+The red line is 2007 and the blue line is 2009. 
+The two lines are very close together for almost everything except for the first 6 hours (12am - 6am). This could suggest that people have become more concious about leaving electronics on while they sleep. 
+
+
+## Who did what:
+
+__Matt__  
+  - Created the lab template  
+  - Worked on Matt's part  
+  - Helped choose the overall question 
+  
+__Bing__
+  -Helped choose overall question
+  -worked on Bing's part
+  
+__Bing__
+  -Helped choose overall question
+  -worked on Brandon's part

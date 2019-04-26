@@ -8,7 +8,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
+library(tidyverse); library(lubridate)
 ```
 
 
@@ -57,11 +57,11 @@ It is easy to see that all of the years behave similarly. The energy useage decr
   
 ## Bing
 ```{r, warning=FALSE,message=FALSE}
-library(lubridate)
-energy <- read_delim("/Users/Matt/Google Drive/A Spring 2019/Data Science/household_power_consumption.txt", delim=";",
-    col_types=cols( Date = col_date(format="%d/%m/%Y"))
-  )
-energy <- na.omit(energy)
+# library(lubridate)
+# energy <- read_delim("/Users/Matt/Google Drive/A Spring 2019/Data Science/household_power_consumption.txt", delim=";",
+#     col_types=cols( Date = col_date(format="%d/%m/%Y"))
+#   )
+# energy <- na.omit(energy)
 
 #head(energy)
 
@@ -169,24 +169,4 @@ ggplot(filter(byHour, Hour == 17))+
 ```
 
 This graph is fairly straightforward. It is easy to see that more energy is being used when the Date gets closer to the new year. Obviously because this is during winter, when it will be much colder. But it is also intresting to notice that there is a slight upward trend in maximum active power. This would suggest that our winters are indeed getting colder as the years go by.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
