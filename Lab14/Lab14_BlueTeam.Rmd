@@ -133,12 +133,69 @@ __New Tools:__
 <br></br>
 <br></br>
 
+## Bing
+
+My subquestion is how did the energy use during the day change from 2007 to 2009?
+
+```{r}
+library(lubridate)
 
 
+  energy <- read_delim("/Users/bing/Desktop/household_power_consumption.txt", delim=";",
+    col_types=cols( Date = col_date(format="%d/%m/%Y"))
+  )
+energy <- na.omit(energy)
+
+energySum <- energy %>% filter(hour(Time) > 8 & hour(Time) < 22) %>% filter(month(Date) > 3 & month(Date) < 10) %>% group_by(Date) %>% summarise(GAP = mean(Global_active_power)) 
+
+energyWint <- energy %>% filter(hour(Time) > 8 & hour(Time) < 22) %>% filter(xor(month(Date) < 4, month(Date) > 9)) %>% group_by(Date) %>% summarise(GAP = mean(Global_active_power)) 
+
+energySum <- cbind(energySum, "time"=1:nrow(energySum)) 
+energySum
+
+
+#ggplot(data = energySum) + geom_point(mapping = aes(x = time, y = GAP))
+
+
+model = lm(GAP ~ time, data = energySum)
+
+#plot(GAP ~ observation, data = energySum)
+#abline(model)
+
+energyWint
+
+energyWint <- cbind(energyWint, "time"=1:nrow(energyWint)) 
+
+
+
+#ggplot(data = energyWint) + geom_point(mapping = aes(x = time, y = GAP))
+
+
+model2 = lm(GAP ~ time, data = energyWint)
+
+plot(GAP ~ time, data = energyWint, xaxt='n')
+points(GAP ~ time, data = energyWint, col = 2)
+abline(model2)
+abline(model)
+
+
+
+
+
+```
+This is the plot of data with the time going linearly from 2007 to 2009 and each line on the plot is the least squares regression line for the summer months and the winter months. As we can see the winter months have a significantly higher averae and you can see a decrease over time, while in the summer its lower and stays constant throughout. While overall it is hard to see if energy consumption has changed but as we can see that it has, but we had to see this because most people only change there ways in the winter when they are using more.
+
+New Tools used:
+Making Linear Models
+Making Multiple Models
 
 ## Who did what:
 
 __Matt__  
   - Created the lab template  
   - Worked on Matt's part  
-  - Helped choose the overall question  
+  - Helped choose the overall question 
+  
+__Bing__
+  -Helped choose overall question
+  -worked on Bing's part
