@@ -189,6 +189,40 @@ New Tools used:
 Making Linear Models
 Making Multiple Models
 
+### Nick 
+
+$H_0$ There is no difference between the energy usage per hour of day from 2007 and 2009
+$H_1$ There is a difference between the energy usage per hour of day from 2007 and 2009
+Test statistic: averaged energy usage by hour 
+
+```{r}
+
+nick_2007 <- energy %>% filter(year(Date) > 2006 & year(Date) < 2008) %>% group_by(Time) %>% summarize(Average = mean(Global_active_power))
+
+nick_2009 <- energy %>% filter(year(Date) > 2008 & year(Date) < 2010) %>% group_by(Time) %>% summarize(Average = mean(Global_active_power))
+
+
+energyHour <- function(df){
+  hour_of_day <- vector("double", 24)
+  avg_energy <- vector("double", 24)
+  for (i in c(1:24)) {
+    hour_of_day[i] = i
+    avg_energy[i] = mean(filter(df, hour(Time) < i)$Average) 
+  }
+  return(tibble(hour_of_day,avg_energy))
+}
+
+
+ggplot(mapping = aes(x = hour_of_day, y = avg_energy))+
+  geom_smooth(data = energyHour(nick_2007), se = FALSE, color = "red")+
+  geom_smooth(data = energyHour(nick_2009), se = FALSE, color = "blue")
+
+
+```
+The red line is 2007 and the blue line is 2009. 
+The two lines are very close together for almost everything except for the first 6 hours (12am - 6am). This could suggest that people have become more concious about leaving electronics on while they sleep. 
+
+
 ## Who did what:
 
 __Matt__  
