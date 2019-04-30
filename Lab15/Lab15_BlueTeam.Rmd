@@ -1,7 +1,7 @@
 ---
 title: "Untitled"
 author: 'Blue Team: Matt Lawson,'
-date: "4/30/2019"
+date: "5/6/2019"
 output: html_document
 ---
 
@@ -11,7 +11,9 @@ library(tidyverse)
 ```
 
 
-```{r}
+# Assigning awards to MLB teams via Data Science
+
+```{r warning=F, message=F}
 columnNames <- c("Year", "League", "Wins", "Losses", "Finish", "Runs per Game", "Number of Games", "Played appearances","At bats", "Runs scored", "Hits", "Doubles", "Tripples", "Home runs", "RBIs", "Stollen bases", "Caught stealing", "Walks", "Strikeouts", "Batting average", "On base %", "Slugging %", "On base + slugging %", "Errors committed", "Double plays", "Fielding %", "Average age")
 
 
@@ -31,5 +33,15 @@ rockies <- read_csv("rockies.csv"); names(rockies) <-  columnNames; rockies <- g
 data <- rbind(giants, db, dodgers, padres, rockies)
 data
 
+```
+
+
+
+
+## Matt
+### Most Improved Award
+
+```{r}
+# Blah blah
 ```
 
