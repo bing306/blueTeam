@@ -12,9 +12,24 @@ library(tidyverse)
 
 
 ```{r}
-giants <- read_csv("giants.csv")
-names(giants) <-  c("Year", "League", "Wins", "Losses", "Finish", "Runs per Game", "Number of Games", "Played appearances","At bats", "Runs scored", "Hits", "Doubles", "Tripples", "Home runs", "RBIs", "Stollen bases", "Caught stealing", "Walks", "Strikeouts", "Batting average", "On base %", "Slugging %", "On base + slugging %", "Errors committed", "Double plays", "Fielding %", "Average age")
+columnNames <- c("Year", "League", "Wins", "Losses", "Finish", "Runs per Game", "Number of Games", "Played appearances","At bats", "Runs scored", "Hits", "Doubles", "Tripples", "Home runs", "RBIs", "Stollen bases", "Caught stealing", "Walks", "Strikeouts", "Batting average", "On base %", "Slugging %", "On base + slugging %", "Errors committed", "Double plays", "Fielding %", "Average age")
 
-giants %>% mutate(Team="Giants")
+
+giants <- read_csv("giants.csv"); names(giants) <-  columnNames; giants <- giants %>% mutate(Team="Giants")
+
+db <- read_csv("diamondbacks.csv"); names(db) <-  columnNames; db <- giants %>% mutate(Team="Diamondbacks")
+
+
+dodgers <- read_csv("dodgers.csv"); names(dodgers) <-  columnNames; dodgers <- giants %>% mutate(Team="Dodgers")
+
+
+padres <- read_csv("padres.csv"); names(padres) <-  columnNames; padres <- giants %>% mutate(Team="Padres")
+
+rockies <- read_csv("rockies.csv"); names(rockies) <-  columnNames; rockies <- giants %>% mutate(Team="Rockies")
+
+
+data <- rbind(giants, db, dodgers, padres, rockies)
+data
+
 ```
 
