@@ -1,0 +1,20 @@
+---
+title: "Untitled"
+author: 'Blue Team: Matt Lawson,'
+date: "4/30/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+
+```{r}
+giants <- read_csv("giants.csv")
+names(giants) <-  c("Year", "League", "Wins", "Losses", "Finish", "Runs per Game", "Number of Games", "Played appearances","At bats", "Runs scored", "Hits", "Doubles", "Tripples", "Home runs", "RBIs", "Stollen bases", "Caught stealing", "Walks", "Strikeouts", "Batting average", "On base %", "Slugging %", "On base + slugging %", "Errors committed", "Double plays", "Fielding %", "Average age")
+
+giants %>% mutate(Team="Giants")
+```
+
