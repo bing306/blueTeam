@@ -17,17 +17,22 @@ library(tidyverse)
 columnNames <- c("Year", "League", "Wins", "Losses", "Finish", "Runs per Game", "Number of Games", "Played appearances","At bats", "Runs scored", "Hits", "Doubles", "Tripples", "Home runs", "RBIs", "Stollen bases", "Caught stealing", "Walks", "Strikeouts", "Batting average", "On base %", "Slugging %", "On base + slugging %", "Errors committed", "Double plays", "Fielding %", "Average age")
 
 
-giants <- read_csv("giants.csv"); names(giants) <-  columnNames; giants <- giants %>% mutate(Team="Giants")
+giants <- read_csv("giants.csv"); names(giants) <-  columnNames
+giants <- giants %>% mutate(Team="Giants")  %>% filter(Year != 2019)
 
-db <- read_csv("diamondbacks.csv"); names(db) <-  columnNames; db <- giants %>% mutate(Team="Diamondbacks")
+db <- read_csv("diamondbacks.csv"); names(db) <-  columnNames
+db <- db %>% mutate(Team="Diamondbacks") %>% filter(Year != 2019)
 
 
-dodgers <- read_csv("dodgers.csv"); names(dodgers) <-  columnNames; dodgers <- giants %>% mutate(Team="Dodgers")
+dodgers <- read_csv("dodgers.csv"); names(dodgers) <-  columnNames
+dodgers <- dodgers %>% mutate(Team="Dodgers") %>% filter(Year != 2019)
 
 
-padres <- read_csv("padres.csv"); names(padres) <-  columnNames; padres <- giants %>% mutate(Team="Padres")
+padres <- read_csv("padres.csv"); names(padres) <-  columnNames
+padres <- padres %>% mutate(Team="Padres") %>% filter(Year != 2019)
 
-rockies <- read_csv("rockies.csv"); names(rockies) <-  columnNames; rockies <- giants %>% mutate(Team="Rockies")
+rockies <- read_csv("rockies.csv"); names(rockies) <-  columnNames
+rockies <- rockies %>% mutate(Team="Rockies") %>% filter(Year != 2019)
 
 
 data <- rbind(giants, db, dodgers, padres, rockies)
@@ -39,9 +44,27 @@ data
 
 
 ## Matt
-### Most Improved Award
+
+### Most Improved Award (1883 to 2018)
 
 ```{r}
-# Blah blah
+giants; db; dodgers; padres; rockies
+
+CalculateImprovement <- function(df){
+  df <- df %>% filter(Year==2018 | Year==1883)
+  wins <- df$Wins[1] - df$Wins[2]
+  runsPerGame <- df$`Runs per Game`[1] - df$`Runs per Game`[2]
+  runsScored <- df$`Runs scored`[1] - df$`Runs scored`[2]
+  doubles <- df$Doubles[1] - df$Doubles[2]
+  tripples <- df$Tripples[1] - df$Tripples[2]
+  homeRuns <- df$`Home runs`[1] - df$`Home runs`[2]
+  
+
+  return(df)
+  
+}
+
+new <- CalculateImprovement(padres)
+new
 ```
 
