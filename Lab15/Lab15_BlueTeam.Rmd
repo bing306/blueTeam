@@ -48,7 +48,7 @@ data
 ### Most Improved Award (1883 to 2018)
 
 ```{r}
-giants; db; dodgers; padres; rockies
+# giants; db; dodgers; padres; rockies
 
 CalculateImprovement <- function(df){
   df <- df %>% filter(Year==2018 | Year==1883)
@@ -58,8 +58,10 @@ CalculateImprovement <- function(df){
   doubles <- df$Doubles[1] - df$Doubles[2]
   tripples <- df$Tripples[1] - df$Tripples[2]
   homeRuns <- df$`Home runs`[1] - df$`Home runs`[2]
-  
+  errorsCommitted <- df$`Errors committed`[1] - df$`Errors committed`[2]
 
+  improvement <- wins + runsPerGame + runsScored + doubles + tripples + homeRuns - errorsCommitted
+  df <- df %>% mutate(Improvement = improvement)
   return(df)
   
 }
