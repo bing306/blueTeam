@@ -11,6 +11,12 @@ library(tidyverse)
 ```
 
 
+Who downloaded what:
+
+Matt: 10-18
+
+
+
 # Assigning awards to MLB teams via Data Science
 
 #### Which is the best team: a study of [Giants, Diamondbacks, Dodgers, Padres, and Rockies]
@@ -100,4 +106,4 @@ CalculateImprovement <- function(df, teamName){
    geom_bar(aes(x=Team, weight=Improvement, fill=Team))
 ```
 
-The improvement score is a weighted sum of the (normalized by number of games per season) difference between wins, runs, runs scored, doubles, tripples, homeruns, and errors committed for the 2018 season and the 1998 season. The most improved score goes to the dodgers. Their improvement score is 30, which is 3x bigger than the next largest improvement, The Diamondbacks.
+The improvement score is a weighted sum of the (normalized by number of games per season) difference between wins, runs, runs scored, doubles, tripples, homeruns, and errors committed for the 2018 season and the 1998 season. The most improved score goes to the dodgers. Their improvement score is 30, which is 3x bigger than the next largest improvement, The Diamondbacks. This is one out of four awards. All four awards will be used to determine the best team in the MLB.
