@@ -36,7 +36,11 @@ rockies <- rockies %>% mutate(Team="Rockies") %>% filter(Year != 2019)
 
 
 data <- rbind(giants, db, dodgers, padres, rockies)
-data
+giants %>% arrange(Year)
+db %>% arrange(Year)
+dodgers %>% arrange(Year)
+rockies %>% arrange(Year)
+padres %>% arrange(Year)
 
 ```
 
@@ -50,23 +54,42 @@ data
 ```{r}
 # giants; db; dodgers; padres; rockies
 
-CalculateImprovement <- function(df){
-  df <- df %>% filter(Year==2018 | Year==1883)
-  wins <- df$Wins[1] - df$Wins[2]
-  runsPerGame <- df$`Runs per Game`[1] - df$`Runs per Game`[2]
-  runsScored <- df$`Runs scored`[1] - df$`Runs scored`[2]
-  doubles <- df$Doubles[1] - df$Doubles[2]
-  tripples <- df$Tripples[1] - df$Tripples[2]
-  homeRuns <- df$`Home runs`[1] - df$`Home runs`[2]
-  errorsCommitted <- df$`Errors committed`[1] - df$`Errors committed`[2]
+CalculateImprovement <- function(df, teamName){
+  df <- df %>% filter(Year==2018 | Year==1998)
+  
+  wins <- (df$Wins[1]/df$`Number of Games`[1]) - (df$Wins[2]/df$`Number of Games`[2])
+  runsPerGame <- (df$`Runs per Game`[1]/df$`Number of Games`[1]) - (df$`Runs per Game`[2]/df$`Number of Games`[2])
+  runsScored <- (df$`Runs scored`[1]/df$`Number of Games`[1]) - (df$`Runs scored`[2]/df$`Number of Games`[2])
+  doubles <- (df$Doubles[1]/df$`Number of Games`[1]) - (df$Doubles[2]/df$`Number of Games`[2])
+  tripples <-(df$Tripples[1]/df$`Number of Games`[1]) - (df$Tripples[2]/df$`Number of Games`[2])
+  homeRuns <- (df$`Home runs`[1]/df$`Number of Games`[1]) - (df$`Home runs`[2]/df$`Number of Games`[2])
+  errorsCommitted <- (df$`Errors committed`[1]/df$`Number of Games`[1]) - (df$`Errors committed`[2]/df$`Number of Games`[2])
+  
+  
+# print(df$Wins[1]) 
+# print(df$Wins[2])
+# print(df$`Number of Games`)
+  
+  
+# print(wins)
+# print(runsPerGame)
+# print(runsScored)
+# print(doubles)
+# print(tripples)
+# print(homeRuns)
+# print(errorsCommitted)
+  
 
   improvement <- wins + runsPerGame + runsScored + doubles + tripples + homeRuns - errorsCommitted
-  df <- df %>% mutate(Improvement = improvement)
-  return(df)
+  print(improvement)
+  tb <- tribble(~Team, ~Improvement,
+                teamName, improvement)
+  return(tb)
   
 }
 
-new <- CalculateImprovement(padres)
+ <- CalculateImprovement(db,  "Diamondbacks")
 new
+# new$Improvement
 ```
 
