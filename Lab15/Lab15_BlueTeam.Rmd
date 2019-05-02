@@ -18,48 +18,73 @@ Matt: 10-18
 
 
 # Assigning awards to MLB teams via Data Science
-
+  
+  <br></br>
+  
 #### Which is the best team: a study of [Giants, Diamondbacks, Dodgers, Padres, and Rockies]
 
-We will each determine an award to give to a team. The team with the most awards is the best team. 
+<br></br>
+
+We will each determine an award to give to a team. The team with the most awards is the best team. It is important that we use multiple different metrics to decide what team is the best because some teams are good at one thing while other teams are good at something else.
+
+<font color=red> THIS IS WHERE THE ANSWER TO THE OVERALL QUESTION WILL GO </font>
 
 __Most Improved Award (Matt):__
 
-The most improved award goes to the Dodgers. Their improvement score of 30 is 3x higher than the second place team, The Diamondbacks.
+The most improved award goes to the Dodgers. Their improvement score is 30.
 
-```{r warning=F, message=F, echo=F}
+```{r echo=F, message=F, warning=F}
 columnNames <- c("Year", "League", "Wins", "Losses", "Finish", "Runs per Game", "Number of Games", "Played appearances","At bats", "Runs scored", "Hits", "Doubles", "Tripples", "Home runs", "RBIs", "Stollen bases", "Caught stealing", "Walks", "Strikeouts", "Batting average", "On base %", "Slugging %", "On base + slugging %", "Errors committed", "Double plays", "Fielding %", "Average age")
 
 
-giants <- read_csv("giants.csv"); names(giants) <-  columnNames
+giants <- read_csv("teams/giants.csv"); names(giants) <-  columnNames
 giants <- giants %>% mutate(Team="Giants")  %>% filter(Year != 2019)
 
-db <- read_csv("diamondbacks.csv"); names(db) <-  columnNames
+db <- read_csv("teams/diamondbacks.csv"); names(db) <-  columnNames
 db <- db %>% mutate(Team="Diamondbacks") %>% filter(Year != 2019)
 
-
-dodgers <- read_csv("dodgers.csv"); names(dodgers) <-  columnNames
+dodgers <- read_csv("teams/dodgers.csv"); names(dodgers) <-  columnNames
 dodgers <- dodgers %>% mutate(Team="Dodgers") %>% filter(Year != 2019)
 
-
-padres <- read_csv("padres.csv"); names(padres) <-  columnNames
+padres <- read_csv("teams/padres.csv"); names(padres) <-  columnNames
 padres <- padres %>% mutate(Team="Padres") %>% filter(Year != 2019)
 
-rockies <- read_csv("rockies.csv"); names(rockies) <-  columnNames
+rockies <- read_csv("teams/rockies.csv"); names(rockies) <-  columnNames
 rockies <- rockies %>% mutate(Team="Rockies") %>% filter(Year != 2019)
 
+astros <- read_csv("teams/astros.csv"); names(astros) <-  columnNames
+astros <- astros %>% mutate(Team="Astros") %>% filter(Year != 2019)
 
-data <- rbind(giants, db, dodgers, padres, rockies)
-# giants %>% arrange(Year)
-# db %>% arrange(Year)
-# dodgers %>% arrange(Year)
-# rockies %>% arrange(Year)
-# padres %>% arrange(Year)
+brewers <- read_csv("teams/brewers.csv"); names(brewers) <-  columnNames
+brewers <- brewers %>% mutate(Team="Brewers") %>% filter(Year != 2019)
+
+marlins <- read_csv("teams/marlins.csv"); names(marlins) <-  columnNames
+marlins <- marlins %>% mutate(Team="Marlins") %>% filter(Year != 2019)
+
+mets <- read_csv("teams/mets.csv"); names(mets) <-  columnNames
+mets <- mets %>% mutate(Team="Mets") %>% filter(Year != 2019)
+
+tigers <- read_csv("teams/tigers.csv"); names(tigers) <-  columnNames
+tigers <- tigers %>% mutate(Team="Tigers") %>% filter(Year != 2019)
+
+twins <- read_csv("teams/twins.csv"); names(twins) <-  columnNames
+twins <- twins %>% mutate(Team="Twins") %>% filter(Year != 2019)
+
+
+
+
+data <- rbind(giants, db, dodgers, padres, rockies, astros, brewers, marlins, mets, tigers, twins)
+data$Team <- as.factor(data$Team)
+
+#data
 
 ```
 
 
-
+<br></br>  
+<br></br>  
+<br></br>  
+<br></br>  
 
 ## Matt
 
@@ -68,7 +93,16 @@ data <- rbind(giants, db, dodgers, padres, rockies)
 It is important to see which teams have gotten better with time and which teams have gotten worse. Once we know that, we can find similarities between improving teams and determine what is important.
 
 ```{r}
-CalculateImprovement <- function(df, teamName){
+calcPositions <- function(improvement){
+     if(abs(improvement)<5) {
+       return(sign(improvement)*7)
+     }else{
+         return(improvement/2)
+       }
+  }
+
+CalculateImprovement <- function(df){
+  teamName <- df$Team[1]
   df <- df %>% filter(Year==2018 | Year==1998)
   
   wins <- (df$Wins[1]/df$`Number of Games`[1]) - (df$Wins[2]/df$`Number of Games`[2])
@@ -82,10 +116,13 @@ CalculateImprovement <- function(df, teamName){
   
    scores <- c(wins, runsPerGame, runsScored, doubles, tripples, homeRuns, -1*errorsCommitted)
   weights <- c(20, 10, 15, 10, 15, 20, 10)
-
-  improvement <- scores %*% weights
-  tb <- tribble(~Team, ~Improvement,
-                teamName, improvement)
+  
+  improvement <- scores %*% weights %>% round(2)
+  position <- calcPositions(improvement)
+  
+  
+  tb <- tribble(~Team, ~Improvement, ~Position,
+                teamName, improvement, position)
   return(tb)
 }
 ```
@@ -93,17 +130,81 @@ CalculateImprovement <- function(df, teamName){
 
 ```{r}
  mostImproved <- rbind(
-   CalculateImprovement(giants,  "Giants"),
-   CalculateImprovement(db,  "Diamondbacks"),
-   CalculateImprovement(dodgers,  "Dodgers"),
-   CalculateImprovement(padres,  "Padres"),
-   CalculateImprovement(rockies,  "Rockies")
+   CalculateImprovement(giants),
+   CalculateImprovement(db),
+   CalculateImprovement(dodgers),
+   CalculateImprovement(padres),
+   CalculateImprovement(rockies),
+   CalculateImprovement(astros),
+   CalculateImprovement(brewers),
+   CalculateImprovement(marlins),
+   CalculateImprovement(mets),
+   CalculateImprovement(tigers),
+   CalculateImprovement(twins)
  )
 
 # mostImproved
  
- ggplot(mostImproved) + 
-   geom_bar(aes(x=Team, weight=Improvement, fill=Team))
+ ggplot(mostImproved) +
+   geom_bar(aes(x=Team, weight=Improvement), fill="red", color="black", alpha=0.65) + 
+   geom_text(aes(x=Team, y=Position, label = Improvement)) +
+   coord_flip() + 
+   theme_bw() +
+   labs(title="Improvement Score", y="Improvement Score")
 ```
 
-The improvement score is a weighted sum of the (normalized by number of games per season) difference between wins, runs, runs scored, doubles, tripples, homeruns, and errors committed for the 2018 season and the 1998 season. The most improved score goes to the dodgers. Their improvement score is 30, which is 3x bigger than the next largest improvement, The Diamondbacks. This is one out of four awards. All four awards will be used to determine the best team in the MLB.
+The improvement score is a weighted sum of the (normalized by number of games per season) difference between wins, runs, runs scored, doubles, tripples, homeruns, and errors committed for the 2018 season and the 1998 season. The most improved score goes to The Dodgers. Their improvement score is 30. All four awards will be used to determine the best team in the MLB.
+
+__New Tools:__
+
+  - Functions  
+  - Conditionals  
+  - Better visualization  
+  - More data wrangling   
+  
+  
+  
+  
+  
+  
+  
+<br></br>  
+<br></br> 
+<br></br> 
+<br></br> 
+<br></br> 
+
+  
+  
+  
+  
+# Reflections:
+
+
+### Matt  
+Six months after graduation, I said that I wanted to be traveling around the world. This is still my goal. I think that I am still likely to acheive it. My 5 year plan has changed a little. Before, I wanted to be a data scientist, but now I know that I want to do research that allows me to study the earth and travel. I learned a lot of cool data visualization tools in this class. I became fluent in RStudio (especially r markdown). We explored some really cool datasets. If I could give myself advice at the begining of the year, I would tell myself to make sure to read all of the readings. I read all of the readings on time and it really helped my understanding of the material.
+
+
+
+
+
+<br></br> 
+<br></br> 
+<br></br> 
+
+
+# Who did what:
+  
+#### Matt  
+
+
+
+#### Brandon  
+
+
+
+#### Bing  
+
+
+
+#### Nick  
