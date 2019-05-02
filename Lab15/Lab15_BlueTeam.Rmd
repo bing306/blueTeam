@@ -13,7 +13,15 @@ library(tidyverse)
 
 # Assigning awards to MLB teams via Data Science
 
-```{r warning=F, message=F}
+#### Which is the best team: a study of [Giants, Diamondbacks, Dodgers, Padres, and Rockies]
+
+We will each determine an award to give to a team. The team with the most awards is the best team. 
+
+__Most Improved Award (Matt):__
+
+The most improved award goes to the Dodgers. Their improvement score of 30 is 3x higher than the second place team, The Diamondbacks.
+
+```{r warning=F, message=F, echo=F}
 columnNames <- c("Year", "League", "Wins", "Losses", "Finish", "Runs per Game", "Number of Games", "Played appearances","At bats", "Runs scored", "Hits", "Doubles", "Tripples", "Home runs", "RBIs", "Stollen bases", "Caught stealing", "Walks", "Strikeouts", "Batting average", "On base %", "Slugging %", "On base + slugging %", "Errors committed", "Double plays", "Fielding %", "Average age")
 
 
@@ -36,11 +44,11 @@ rockies <- rockies %>% mutate(Team="Rockies") %>% filter(Year != 2019)
 
 
 data <- rbind(giants, db, dodgers, padres, rockies)
-giants %>% arrange(Year)
-db %>% arrange(Year)
-dodgers %>% arrange(Year)
-rockies %>% arrange(Year)
-padres %>% arrange(Year)
+# giants %>% arrange(Year)
+# db %>% arrange(Year)
+# dodgers %>% arrange(Year)
+# rockies %>% arrange(Year)
+# padres %>% arrange(Year)
 
 ```
 
@@ -49,11 +57,11 @@ padres %>% arrange(Year)
 
 ## Matt
 
-### Most Improved Award (1883 to 2018)
+### Most Improved Award (1998 to 2018)
+
+It is important to see which teams have gotten better with time and which teams have gotten worse. Once we know that, we can find similarities between improving teams and determine what is important.
 
 ```{r}
-# giants; db; dodgers; padres; rockies
-
 CalculateImprovement <- function(df, teamName){
   df <- df %>% filter(Year==2018 | Year==1998)
   
@@ -66,30 +74,30 @@ CalculateImprovement <- function(df, teamName){
   errorsCommitted <- (df$`Errors committed`[1]/df$`Number of Games`[1]) - (df$`Errors committed`[2]/df$`Number of Games`[2])
   
   
-# print(df$Wins[1]) 
-# print(df$Wins[2])
-# print(df$`Number of Games`)
-  
-  
-# print(wins)
-# print(runsPerGame)
-# print(runsScored)
-# print(doubles)
-# print(tripples)
-# print(homeRuns)
-# print(errorsCommitted)
-  
+   scores <- c(wins, runsPerGame, runsScored, doubles, tripples, homeRuns, -1*errorsCommitted)
+  weights <- c(20, 10, 15, 10, 15, 20, 10)
 
-  improvement <- wins + runsPerGame + runsScored + doubles + tripples + homeRuns - errorsCommitted
-  print(improvement)
+  improvement <- scores %*% weights
   tb <- tribble(~Team, ~Improvement,
                 teamName, improvement)
   return(tb)
-  
 }
-
- <- CalculateImprovement(db,  "Diamondbacks")
-new
-# new$Improvement
 ```
 
+
+```{r}
+ mostImproved <- rbind(
+   CalculateImprovement(giants,  "Giants"),
+   CalculateImprovement(db,  "Diamondbacks"),
+   CalculateImprovement(dodgers,  "Dodgers"),
+   CalculateImprovement(padres,  "Padres"),
+   CalculateImprovement(rockies,  "Rockies")
+ )
+
+# mostImproved
+ 
+ ggplot(mostImproved) + 
+   geom_bar(aes(x=Team, weight=Improvement, fill=Team))
+```
+
+The improvement score is a weighted sum of the (normalized by number of games per season) difference between wins, runs, runs scored, doubles, tripples, homeruns, and errors committed for the 2018 season and the 1998 season. The most improved score goes to the dodgers. Their improvement score is 30, which is 3x bigger than the next largest improvement, The Diamondbacks.
