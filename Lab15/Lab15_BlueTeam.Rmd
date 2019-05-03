@@ -10,22 +10,24 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
+<font color=blue>
 
 Who downloaded what:
 
 Matt: 10-18
 
-
+</font>
 
 # Assigning awards to MLB teams via Data Science
   
   <br></br>
   
-#### Which is the best team: a study of [Giants, Diamondbacks, Dodgers, Padres, and Rockies]
+#### Which is the best team: a study of MLB Teams.
 
 <br></br>
 
-We will each determine an award to give to a team. The team with the most awards is the best team. It is important that we use multiple different metrics to decide what team is the best because some teams are good at one thing while other teams are good at something else.
+We will each determine an award to give to a team. All four awards will be used to determine the best team in the MLB. The team with the most awards is the best team. It is important that we use multiple different metrics to decide what team is the best because some teams are good at one thing while other teams are good at something else.  
+
 
 <font color=red> THIS IS WHERE THE ANSWER TO THE OVERALL QUESTION WILL GO </font>
 
@@ -153,7 +155,7 @@ CalculateImprovement <- function(df){
    labs(title="Improvement Score", y="Improvement Score")
 ```
 
-The improvement score is a weighted sum of the (normalized by number of games per season) difference between wins, runs, runs scored, doubles, tripples, homeruns, and errors committed for the 2018 season and the 1998 season. The most improved score goes to The Dodgers. Their improvement score is 30. All four awards will be used to determine the best team in the MLB.
+The improvement score is a weighted sum of the (normalized by number of games per season) difference between wins, runs, runs scored, doubles, tripples, homeruns, and errors committed for the 2018 season and the 1998 season. The most improved score goes to The Dodgers. Their improvement score is 30.  
 
 __New Tools:__
 
@@ -196,6 +198,12 @@ Six months after graduation, I said that I wanted to be traveling around the wor
 # Who did what:
   
 #### Matt  
+- Helped with overall question choice  
+- Chose a subquestion  
+  - Created data frames, functions, and plots to answer the subquestion  
+- Downloaded files from [baseball-reference.com](https://www.baseball-reference.com/teams/)  
+  - Read in the files into useable, tidy data frames for later use  
+- Reflected on lab 2 and this course   
 
 
 
