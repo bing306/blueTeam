@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Lab 15"
 author: 'Blue Team: Matt Lawson,'
 date: "5/6/2019"
 output: html_document
@@ -10,13 +10,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
-<font color=blue>
-
-Who downloaded what:
-
-Matt: 10-18
-
-</font>
 
 # Assigning awards to MLB teams via Data Science
   
@@ -28,12 +21,10 @@ Matt: 10-18
 
 We will each determine an award to give to a team. All four awards will be used to determine the best team in the MLB. The team with the most awards is the best team. It is important that we use multiple different metrics to decide what team is the best because some teams are good at one thing while other teams are good at something else.  
 
+__Most Improved Award (Matt):__  
+The most improved award goes to the Dodgers. Their improvement score is 30 (more than twice the amount of the next-best team).
 
-<font color=red> THIS IS WHERE THE ANSWER TO THE OVERALL QUESTION WILL GO </font>
 
-__Most Improved Award (Matt):__
-
-The most improved award goes to the Dodgers. Their improvement score is 30.
 
 ```{r echo=F, message=F, warning=F}
 columnNames <- c("Year", "League", "Wins", "Losses", "Finish", "Runs per Game", "Number of Games", "Played appearances","At bats", "Runs scored", "Hits", "Doubles", "Tripples", "Home runs", "RBIs", "Stollen bases", "Caught stealing", "Walks", "Strikeouts", "Batting average", "On base %", "Slugging %", "On base + slugging %", "Errors committed", "Double plays", "Fielding %", "Average age")
@@ -168,11 +159,11 @@ __New Tools:__
 
 The Home run Award: which team over time has been the best home run hitting team?
 
-```{r}
+```{r message=F, warning=F}
 
 library(lubridate)
 
-data
+# data
 
 modernData <- data %>% filter(League == "AL Central" | League == "AL West" | League == "AL East" |League == "NL Central" | League == "NL West" | League == "NL East")
 
@@ -185,7 +176,8 @@ model = lm(`Home runs` ~ Year , data = modernData)
 ggplot(data = data) + geom_point(mapping = aes(x = Year, y = `Home runs`, color = Team)) + geom_abline(intercept = -2493.37, slope = 1.321)
 
 ```
-This is the plot of the all the teams and their homeruns over time. the black line is the regression line for all teams homeruns per year.
+
+This is the plot of the all the teams and their homeruns over time. the black line is the regression line for all teams homeruns per year.  
 ```{r}
 
 ggplot(data = modernData) + geom_point(mapping = aes(x = Year, y = `Home runs`, color = League)) + facet_wrap(~ League, nrow = 2)
@@ -211,6 +203,7 @@ geom_abline(intercept = -2827.194, slope = 1.484, color = "orange") +
 geom_abline(intercept = -2825.563 , slope = 1.486, color = "yellow")
 
 ```
+
 Line Colors:
 green - AL Central
 red - AL West
@@ -219,7 +212,7 @@ blue - NL Central
 yellow - NL West
 orange - NL East
 
-As we can see from these plots that AL West has the largest slope and ends with the highest amount of homeruns in 2018. We will look at the teams in the AL West to see who is our best team
+As we can see from these plots that AL West has the largest slope and ends with the highest amount of homeruns in 2018. We will look at the teams in the AL West to see who is our best team.
 
 ```{r}
 
@@ -243,6 +236,7 @@ ggplot(data = LeagueHR) + geom_point(mapping = aes(x = Year, y = `Home runs`,col
 
 
 ```
+
 As we can see the Astros have the highest slope and ends in 2018 with the most out of the AL West teams so they are crowned our Home Run championship. This is important because Home Runs are one of the most important parts of Baseball both statistically and for the fans, so to determine the best team Home runs should definitely be included. The new tools that I used were models and multiple models. This shows that Astros can bring fans and also do statistically well.
 
 <br></br>  
@@ -257,7 +251,7 @@ As we can see the Astros have the highest slope and ends in 2018 with the most o
   
 # Reflections:
 ##Team
-As far as our Team goal, I would say we achieved them. We are all fluent in R markdown and have learned tons of data science tools. These are skills that we can use for the rest of our lives and will be great assets to us. We did really well on all of our Team tests, so we wouldn't change that, however one thing we could have done is get work done earlier so that we had less stress right before the deadline
+We have achieved our team goals. We are all fluent in R markdown and have learned new data science tools. These are skills that we can use for the rest of our lives. They will be very helpful. We did well on all of our tRATs, so we wouldn't change that. One thing we could have done better is starting the labs earlier. We were always finishing tem minutes before the deadline.
 
 ### Matt  
 Six months after graduation, I said that I wanted to be traveling around the world. This is still my goal. I think that I am still likely to acheive it. My 5 year plan has changed a little. Before, I wanted to be a data scientist, but now I know that I want to do research that allows me to study the earth and travel. I learned a lot of cool data visualization tools in this class. I became fluent in RStudio (especially r markdown). We explored some really cool datasets. If I could give myself advice at the begining of the year, I would tell myself to make sure to read all of the readings. I read all of the readings on time and it really helped my understanding of the material.
@@ -278,6 +272,7 @@ I said that I want to be able to find insights about Basketball by analyzing dat
   
 #### Matt  
 - Helped with overall question choice  
+- Setup the markdown file  
 - Chose a subquestion  
   - Created data frames, functions, and plots to answer the subquestion  
 - Downloaded files from [baseball-reference.com](https://www.baseball-reference.com/teams/)  
