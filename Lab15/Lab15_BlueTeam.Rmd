@@ -294,7 +294,45 @@ COuldn't get the plot to work, but based off the gather data and indivdual runs 
 
 
 
+###Nick
+
+How are the rates of bases stolen over the past 18 years for each team
+
+```{r}
+
+teams <- data %>% group_by(Team) %>% nest()
+
+stealing_stats <- function(df){
+  team_names <- df$Team[1]
   
+  
+  stealings <- df %>% filter(Year >= 2000) %>% select(Team,Year,`Stollen bases`,`Caught stealing`)
+  
+  stealings <- stealings %>% group_by(Team,Year) %>% summarise(`Stollen bases` = sum(`Stollen bases`), `Caught stealing` = sum(`Caught stealing`))
+  
+  
+  stealings <- stealings %>% mutate(total = `Stollen bases` + `Caught stealing`)
+  stealings <- stealings %>% mutate(steal_per = `Stollen bases` / total)    
+  stealings <- stealings %>% mutate(caught_per = `Caught stealing` / total)
+                                    
+ return(stealings)
+}
+
+
+
+ggplot(stealing_stats(data))+
+  geom_point(mapping = aes(Team, total))
+
+
+ggplot(stealing_stats(data))+
+  geom_smooth(mapping = aes(Year,steal_per, color = Team), se = FALSE)
+
+ggplot(stealing_stats(data))+
+  geom_smooth(mapping = aes(Year,caught_per, color = Team), se = FALSE)
+
+
+```
+
   
   
   
