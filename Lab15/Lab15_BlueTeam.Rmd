@@ -309,6 +309,11 @@ Six months after graduation, I said that I wanted to be traveling around the wor
 I said that I want to be able to find insights about Basketball by analyzing data, and while this is still a goal of mine, I have not achieved it yet, however I would say that since the beginning of the semester, I can anaylyze data much better, and as we showed in this project we analyzed Baseball and made more minor insights. 6 months after graduation I would still like to be travelling, but 5 years after graduation, I still would like to data analytics, but I would be open to many fields. I would say for my goals for the semester, I acheived those because those were mostly about improving my basic R skills. I would tell myself to just make sure to know the stuff from the reading because I had 2 tests where I didn't try to hard and din't get great grades on.
 
 
+##Brandon
+I said that I want to do statistics on videoGames and profesional videoGame players. My goal has changed a little bit from then I want to do something economcialy related or in the business deartment becuase I think it's interesting how money works. ALso the fact my Dad is a banker was an influence. During the cours eof this year I have learned alot that I never thought i would I have and it has been an amazing year to learn R studio and exploring intersting data
+
+
+
 
 
 
