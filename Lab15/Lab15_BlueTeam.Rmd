@@ -164,12 +164,87 @@ __New Tools:__
   - Better visualization  
   - More data wrangling   
   
-  
-  
-  
-  
-  
-  
+##Bing
+
+The Home run Award: which team over time has been the best home run hitting team?
+
+```{r}
+
+library(lubridate)
+
+data
+
+modernData <- data %>% filter(League == "AL Central" | League == "AL West" | League == "AL East" |League == "NL Central" | League == "NL West" | League == "NL East")
+
+
+ggplot(data = data) + geom_point(mapping = aes(x = Year, y = `Home runs`, color = Team))
+
+model = lm(`Home runs` ~ Year , data = modernData)
+
+
+ggplot(data = data) + geom_point(mapping = aes(x = Year, y = `Home runs`, color = Team)) + geom_abline(intercept = -2493.37, slope = 1.321)
+
+```
+This is the plot of the all the teams and their homeruns over time. the black line is the regression line for all teams homeruns per year.
+```{r}
+
+ggplot(data = modernData) + geom_point(mapping = aes(x = Year, y = `Home runs`, color = League)) + facet_wrap(~ League, nrow = 2)
+
+AC <- modernData %>% filter(League == "AL Central")
+AW <- modernData %>% filter(League == "AL West")
+AE <- modernData %>% filter(League == "AL East")
+NC <- modernData %>% filter(League == "NL Central")
+NE <- modernData %>% filter(League == "NL East")
+NW <- modernData %>% filter(League == "NL West")
+
+modelAC = lm(`Home runs` ~ Year , data = AC)
+modelAW = lm(`Home runs` ~ Year , data = AW)
+modelAE = lm(`Home runs` ~ Year , data = AE)
+modelNC = lm(`Home runs` ~ Year , data = NC)
+modelNE = lm(`Home runs` ~ Year , data = NE)
+modelNW = lm(`Home runs` ~ Year , data = NW)
+
+
+ggplot(data = modernData) + geom_point(mapping = aes(x = Year, y = `Home runs`)) + geom_abline(intercept = -2238.9, slope = 1.2, color = "blue") + geom_abline(intercept = -3425.979, slope = 1.793, color = "red") + geom_abline(intercept = -3103.675, slope = 1.624, color = "green") + 
+geom_abline(intercept = -1599.6820, slope = 0.8815, color = "purple") + 
+geom_abline(intercept = -2827.194, slope = 1.484, color = "orange") + 
+geom_abline(intercept = -2825.563 , slope = 1.486, color = "yellow")
+
+```
+Line Colors:
+green - AL Central
+red - AL West
+purple - AL East
+blue - NL Central
+yellow - NL West
+orange - NL East
+
+As we can see from these plots that AL West has the largest slope and ends with the highest amount of homeruns in 2018. We will look at the teams in the AL West to see who is our best team
+
+```{r}
+
+LeagueHR <- modernData %>% filter(League == "AL West")
+
+ggplot(data = LeagueHR) + geom_point(mapping = aes(x = Year, y = `Home runs`,color = Team))
+
+Astros <- modernData %>% filter(Team == "Astros")
+Brewers <- modernData %>% filter(Team == "Brewers")
+Twins <- modernData %>% filter(Team == "Twins")
+
+modelStros = lm(`Home runs` ~ Year , data = Astros)
+modelBrewers = lm(`Home runs` ~ Year , data = Brewers)
+modelTwins = lm(`Home runs` ~ Year , data = Twins)
+
+#modelStros
+#modelBrewers
+#modelTwins
+
+ggplot(data = LeagueHR) + geom_point(mapping = aes(x = Year, y = `Home runs`,color = Team)) + geom_abline(intercept = -4531.771, slope = 2.339, color = "red") + geom_abline(intercept = -2961.989, slope = 1.562 , color = "green") + geom_abline(intercept = -1638.6750, slope = 0.8886 , color = "blue") 
+
+
+```
+As we can see the Astros have the highest slope and ends in 2018 with the most out of the AL West teams so they are crowned our Home Run championship. This is important because Home Runs are one of the most important parts of Baseball both statistically and for the fans, so to determine the best team Home runs should definitely be included. The new tools that I used were models and multiple models. This shows that Astros can bring fans and also do statistically well.
+
 <br></br>  
 <br></br> 
 <br></br> 
@@ -181,10 +256,14 @@ __New Tools:__
   
   
 # Reflections:
-
+##Team
+As far as our Team goal, I would say we achieved them. We are all fluent in R markdown and have learned tons of data science tools. These are skills that we can use for the rest of our lives and will be great assets to us. We did really well on all of our Team tests, so we wouldn't change that, however one thing we could have done is get work done earlier so that we had less stress right before the deadline
 
 ### Matt  
 Six months after graduation, I said that I wanted to be traveling around the world. This is still my goal. I think that I am still likely to acheive it. My 5 year plan has changed a little. Before, I wanted to be a data scientist, but now I know that I want to do research that allows me to study the earth and travel. I learned a lot of cool data visualization tools in this class. I became fluent in RStudio (especially r markdown). We explored some really cool datasets. If I could give myself advice at the begining of the year, I would tell myself to make sure to read all of the readings. I read all of the readings on time and it really helped my understanding of the material.
+
+##Bing
+I said that I want to be able to find insights about Basketball by analyzing data, and while this is still a goal of mine, I have not achieved it yet, however I would say that since the beginning of the semester, I can anaylyze data much better, and as we showed in this project we analyzed Baseball and made more minor insights. 6 months after graduation I would still like to be travelling, but 5 years after graduation, I still would like to data analytics, but I would be open to many fields. I would say for my goals for the semester, I acheived those because those were mostly about improving my basic R skills. I would tell myself to just make sure to know the stuff from the reading because I had 2 tests where I didn't try to hard and din't get great grades on.
 
 
 
@@ -211,7 +290,13 @@ Six months after graduation, I said that I wanted to be traveling around the wor
 
 
 
-#### Bing  
+#### Bing 
+-Helped with overall question
+-chose a subquestion
+-download file from our source
+-reflected on lab 2
+-did indivdual part
+-did team reflection
 
 
 
