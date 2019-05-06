@@ -245,6 +245,55 @@ As we can see the Astros have the highest slope and ends in 2018 with the most o
 <br></br> 
 <br></br> 
 
+
+
+##Brandon
+Most Offensive team
+
+```{r}
+#calcLocation <- function(offense){
+     #if(abs(offense)<5) {
+      # return(sign(offense)*7)
+     #}else{
+         #return(offense/2)
+       #}
+  #}
+
+#CalculateOffense <- function(db){
+  #Name <- db$Team[1]
+  #db <- db %>% filter(Year==2018 | Year==1998)
+  #RunsPerGame <- (df$`Runs per Game`[1]/df$`Number of Games`[1]) - (df$`Runs per Game`[2]/df$`Number of Games`[2])
+  #RunsScored <- (df$`Runs scored`[1]/df$`Number of Games`[1]) - (df$`Runs scored`[2]/df$`Number of Games`[2])
+  #RBIs <- (df$RBIs[1]/df$`Number of Games`[1]) - (df$RBIs[2]/df$`Number of Games`[2])
+  #OnBase <-(df$`On base %`[1]/df$`Number of Games`[1]) - (df$`On base %`[2]/df$`Number of Games`[2])
+  #BattingAvg <- (df$`Batting average`[1]/df$`Number of Games`[1]) - (df$`Batting average`[2]/df$`Number of Games`[2])
+  #Slugging <- (df$`Slugging %`[1]/df$`Number of Games`[1]) - (df$`Slugging %`[2]/df$`Number of Games`[2])
+#best <- c(RunsPerGame, RunsScored, RBIs, onBase, BattingAvg, Slugging)
+  #weights <- c(20, 10, 15, 10, 15, 20, 10)
+  
+  #offense <- best %*% weights %>% round(2)
+  #Location <- calcLocation(offense)
+  
+  
+  #bb <- tribble(~Team, ~offense, ~Location,
+   #            Name, offense, Location)
+  #return(bb)
+#}
+```
+```{r}
+ #mostImproved <- rbind( CalculateOffense(giants),CalculateOffense(db),CalculateOffense(dodgers),CalculateOffense(padres),CalculateOffense(rockies),CalculateOffense(astros),CalculateOffense(brewers), CalculateOffense(marlins), CalculateOffense(mets), CalculateOffense(tigers), CalculateOffense(twins))
+ #ggplot(mostImproved) +
+  # geom_bar(aes(x=Team, weight=Improvement), fill="red", color="black", alpha=0.65) + 
+   #geom_text(aes(x=Team, y=Position, label = Improvement)) +
+   #coord_flip() + 
+   #theme_bw() +
+   #labs(title="Improvement Score", y="Improvement Score")
+```
+
+COuldn't get the plot to work, but based off the gather data and indivdual runs it looked like the Dodgers and the msot offense team from 1989 to 2018, this can due to their increase in wins which is cotnributed to score, RBI's stolen bases and othe rthing I tested for offense teams
+
+
+
   
   
   
